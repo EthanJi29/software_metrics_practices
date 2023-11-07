@@ -1,0 +1,161 @@
+--*-outline-*--
+
+
+* Known GNU Interactive Tools Problems
+======================================
+
+
+** 1. Missing '.' directory problem
+-----------------------------------
+
+While working on a previous version of git, I've tried to use it to
+read a NFS mounted directory.  The file system was exported by a
+Ultrix system and mounted on a Linux system.  When I've entered the
+directory where the NFS mounted file system was supposed to be, git
+received a SIGSEGV signal.  Looking at that directory with 'ls', I've
+figured out that the directory was completely empty (the '.' & '..'
+directories were missing too) even thought the file system was
+reported as being succesfully mounted.  A few days later I've
+experienced the same problem on our HP-UX workstation, trying to mount
+a NFS file system exported by a SGI workstation.
+
+Starting with that version of git, I've put two tests in the routine
+that reads the directory (panel_read_directory()) that check if the
+'.' and '..' directories have been found.  If any of them is missing,
+git will refuse to enter the directory, in order to avoid further
+problems.
+
+Unfortunately, a few people have reported that git refuses to work on
+their machines because it can't find the '.' directory.  One of them
+was using Solaris 2.3 with NFS, the other one SunOS.
+
+I recently installed NFS on a machine here and I tried to fix all the
+problems git had under NFS.  There were lots of problems, all of them
+were being related to the fact that NFS does lots of strange things:
+
+1) root can enter directories where it has no permission (remember,
+the root id is converted by NFS to -2 (an unprivileged user), and then
+is unable to read files (thus there is no ".." directory).
+
+2) in some other circumstances (directories with rw- permission only)
+it can enter the directory, read the entries but it is unable to stat
+them.
+
+I don't know if the changes I've made will fix all the problems.  I
+have tried to emulate the ".." directory and to recover whenever
+possible.  Please let me know if it works for you.
+
+
+** 2. cp problems
+-----------------
+
+"cp -f" doesn't work on all systems, so directories that are in fact
+symbolic links will not be copied.  If your cp does understand "-f",
+try modifying the panel_copy function in panel.c, replacing "cp -r"
+with "cp -r -f" or "cp -rf".
+
+
+** 3. SCO 3.2 V 4.2 problems
+----------------------------
+
+Han Holl <100327.1632@compuserve.com> has reported a problem running
+git-4.3.5 on SCO Unix 3.2 V 4.2:
+
+> GIT didn't work with the ordinary malloc library:
+> I used './configure --with-terminfo', and added -lmalloc to the LIBS
+> variable (it crashed with the ordinary malloc library). I used gcc.
+
+
+** 4. SLACKWARE Linux 1.2.0 / 2.0.0 termcap/terminfo problems
+-------------------------------------------------------------
+
+a. The 'ms' flag (safe to move in standout mode) is missing from the
+console termcap database.  It is available only in the console
+terminfo database (its terminfo name is 'msgr').
+
+b. The 'sgr0' capability (according to the terminfo manual this is the
+terminfo name of the termcap 'me' capability) is missing from the
+console terminfo database but it is available in the termcap database.
+This is a problem for GIT when using terminfo because if we can't turn
+the reverse video mode or the brightness off, we should not turn them
+on at all.  I've solved the problem by using a hard-coded 'me' for the
+Linux console if I can't find 'me' in the database, but I hate this
+method.  This is one of the two reasons why I prefer using termcap
+under Linux (the second one is that the executable linked with the
+termcap library is a lot smaller).
+
+c. The 'smacs' and 'rmacs' ('as' and 'ae' in termcap) are missing from
+the console termcap database but are available in the console terminfo
+database.
+
+d. 'se' is \E[27m in termcap but 'rmso' (the terminfo equivalent) is
+\E[0m in terminfo.  Are both ok ?
+
+
+** 5. Linux color_xterm problems
+--------------------------------
+
+Sometimes, when moving the cursor, color_xterm deletes useful
+informations on the screen.  This is *NOT* an git bug because when
+hiding/repainting the window, the garbage disappears.  I don't know
+how to handle this.  The normal xterm (b/w) works fine.  Other
+xterm terminal emulators (with color support) like Linux's rxvt and
+Ultrix's xterm work just fine.
+
+To reproduce the problem, start git, press the down arrow (or ^N), and
+then type a few spaces in the command line.  Those spaces will be
+displayed with the wrong color, but if you hide and the re-expose the
+color_xterm window, everything will be redisplayed correctly.
+
+
+** 6. File systems with no support for hard links
+-------------------------------------------------
+
+We can't *really* move a file on such file systems.  We have to copy
+the source file to the destination and then remove the it.  MS-DOG
+programs can perform a real move by copying the directory entry in the
+destination directory but I don't think we can do this under UNIX and
+I don't feel like writing MS-DOG "file system" dependent code.  Sorry.
+In fact, my real problem wasn't that stupid MS-DOG file system, but
+the impossibility of detecting such file systems.  The 'move' command
+will normally fail on file systems with no support for hard links, but
+under Linux it *will* work with MS-DOG file systems because I know
+MS-DOG lacks working hard links and I've put a small test in the right
+place :-).
+
+
+** 7. Sun's sun-cmd termcap problems
+------------------------------------
+
+If you are using the sun-cmd terminal emulator under SunOS 5.4,
+Solaris or similar systems, it seems that the termcap library fails to
+work as expected.  because some capabilities are reported as missing
+even though they are available.  This leads to git being unable to
+display the frame in reverse video.  I've compiled git with the GNU
+termcap library and it works just fine, but the scrolling feature
+still has to be disabled.
+
+I recently (4.3.8) changed git to work with standout mode whenever
+possible.  I don't know if this problem still exists.  Please let me
+know if you can figure it out.  Thanks.
+
+
+** 8. Linux 2.0.x kernels
+-------------------------
+
+If you are experiencing problems with gitview under Linux kernels >
+2.0.0, try updating your termcap database to termcap 2.0.8.
+
+It seems that the sequence returned by the `End' key is given by the
+`@7' termcap capability in the latest termcap.  GIT used to inspect
+`kH' for this...
+
+
+** 9. UNIX System V Release 4
+-----------------------------
+
+If you're compiling with gcc, you're fine.  With the native compiler
+you need to hand edit config.h _after_ running configure, comment out
+HAVE_DIRENT_H and define HAVE_SYS_DIR_H instead.  While git will
+compile anyway, dirent will not work for some reason I haven't had the
+time to figure out.

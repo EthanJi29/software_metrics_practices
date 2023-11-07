@@ -1,0 +1,58 @@
+.\" +----------
+.\" |
+.\" |			       gitdpkgname man page
+.\" |
+.\" |	       Copyright 1993-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.TH gitdpkgname 1
+.SH NAME
+gitdpkgname \- GNU Interactive Tools \- gitdpkgname helper script
+.SH SYNTAX
+.I gitdpkgname [file...]
+
+.SH DESCRIPTION
+
+gitdpkgname is a very small script that is used by gitfm(1) when using
+any of the ^C^D commands that expect a debian packagename.
+
+For each argument that ends in .deb, gitdpkgname queries the named
+package for its name and prints it. All other arguments are printed
+unchanged.
+
+This enables commands (e.g. ^C^DL) expecting a packagename to be given
+a .deb file, and the packagename will be extracted automatically.
+
+.SH SEE ALSO
+
+gitfm(1)
+
+info(1) documentation for 'gnuit', especially section 3.1.9.21:
+.B Working with DPKG
+
+.SH BUGS
+
+Please send bug reports to:
+.br
+.I gnuit-dev@gnu.org
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)

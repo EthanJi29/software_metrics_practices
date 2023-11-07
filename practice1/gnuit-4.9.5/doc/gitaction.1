@@ -1,0 +1,146 @@
+.\" +----------
+.\" |
+.\" |			      GITACTION man page
+.\" |
+.\" |	      Copyright 1993-1999, 2006-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.TH gitaction 1
+.SH NAME
+gitaction \- GNU Interactive Tools - per file type action script
+.SH SYNTAX
+.I gitaction
+.I directory file
+.br
+.I .gitaction directory file
+
+.SH DESCRIPTION
+.I gitaction
+is a script that executes a different action for each file type
+specified. It is called by the
+.I gitfm
+program when pressing
+.B F2
+or
+.B ^Xa
+(see the
+.B gnuitrc.TERM
+configuration files in the
+.I gnuit
+manual). The first parameter is the current directory name and the second
+one is the file name to be matched against the default patterns. The
+matching is done using the shell 'case' statement.
+If you press
+.B F2
+or
+.B ^Xa
+on a
+.B "*.html"
+file,
+.I gitfm
+will invoke a browser to view it, if you press
+.B F2
+or
+.B ^Xa
+on a
+.B "*.tar.gz"
+file,
+.I gitfm
+will list the tar archive contents, if you press the same keys on a
+.B "*.gz"
+file,
+.I gitfm
+will display its uncompressed contents on the screen, etc ...
+
+If you press
+.B F2
+or
+.B ^Xa
+on a
+.B "*.gif"
+file or
+.B "*.jpg"
+file and you have the
+.I zgv
+utility installed, you will be able to see it. If you want to change
+the gif/jpeg viewer, all you need to do is to change its name in the
+.I gitaction
+script. 
+
+There are many more file types and viewers that
+.I gitaction
+knows about.
+In addition, if you are running under GNOME, gnome-open is used, and on
+MacOS, open(1) is used. see(1) and metamail(1) are also used as
+fallbacks.
+
+If all else fails, the file is displayed using
+$GNUIT_PAGER. Feel free to change this. If you want to find out what the
+default action for each file type is (or if you want to modify it), just
+read/modify the
+.I gitaction
+script.
+
+The script can be easily enhanced. Just read it.
+
+The
+.I .gitaction
+script is a local version of the
+.I gitaction
+script. When started,
+.I gitaction
+tries to search a script called
+.B .gitaction
+in the current directory and, if it finds it, it starts it. If
+.IR .gitaction 's
+exit code is 0 (
+.I .gitaction
+couldn't find a matching pattern),
+.I gitaction
+starts its own case statement trying to match the current file name (the
+second parameter) against its default patterns.
+
+The
+.I .gitaction
+script *must* be executable. An example of
+.I .gitaction
+can be found in the directory gitfm is installed into.
+(usually
+.BR /usr/local/bin
+or
+.BR /usr/bin )
+Debian users can find it in
+.BR /usr/share/doc/gnuit/examples/ .
+You should copy the example to the current directory or your home
+directory and then modify it.
+
+
+.SH BUGS
+
+Please send bug reports to:
+.br
+.I gnuit-dev@gnu.org
+
+.SH SEE ALSO
+gitfm(1) gitps(1) gitview(1) gitmount(1) gitkeys(1) gitrgrep(1) gitunpack(1)
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (current maintainer).

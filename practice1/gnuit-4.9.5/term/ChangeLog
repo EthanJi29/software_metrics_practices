@@ -1,0 +1,134 @@
+2007-10-20  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* Discontinued this ChangeLog, see ../ChangeLog for
+	  changes from now on.
+
+2000-03-09  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.common.in (COPYING): Duplicate *.pm* removed, the Perl
+	module definition is more common.
+
+1999-12-18  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.common.in: Added support for *.mips.rpm and *.mipsel.rpm.
+
+1999-10-16  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.common.in: Added ".pnm".
+
+1999-06-28  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.common.in: Added .i[4-6]86.rpm as options to
+ 	RPM-UNINSTALL.
+
+1999-05-31  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* Fixed the pattern for libX.so.n.n.n.
+
+1998-12-27  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* *.h colored with the same color as the other source files.
+
+1998-09-16  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* Added *.fit.
+
+1998-09-14  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.xterm-color: F1-F4 are working again.
+
+	* .gitrc.xterm: F1-F4 are working again.
+
+1998-09-05  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.xterm-color: Added *.png.
+
+1998-09-04  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.common.in: Added *.djv, *.pvf, *.aiff, *.aifc.
+
+1998-03-11  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* Makefile.in (GIT_VT100S): .gitrc.screen linked to .gitrc.vt100.
+
+1998-03-05  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* INBOX* and OUTBOX* added.
+
+1998-01-23  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.common.in: Improved to handle multiple files and various
+	architecture specific formats (rpms).
+
+1997-09-14  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* .gitrc.*: ^G no longer terminates gitview & gitps.
+
+	* .gitrc.*: "GitPsModeHelp" & "GitViewModeHelp" have been renamed
+	to "Help".
+
+Sat Dec 21 15:46:11 1996  Tudor Hulubei  <tudor@hal.cs.unh.edu>
+
+	* .gitrc.common: Added -- to all the commands that support it.
+	Thanks to Andrei Caraman <xax@pub.ro> for reporting the problem.
+
+Fri Dec 20 15:49:52 1996  Tudor Hulubei  <tudor@hal.cs.unh.edu>
+
+	* .gitrc.common: Replaced `gitrgrep command' with
+	`(command 1>&2 && exit 1)' in order to both get rid of gitredir
+	and to avoid some quoting problems.
+
+Fri Nov 29 18:10:28 1996  Tudor Hulubei  <tudor@hal.cs.unh.edu>
+
+	* .gitrc.common (MTOOLS-*): Added support for the commands
+	provided by the mtools package.  They use the ^Cm and ^Cbm key
+	prefixes.
+
+Wed Oct 16 18:09:33 1996  Tudor Hulubei  <tudor@kaa.cs.unh.edu>
+
+	* .gitrc.xterm-color: New file.
+
+Sun Oct 13 18:47:19 1996  Tudor Hulubei  <tudor@kaa.cs.unh.edu>
+
+	* .gitrc.common: Added support for *.rpm files.
+
+Wed Aug 21 01:01:39 1996  Tudor Hulubei  <tudor@chang.pub.ro>
+
+	* .gitrc.generic: added *.eps & Co.
+
+	* .gitrc.*: Switched back to System/Host/Machine/Date status bar.
+
+Thu Aug  8 11:58:01 1996  Tudor Hulubei  <tudor@chang.pub.ro>
+
+	* .gitrc.common: Function keys F1-F10 are available on
+	ESC 1, ESC 2, ... ESC 0.
+
+	* .gitrc.*: select-file changed to select-entry.
+	file-to-input-line change to entry-to-input-line
+	etc.
+
+Tue Aug  6 09:25:05 1996  Tudor Hulubei  <tudor@chang.pub.ro>
+
+	* .gitrc.common (^G): No longer an exit key for gitps.
+	(^X^I): replaced ^X^G on selected-files-to-input-line.
+	(F11 & F12): Removed.  They don't have associated termcap
+	capabilities.
+
+Mon Aug  5 19:39:00 1996  Tudor Hulubei  <tudor@chang.pub.ro>
+
+	* .gitrc.common: Added *.orig and *.r[0-9][0-9] for RAR archives.
+
+	* .gitrc.common: Added recursive context diffs on ^Cd and ^Cbd.
+	Should be started only when both panels point to the same
+	directory.
+
+Thu Jun  6 09:18:06 1996  Tudor Hulubei  <tudor@chang.pub.ro>
+
+	* Makefile.in: 	install_strip renamed to install-strip.
+	install now depends on all and on install-only.
+
+	* .gitrc.common: backward-kill-word added on ^[^H.
+
+	* Makefile.in: chmod 755 removed.
+
+

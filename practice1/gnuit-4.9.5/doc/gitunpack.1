@@ -1,0 +1,49 @@
+.\" +----------
+.\" |
+.\" |			       GITUNPACK man page
+.\" |
+.\" |	       Copyright 1993-1999, 2006-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.TH gitunpack 1
+.SH NAME
+gitunpack \- GNU Interactive Tools - Unified archive unpacking
+.SH SYNTAX
+.I gitunpack dir files...
+
+.SH DESCRIPTION
+.I gitunpack
+is a shell script that accepts a directory and a set of archives as
+its command line parameters, and then attempts to unpack those
+archives in the given directory, selecting the utility used to unpack
+the archives based on the archive extensions.
+
+.SH BUGS
+
+Please send bug reports to:
+.br
+.I gnuit-dev@gnu.org
+
+.SH SEE ALSO
+gitfm(1) gitps(1) gitview(1) gitmount(1) gitaction(1) gitrgrep(1) gitkeys(1)
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)

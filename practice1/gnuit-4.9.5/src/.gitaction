@@ -1,0 +1,63 @@
+#! /bin/sh
+
+###############################################################################
+###									    ###
+###	        GNU Interactive Tools per file type action script	    ###
+###				Local version				    ###
+###           Copyright (c) 1993-1999 Free Software Foundation, Inc.        ###
+###                                                                         ###
+###                  This file is part of gnuit.                            ###
+###                                                                         ###
+###  gnuit is free software: you can redistribute it and/or modify it       ###
+###  under the terms of the GNU General Public License as published         ###
+###  by the Free Software Foundation, either version 3 of the               ###
+###  License, or (at your option) any later version.                        ###
+###                                                                         ###
+###  gnuit is distributed in the hope that it will be useful, but           ###
+###  WITHOUT ANY WARRANTY; without even the implied warranty of             ###
+###  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          ###
+###  GNU General Public License for more details.                           ###
+###                                                                         ###
+###  You should have received a copy of the GNU General Public              ###
+###  License along with this program. If not, see                           ###
+###  http://www.gnu.org/licenses/.                                          ###
+###									    ###
+###		    Written by Tudor Hulubei and Andrei Pitis.		    ###
+###									    ###
+###############################################################################
+
+#
+# This script executes a different action for each file type specified.
+# The script tries to match the second parameter against the patterns
+# specified in the 'case' statement (see below).
+# If you want to add new file types & actions to this script, just add a
+# new entry to the 'case' statement *before* the last one ( *) ... )
+#
+# For greater flexibility, .gitaction's first parameter is the name of the
+# directory where the file resides.  So, you can get the complete file
+# name appending the file base name to the file path just like that: $1/$2
+#
+
+name=`basename $0`
+
+if test "$#" -ne 2 -o ! -d "$1" -o ! -f "$2"; then
+	echo "$name: GIT internal script" >&2
+	exit 1
+fi
+
+done=1
+file="$1/$2"
+
+case "$2" in
+*.foo)  ls -la "$file";;
+*.bar)  "$GNUIT_PAGER" "$file";;
+*)      done=0
+esac
+
+ret=$?
+
+if test $done -eq 0; then
+    exit 1
+else
+    exit $ret
+fi

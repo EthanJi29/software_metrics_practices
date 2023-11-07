@@ -1,0 +1,116 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" +----------
+.\" |
+.\" |			  GITPS man page
+.\" |
+.\" |	      Copyright 1993-1999,2006-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH GITPS 1 "Sep 30, 2007"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+gitps \- A process viewer/killer
+.SH SYNOPSIS
+.B gitps
+.RI [ -hvcblp ]
+
+.SH DESCRIPTION
+This manual page documents briefly the
+.B gitps
+command.
+
+\fBgitps\fP is an interactive process viewer/killer.  It calls
+internally the \fBps\fP(1) utility.
+
+
+.PP
+More extensive documentation on
+.I gitps
+and the other
+.B gnuit
+tools is available in info format, try
+.I 'info gnuit'.
+
+.PP
+
+Running `gitps' is self explanatory.  Use the `arrows', `PageUp',
+`PageDown', `Home', `End', `^N', `^P', `^V', `ESC v', `Space' and
+`Backspace' to move in the list, `^L' to refresh it, `Enter' to change
+the default signal and `F10', `q' or `^X ^C' to leave.
+
+.PP
+You can change these keys, just read the GITPS-Setup, GITPS-Color,
+GITPS-Monochrome and GITPS-Keys sections in the configuration files
+\fBgnuitrc.TERM\fP.
+
+.PP
+.B gitps
+is part of the GNU Interactive Tools.
+
+.SH OPTIONS
+A summary of options is included below.
+For a complete description, see the Info files.
+.TP
+.B \-h
+Show summary of options.
+.TP
+.B \-v
+Show version of program.
+.TP
+.B \-c
+Use ANSI colours.
+.TP
+.B \-b
+Don't use ANSI colours.
+.TP
+.B \-l
+Don't use last screen character.
+.TP
+.B \-p
+Pass the remaining arguments to ps(1).
+.SH SEE ALSO
+.BR gitfm (1)
+.PP
+\fBgitps\fP and \fBgitfm\fP are documented fully by
+.IR "GNU Interactive Tools" ,
+available via the Info system.
+
+.SH BUGS
+Please send bug reports to:
+.br
+.I gnuit-dev@gnu.org
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)

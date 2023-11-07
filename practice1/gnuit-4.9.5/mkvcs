@@ -1,0 +1,21 @@
+#! /bin/sh
+
+
+# Check for Linux
+if test `uname` != Linux; then
+	echo You are not running Linux
+	echo This is the result of 'uname -a' on this machine:
+	uname -a
+	echo mkvcs failed
+	exit 1
+fi
+
+# Create /dev/vcsX and /dev/vcsaX.
+for n in 0 1 2 3 4 5 6 7 8; do
+	mknod --mode=0666 /dev/vcs$n c 7 $n
+	mknod --mode=0666 /dev/vcsa$n c 7 `expr $n + 128`
+done
+
+chown root.tty /dev/vcs[0-8] /dev/vcsa[0-8]
+
+echo done

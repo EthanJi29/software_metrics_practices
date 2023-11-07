@@ -1,0 +1,25 @@
+#! /bin/sh
+
+# Prepare a freshly checked out copy of
+# the CVS tree for compilation.
+
+AMFLAGS=
+
+if [ "$1" = "-a" ]
+then
+    ../../gnulib/gnulib/gnulib-tool --import fnmatch fnmatch-gnu fsusage getopt human idcache mbsstr mkstemp nanosleep putenv readlink rename strcase strcasestr utime xalloc; echo -n .
+#    gnulib-tool --update; echo -n .
+#    patch -p0 < lib-Makefile.am.patch ; echo -n .
+    AMFLAGS="--add-missing --force-missing --copy"
+fi
+
+cp .gitignore .gitignore.gnulib-backup
+rm -rf autom4te.cache config.cache; echo -n "."
+#libtoolize --automake --copy --force && echo -n "."
+autoheader && echo -n "."
+aclocal -I m4 && echo -n "." &&
+automake --foreign $AMFLAGS && echo -n "." &&
+autoconf && echo -n "." &&
+rm -rf autom4te.cache config.cache `find lib m4 -name .gitignore` ; echo -n "."
+mv .gitignore.gnulib-backup .gitignore
+echo " done"

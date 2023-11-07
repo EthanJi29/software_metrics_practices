@@ -1,0 +1,62 @@
+.\" +----------
+.\" |
+.\" |			       GITMOUNT man page
+.\" |
+.\" |	      Copyright 1993-1999, 2006-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.TH gitmount 1
+.SH NAME
+gitmount \- GNU Interactive Tools - auto-mount script
+.SH SYNTAX
+.I gitmount device
+
+.SH DESCRIPTION
+.I gitmount
+is a script which allows you to mount any block device without
+specifying the file system type.  You may now insert the floppy in the
+drive and type  '
+.BR "gitmount fd0" '
+and the first floppy will be mounted in the directory
+.BR /mnt/fd0 .
+On Linux just press
+.B F11
+or
+.BR F12 .
+You don't need to know the file system type anymore. The directories
+.B /mnt/fd0
+and
+.B /mnt/fd1
+are created if they don't exist.
+
+
+
+.SH BUGS
+
+Please send bug reports to:
+.br
+.I gnuit-dev@gnu.org
+
+.SH SEE ALSO
+gitfm(1) gitps(1) gitview(1) gitkeys(1) gitaction(1) gitrgrep(1) gitunpack(1)
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)

@@ -1,0 +1,53 @@
+Help for GNUIT's DPKG Commands
+
+Note: Commands expecting package names can be given .deb files, the
+package names will be extracted from the debs.
+
+Command
+Keys            Argument            Description
+-------         --------            -----------
+
+DPKG-INSTALL
+^C ^D i         .deb files          installs binary packages
+^C ^D R i       directories         (recursive)
+
+DPKG-UNPACK
+^C ^D u         .deb files          unpacks binary packages
+^C ^D R u       directories         (recursive)
+
+DPKG-CONFIGURE
+^C ^D C         package names       configure unpacked packages
+
+DPKG-REMOVE
+^C ^D r         package names       remove installed packages from system
+
+DPKG-PURGE
+^C ^D P         package names       purge installed packages from system
+
+DPKG-RECORDAVAIL
+^C ^D A         .deb files          record binary packages in available file
+^C ^D R A       directories         (recursive)
+
+DPKG-CONTENTS
+^C ^D c         .deb file           list contents of a binary package
+
+DPKG-FIELD
+^C ^D f         .deb file [fields]  show control fields in a binary package
+
+DPKG-INFO
+^C ^D I         .deb file           information about a binary package
+
+DPKG-LISTPKGS
+^C ^D l         package names       list installed packages
+
+DPKG-STATUS
+^C ^D s         package names       status of installed packages
+
+DPKG-LISTFILES
+^C ^D L         package names       list files owned by installed packages
+
+DPKG-SEARCH
+^C ^D S         file path           search for package owning a file
+
+DPKG-PRINTAVAIL
+^C ^D p         package names       details of package in available file

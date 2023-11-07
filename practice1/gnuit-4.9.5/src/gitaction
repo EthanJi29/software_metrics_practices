@@ -1,0 +1,657 @@
+#! /bin/sh
+
+###############################################################################
+###									    ###
+###		 GNU Interactive Tools per file type action script	    ###
+###				   Global version			    ###
+###     Copyright (C) 1994-2000, 2006-2007 Free Software Foundation, Inc.   ###
+###                                                                         ###
+###                  This file is part of gnuit.                            ###
+###                                                                         ###
+###  gnuit is free software: you can redistribute it and/or modify it       ###
+###  under the terms of the GNU General Public License as published         ###
+###  by the Free Software Foundation, either version 3 of the               ###
+###  License, or (at your option) any later version.                        ###
+###                                                                         ###
+###  gnuit is distributed in the hope that it will be useful, but           ###
+###  WITHOUT ANY WARRANTY; without even the implied warranty of             ###
+###  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          ###
+###  GNU General Public License for more details.                           ###
+###                                                                         ###
+###  You should have received a copy of the GNU General Public              ###
+###  License along with this program. If not, see                           ###
+###  http://www.gnu.org/licenses/.                                          ###
+###									    ###
+###		    Written by Tudor Hulubei and Andrei Pitis.		    ###
+###			  Enhanced by Verdoolaege Sven		            ###
+###			       and Ian Beckwith.			    ###
+###									    ###
+###############################################################################
+
+###
+### This script executes a different action for each file type
+### specified.  It tries to match the second parameter against the
+### patterns specified in the 'case' statement (see below).
+###
+### If you want to add new file types & actions to this script, just
+### add a new entry to the 'case' statement *before* the last one
+### ( *) ... )
+###
+### For greater flexibility, gitaction's first parameter is the name
+### of the directory where the file resides.  The complete file name
+### is obtained by appending the file base name to the file path:
+### "$1/$2".
+###
+### If you enhance this script, please send me a patch at
+### gnuit-dev@gnu.org.  I'll include it in the next release.
+###
+
+###
+### Instead of hardcoding `more' or `less' here, we can use GNUIT_PAGER,
+### a shell environment variable that is bound on one of them, depending
+### on your environment.  The default is to call `more', but you can
+### change GNUIT_PAGER to point to your favorite pager...
+###
+
+###
+### Thanks to John Stump for suggesting me to get rid of gitmatch.
+### Thanks to Juhapekka Tolvanen <juhtolv@silmu.st.jyu.fi> for the new
+### mikmod-related entries.
+###
+
+###
+### Note: Not all the programs called here are able to handle the --
+### command line switch.  These are:
+###   emacs lynx elinks ar btshowmetainfo html2text lha pstotext tar w3m
+###   xli xloadimage zoo jar avifile-player xchm iceweasel firefox gv
+###   sensible-browser kfax xdvi ted unrtf dotty fbgs gm xcfview sqlite
+###   gm xfmedia uncompress djview djview3 javap lyx vrweb metamail
+### programs with multiple implementations that we can't rely on supporting --:
+###    file last more ldd nroff cpio uudecode objdump tar ar uncompress
+### There are some that I couldn't test.
+###
+### When these programs will be fixed, we should add -- to them...
+### Until then, we will fail to run commands like `xfig -P -P' to
+### process a file called `-P'.
+###
+
+name=`basename "$0"`
+msg="Press ENTER to continue..."
+GIT_PAGER=${GIT_PAGER:-more}
+GNUIT_PAGER=${GNUIT_PAGER:-$GIT_PAGER}
+GIT_BROWSER=${GIT_BROWSER:-lynx}
+GNUIT_BROWSER=${GNUIT_BROWSER:-$GIT_BROWSER}
+export GNUIT_PAGER GNUIT_BROWSER
+
+#################### helper functions ####################
+
+cleanup()
+{
+    if test -n "$tempfile" && test -f "$tempfile"; then
+	rm -f "$tempfile"
+    fi
+}
+
+doexit()
+{
+    ret=$1
+    echo "$msg"; read key;
+    cleanup
+    exit $ret
+}
+
+exitifdone()
+{
+    if test $? -eq 0; then
+	doexit
+    fi
+}
+
+whichlist()
+{
+    while test $# -gt 0
+    do
+	gitwhich "$1"
+	if test $? -ne 0; then
+	    return 1
+	fi
+	shift
+    done
+    return 0
+}
+
+TRY_NORMAL=0
+TRY_PAGED=1
+TRY_X=2
+
+dotry()
+{
+    type=$1
+    cmd="$2"
+    shift
+    shift
+    if whichlist "$cmd"; then
+	case $type in
+	    $TRY_NORMAL)	"$cmd" "$@" ;;
+	    $TRY_PAGED)		"$cmd" "$@"  2>&1 | "$GNUIT_PAGER" ;;
+	    $TRY_X)		("$cmd" "$@"  >/dev/null 2>&1 ; cleanup ) &
+				exit $? ;;
+	    *) 			echo "$name: INTERNAL ERROR: unknown type ($type)" ;;
+	esac
+	doexit
+    fi
+}
+
+try()
+{
+    dotry $TRY_NORMAL "$@"
+}
+
+trypaged()
+{
+    dotry $TRY_PAGED "$@"
+}
+
+tryx()
+{
+    if test -n "$DISPLAY"; then
+	dotry $TRY_X "$@"
+    fi
+}
+
+trymac()
+{
+    # like tryx but don't check $DISPLAY
+    dotry $TRY_X "$@"
+}
+
+totempfile()
+{
+    tmpfile="${TMPDIR:-/tmp}/gitaction.$$"
+    if whichlist "$1"; then
+	"$@" > "$tmpfile"
+	if test $? -eq 0; then
+	    echo "$tmpfile"
+	else
+	    rm -f  "$tmpfile"
+	fi
+    fi
+}
+
+tryvideo()
+{
+    for prog in gmplayer gxine xine vlc totem totem-xine mplayer;
+    do
+	tryx "$prog" -- "$1"
+    done
+    tryx xfmedia               "$1"
+    tryx xanim                 "$1"
+    tryx aktion                "$1"
+    try  mplayer -vo svga   -- "$1"
+    try  vlc -I rc -V caca  -- "$1"
+    try  aaxine             -- "$1"
+}
+
+tryaudio()
+{
+    for prog in audacious xmms rhythmbox bmp-play-files-2.0 \
+        	bmp-play-files esdplay herrie kwave;
+    do
+	tryx "$prog" -- "$1"
+    done
+    tryx x11amp            -- "$1"
+    tryx bmpx -f           -- "$1"
+    tryx bmp2 -f           -- "$1"
+    tryx bmp  -f           -- "$1"
+    tryx noatun --nofork   -- "$1"
+    try  alsaplayer        -- "$1"
+    try  play              -- "$1"
+    try  amp                  "$1"
+}
+
+trybrowse()
+{
+    if test "$GNUIT_BROWSER"; then
+	try "$GNUIT_BROWSER" "$1"
+    fi
+    try  lynx                  "$1"
+    try  w3m                   "$1"
+    try  elinks                "$1"
+    tryx firefox               "$1"
+    tryx iceweasel             "$1"
+    tryx seamonkey             "$1"
+    tryx iceape             -- "$1"
+    tryx galeon             -- "$1"
+    tryx kfmclient openURL  -- "$1"
+    tryx konqueror          -- "$1"
+    try  sensible-browser      "$1"
+    try  safari                "$1"
+}
+
+trypgp()
+{
+    try  pgp   --              "$1"
+    try  pgp5  --              "$1"
+    try  pgp5i --              "$1"
+    try  gpgv  --              "$1"
+}
+
+tryoffice()
+{
+    tryx openoffice         -- "$1"
+    tryx soffice            -- "$1"
+    tryx abiword            -- "$1"
+    tryx AbiWord            -- "$1"
+    tryx kword              -- "$1"
+}
+
+#################### Main logic ####################
+
+if test "$#" -ne 2; then
+    echo "$name: GIT internal script" >&2
+    doexit 1
+fi
+
+if test ! -d "$1"; then
+    echo "$name: $1 is not a directory"
+    doexit 1
+fi
+
+if test ! -f "$1/$2"; then
+    echo "$name: file $1/$2 does not exist"
+    doexit 1
+fi
+
+if test -f .gitaction; then
+    ./.gitaction "$1" "$2"
+    exitifdone
+fi
+
+if test -f $HOME/.gitaction; then
+    $HOME/.gitaction "$1" "$2"
+    exitifdone
+fi
+
+file="$1/$2"
+
+istext=0
+if whichlist file; then
+    file "$file" |grep -q '.*:.*text'
+    if test $? -eq 0; then
+	istext=1
+    fi
+fi
+
+lcfile="$(echo "$file"|tr [:upper:] [:lower:])"
+
+# Handle listing compressed archives first, to avoid decompressing
+# them to disk just to list them
+
+case "$lcfile" in
+    *.tar.gz|*.pkg|*.t[arg]z) if whichlist gunzip tar; then
+				  gunzip  -c -- "$file" | tar tvf -    | "$GNUIT_PAGER"
+				  doexit
+			      fi ;;
+    *.tar.bz2|*.tbz)          if whichlist bunzip2 tar; then
+				  bunzip2 -c -- "$file" | tar tvf -    | "$GNUIT_PAGER"
+				  doexit
+			      fi ;;
+    *.cpio.gz)                if whichlist gunzip cpio; then
+				  gunzip  -c -- "$file" | cpio -t 2>&1 | "$GNUIT_PAGER"
+				  doexit
+			      fi ;;
+    *.cpio.bz2)               if whichlist bunzip2 cpio; then
+				  bunzip2 -c -- "$file" | cpio -t 2>&1 | "$GNUIT_PAGER"
+				  doexit
+			      fi ;;
+esac
+
+lcbase="$(echo $lcfile |sed -e 's/\(.*\)\..*/\1/')"
+
+tempfile=""
+case "$lcfile" in
+    *.gz)  	tempfile="$(totempfile gunzip -c             -- "$file")" ;;
+    *.bz)  	tempfile="$(totempfile bunzip -c                "$file")" ;;
+    *.bz2) 	tempfile="$(totempfile bzcat                 -- "$file")" ;;
+    *.z)   	tempfile="$(totempfile uncompress -c            "$file")" ;;
+    *.uu|*.uue)	tempfile="$(totempfile uudecode -o /dev/stdout  "$file")" ;;
+esac
+
+if test -n "$tempfile"; then
+    file="$tempfile"
+    lcfile="$lcbase"
+fi
+
+# don't run open(1) on text files
+if test $istext -eq 0 ; then
+    if test `uname -s` = "Darwin"; then
+        # Macos: don't run open(1) on archives, it uncompresses them
+	case "$lcfile" in
+	    *.7z|*.arj|*.cpio|*.rar|*.tar|*.zip|*.zoo) ;;
+	    *)   dotry $TRY_X open "$file" ;;
+	esac
+    elif whichlist xdg-open; then
+	tryx xdg-open "$file"
+    elif [ -n "$GNOME_DESKTOP_SESSION_ID" ]; then
+	tryx gnome-open "$file"
+    elif [ "$KDE_FULL_SESSION" = true ]; then
+	tryx kfmclient exec  "$file"
+    elif whichlist xprop; then
+	# xfce
+	if xprop -root _DT_SAVE_MODE | grep ' = \"xfce4\"$' >/dev/null 2>&1; then
+	    tryx exo-open "$file"
+	fi
+    fi
+fi
+
+case "$lcfile" in
+*.info)		try      info --file    -- "$file" ;;
+*.aiff|*.aifc)	tryaudio                   "$file" ;;
+*.a|*.sa)	trypaged ar -tv            "$file" ;;
+*.cpio)		trypaged cpio -t -F        "$file" ;;
+*.db)		trypaged db_dump        -- "$file" ;;
+*.dia)		tryx     dia            -- "$file" ;;
+*.dot)		tryx     dotty             "$file" ;;
+*.dxf)		tryx     qcad           -- "$file" ;;
+*.fig)		tryx     xfig              "$file" ;;
+*.gl)		tryx     xgrasp            "$file" ;;
+*.gnumeric)	tryx     gnumeric       -- "$file" ;;
+*.jar)		trypaged jar tvf           "$file" ;;
+*.lha|*.lzh)	trypaged lha -v            "$file" ;;
+*.mgp)		tryx     mgp -S         -- "$file" ;;
+*.mov)		tryvideo                   "$file" ;;
+*.ms)		trypaged nroff -ms         "$file" ;;
+*.oleo)		try      oleo           -- "$file" ;;
+*.po)		tryx     kbabel         -- "$file" ;;
+*.pod)		trypaged pod2text       -- "$file" ;;
+*.rpm)		trypaged rpm -qilRsp    -- "$file" ;;
+*.sqlite)	trypaged sqlite            "$file" .dump ;;
+*.tar|*.cbt)	trypaged tar tvf           "$file" ;;
+*.torrent)	trypaged btshowmetainfo    "$file" ;;
+*.wma | *.gsm)	tryaudio                   "$file" ;;
+*.wrl)		tryx     vrweb             "$file" ;;
+*.zoo)		trypaged zoo -list         "$file" ;;
+inbox|outbox)	try xemacs              -- "$file" ;;
+*.voc)		(vplay "$file" > /dev/null 2>&1 ; cleanup ) & exit 0 ;;
+*.au)		(cat "$file" > /dev/audio 2> /dev/null ; cleanup ) & exit 0 ;;
+*.class)	trypaged javap -c -s -l -verbose "$(basename "$file" .class)" ;;
+
+*.rar|*.cbr)	trypaged unrar l        -- "$file"
+		trypaged rar   l        -- "$file" ;;
+
+*.url)		url="$(grep '^URL=' "$file" |tr -d '\015'|sed -e 's/^URL=//')"
+		if test -n "$url"; then
+		    trybrowse  "$url"
+		fi ;;
+
+*.html|*.htm)	trybrowse                  "$file"
+		trypaged   html2text       "$file"  ;;
+
+*.pdf)		tryx evince             -- "$file"
+		tryx epdfview           -- "$file"
+		tryx gv                    "$file"
+		tryx kpdf               -- "$file"
+		tryx acroread              "$file"
+		tryx xpdf               -- "$file"
+		trypaged pstotext          "$file" ;;
+
+*.ps | *.eps)	tryx evince             -- "$file"
+		tryx gv                    "$file"
+		tryx kghostview         -- "$file"
+		tryx ggv                -- "$file"
+		tryx ghostview             "$file"
+		tryx karbon             -- "$file"
+		try  fbgs                  "$file"
+		try  gs                 -- "$file"
+		trypaged pstotext          "$file" ;;
+
+*.dvi)		tryx evince             -- "$file"
+		tryx kdvi               -- "$file"
+		tryx xdvi                  "$file" ;;
+
+*.dbf)		tryoffice                  "$file"
+		trypaged dbview         -- "$file" ;;
+
+*.123 | *.602 | *.doc |\
+*.wri | *.ot  | *.mml | *.ppt |\
+*.wb2 | *.wp  | *.wps | *.xls |\
+*.xl[sct]  | *.wp[5ds] | *.doc[mx] |\
+*.dot[mx] | *.od[bcfgmpst] | *.ot[ghpst] |\
+*.pot[mx] | *.pps[mx]  | *.ppt[mx] |\
+*.sd[abcdfsw] | *.sg[lk] | *.st[cdiw] |\
+*.sx[cdgimw] | *.xls[mx] |\
+*.xlt[mx])	tryoffice                  "$file" ;;
+
+*.rtf)		tryoffice                  "$file"
+		tryx Ted                   "$file"
+		trypaged unrtf --text      "$file" ;;
+
+*.lyx)		tryx klyx                  "$file"
+		tryx lyx                   "$file" ;;
+
+*.gif | *.jpg | *.jpeg |\
+*.tga | *.bmp | *.ppm |\
+*.pnm | *.pgm | *.pbm |\
+*.tif | *.tiff | *.bm |\
+*.xbm | *.xpm | *.ras |\
+*.rgb | *.png | *.fts |\
+*.pam | *.ico)	for prog in xzgv kview display gimv feh krita qiv gpe-gallery;
+		do
+		    tryx "$prog"        -- "$file"
+		done
+		tryx xli                   "$file"
+		tryx xloadimage            "$file"
+		tryx gimp               -- "$file"
+		tryx xv                    "$file"
+		tryx gm display            "$file"
+		try  zgv                -- "$file"
+		try  fbi                   "$file"
+		tryx ee                    "$file"
+		try  cacaview           -- "$file" ;;
+
+*.mp[23])	tryaudio                   "$file"
+		tryx mp3blaster         -- "$file"
+		try  mpg123 -v          -- "$file"
+		try  mpg321 -v          -- "$file" ;;
+
+*.ogg)		tryaudio                   "$file"
+		try  ogg123 -v          -- "$file" ;;
+
+*.flac)		tryaudio                   "$file"
+		try  flac123            -- "$file" ;;
+
+*.asx | *.m3u |\
+*.pls)		tryaudio                   "$file"
+		try mplayer -playlist   -- "$file" ;;
+
+*.r[avm]|*.ram)	tryx realplay           -- "$file"
+		tryx rvplayer              "$file"
+		tryx raplayer              "$file"
+		tryvideo                   "$file" ;;
+
+*.wav)		for prog in audacious xmms kwave;
+		do
+		    tryx "$prog"        -- "$file"
+		done
+		try wavplay             -- "$file"
+		try play                -- "$file" ;;
+
+*.rmd)		if whichlist rmdtopvf pvftobasic; then
+		    (rmdtopvf -8 "$file" 2> /dev/null |
+		     pvftobasic > /dev/audio 2> /dev/null ; cleanup ) &
+		     exit 0
+		fi;;
+
+*.pvf)		if whichlist pvftobasic; then
+		    (pvftobasic > /dev/audio 2> /dev/null ; cleaup ) &
+		    exit 0
+		fi;;
+*.midi |*.mid)
+		tryx timidity -ia       -- "$file"
+		try  timidity -id       -- "$file" ;;
+
+*.sf2 | *.sfx | *.sbk)
+		tryx swami              -- "$file" ;;
+
+*.mod | *.mod.lha | *.mod.lzh | *.mod.zip |\
+*.nst | *.nst.lha | *.nst.lzh | *.nst.zip |\
+*.stx | *.stx.lha | *.stx.lzh | *.stx.zip |\
+*.ptm | *.ptm.lha | *.ptm.lzh | *.ptm.zip |\
+*.okt | *.okt.lha | *.okt.lzh | *.okt.zip |\
+*.wow | *.wow.lha | *.wow.lzh | *.wow.zip |\
+*.mdl | *.mdl.lha | *.mdl.lzh | *.mdl.zip |\
+*.alm | *.alm.lha | *.alm.lzh | *.alm.zip |\
+*.669 | *.669.lha | *.669.lzh | *.669.zip |\
+*.dsm | *.dsm.lha | *.dsm.lzh | *.dsm.zip |\
+*.far | *.far.lha | *.far.lzh | *.far.zip |\
+*.med | *.med.lha | *.med.lzh | *.med.zip |\
+*.mtm | *.mtm.lha | *.mtm.lzh | *.mtm.zip |\
+*.ult | *.ult.lha | *.ult.lzh | *.ult.zip |\
+*.it | *.it.lha | *.it.lzh | *.it.zip |\
+*.xm | *.xm.lha | *.xm.lzh | *.xm.zip |\
+*.s[3t]m | *.s[3t]m.lha| *.s[3t]m.lzh| *.s[3t]m.zip)
+		tryx soundtracker       -- "$file"
+		try  mikmod -t          -- "$file"
+		try  xmp                -- "$file" ;;
+
+*.zip|*.cbz)	trypaged unzip -l       -- "$file" ;;
+
+*.asf | *.wm[vf] |\
+*.avi)		tryvideo                   "$file"
+		tryx aviplay	           "$file" ;;
+
+*.mp[4g]|*.mpeg) tryvideo                  "$file"
+		 tryx gtv               -- "$file"
+		 tryx plaympeg          -- "$file"
+		 try mpeg_vga              "$file" ;;
+
+*.djvu)		tryx djview4            -- "$file"
+		tryx djview3               "$file"
+		tryx djview                "$file" ;;
+
+*.chm)		tryx gnochm             -- "$file"
+		tryx kchmviewer         -- "$file"
+		tryx chmsee             -- "$file"
+		tryx xchm                  "$file" ;;
+
+utmp)		trypaged w ;;
+
+wtmp | wtmp.[0-9]*)
+		trypaged last -f           "$file" ;;
+
+*.afm | *.bdf | *.cff | *.cid |\
+*.mmm | *.ocf | *.ofm | *.otf |\
+*.pcf | *.pfa | *.pfb | *.pfm |\
+*.ttf | *.font)	tryx gfontview          -- "$file" ;;
+
+*.xcf | *.fit)	tryx gimp               -- "$file"
+		tryx xcfview               "$file" ;;
+
+
+*.fl[icv])	tryvideo                   "$file"
+		try flip                   "$file" ;;
+
+*.swf)		tryx swfdec-player      -- "$file"
+		tryx gnash              -- "$file"
+		tryx swfplayer          -- "$file"
+		tryx firefox               "$file"
+		tryx iceweasel             "$file"
+		try  safari                "$file" ;;
+
+*.svg)		tryx gthumb             -- "$file"
+		tryx svgdisplay         -- "$file"
+		tryx display            -- "$file"
+		tryx gm display            "$file"
+		tryx firefox               "$file"
+		tryx iceweasel             "$file"
+		tryx inkscape           -- "$file"
+		tryx sodipodi           -- "$file"
+		tryx gimp               -- "$file" ;;
+
+*.g3)		tryx     kfax              "$file"
+		tryx     viewfax        -- "$file"
+		tryx     xli               "$file"
+		try      cacaview       -- "$file" ;;
+
+*.so | *.so.[0-9]* |\
+*.o | *.lo)	trypaged objdump --syms --all-headers -- "$file" ;;
+
+[sr]mail)	try emacs                  "$file"
+		try xemacs              -- "$file" ;;
+
+*.arj |\
+*.a[0-9][1-9])	trypaged unarj l        -- "$file" ;;
+
+*.7z)		trypaged 7z  l          -- "$file"
+		trypaged 7za l          -- "$file" ;;
+
+*.deb)		if whichlist dpkg; then
+		    (echo "$file"; dpkg --info -- "$file";
+		     echo; dpkg --contents -- "$file") | "$GNUIT_PAGER"
+		    doexit
+		fi;;
+
+*.tnef)		tryx     ktnef         --  "$file"
+		trypaged tnef -t -f    --  "$file" ;;
+
+*ring.gpg)	try      gpg --list-keys --no-default-keyring --keyring "$file"
+		try      gpgv          --  "$file" ;;
+
+*gpg)		try      gpg --verify  --  "$file"
+		try      gpgv          --  "$file" ;;
+
+*ring.pgp)	trypaged pgpk    --        "$file"
+		trypaged pgp -kv --        "$file"
+		trypgp                     "$file" ;;
+
+*pgp)		try     pgpv     --        "$file"
+		trypgp                     "$file" ;;
+
+*.[1-9n] | *.[1-9n][xm] | *.[1357]ssl | *.[137]posix |\
+*.[1-9]fun | *.[1-9n]freebsd | *.1emacs[0-9][0-9] |\
+*.1[aelmpqx] | *.3[ow] | *.5[ag] | *.8[aclp] |\
+*.[78]cdebconf | *.[158]cn | *.[35]el | *.[135]gv |\
+*.[135]nas | *.[13]pvm | *.[35]snmp | *.[1357]wn | \
+*.[37]tcl | *.[1-9]x | *.1gmt | *.1grass | *.1olvwm | \
+*.1sr | *.1viewos | *.3abz | *.3alleg | *.3aolserver |\
+*.3ber | *.3blt | *.3bobcat | *.3caca | *.3curses |\
+*.3debug | *.3diet | *.3el | *.3erl | *.3f90 |\
+*.3form | *.3gdbm | *.3gle | *.3itcl | *.3itk |\
+*.3iv | *.3iwidget | *.3iwidgets | *.3kaya |\
+*.3m17n | *.3menu | *.3ncp | *.3ncurses | *.3ossp |\
+*.3perl | *.3plplot | *.3pm | *.3pub | *.3qt |\
+*.3readline | *.3ruby | *.3tclx | *.3tiff | *.3tix |\
+*.3tk | *.3trf | *.3xp | *.5el | *.5heimdal | *.7cdebconf |\
+*.7g | *.7wn | *.8cdebconf | *.8mailutils | *.8postfix |\
+*.8tp | *.man)	trypaged nroff -man "$file" ;;
+
+esac
+
+if test -x "$file"; then
+    if test `uname` = "Linux"; then
+	FILE_OPTIONS="-L"
+    fi
+    file $FILE_OPTIONS "$file" | grep "ELF" > /dev/null 2>&1
+    if test $? -eq 0; then
+	file $FILE_OPTIONS "$file"
+	ldd "$file"
+	doexit
+    fi
+fi
+FILEOUT="$(file --mime "$file" 2>/dev/null)"
+if test $? -eq 0; then
+    MIMETYPE="$(echo "$FILEOUT" | sed 's/.*: *\([-a-zA-Z0-9/]*\).*/\1/;')"
+fi
+if test -n "$MIMETYPE" && \
+   test "$MIMETYPE" != "application/octet-stream" && \
+   test $istext -ne 1; then
+    try see -- "${MIMETYPE}:${file}"
+    try metamail -d -b -c "$MIMETYPE" "$file"
+fi
+try "$GNUIT_PAGER" "$file"
+try less        -- "$file"
+try more           "$file"
+try cat            "$file"
+
+cleanup
+exit 1

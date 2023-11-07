@@ -1,0 +1,5 @@
+#define PRODUCT "@PRODUCT@"
+#define PACKAGE "@PACKAGE@"
+#define VERSION "@VERSION@"
+#define HOST "@HOST@"
+#define PREFIX "@prefix@"

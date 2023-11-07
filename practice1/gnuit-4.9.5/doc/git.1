@@ -1,0 +1,57 @@
+.\" +----------
+.\" |
+.\" |			       git.transition man page
+.\" |
+.\" |	       Copyright 1993-2008 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.TH git.transition 1
+.SH NAME
+git.transition \- GNU Interactive Tools \- git transition script
+.SH SYNTAX
+.I git [arguments to gitfm]
+
+.SH DESCRIPTION
+
+The filemanager with GNU Interactive Tools (gnuit) is now called
+.I gitfm
+
+git.transition is a very small script that replaces /usr/bin/git.
+The script warns the user of the rename, and then runs gitfm(1),
+passing any supplied arguments.
+
+git was renamed to gitfm to avoid confusion with Linus Torvalds'
+content tracker, also called git.
+
+.SH DEBIAN
+
+If you wish to complete the transition early, install git-core
+and (as root) use:
+
+ update-alternatives \-\-config git
+
+.SH SEE ALSO
+gitfm(1)
+
+git(7) (part of the git-core package on Debian, or see http://git.or.cz/)
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)

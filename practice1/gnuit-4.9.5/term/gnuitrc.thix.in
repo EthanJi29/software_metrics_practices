@@ -1,0 +1,316 @@
+###############################################################################
+###									    ###
+###	        GNU Interactive Tools @VERSION@ configuration file		    ###
+###    Copyright (c) 1993-2000, 2006-2007 Free Software Foundation, Inc.    ###
+###                                                                         ###
+###                  This file is part of gnuit.                            ###
+###                                                                         ###
+###  gnuit is free software: you can redistribute it and/or modify it       ###
+###  under the terms of the GNU General Public License as published         ###
+###  by the Free Software Foundation, either version 3 of the               ###
+###  License, or (at your option) any later version.                        ###
+###                                                                         ###
+###  gnuit is distributed in the hope that it will be useful, but           ###
+###  WITHOUT ANY WARRANTY; without even the implied warranty of             ###
+###  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          ###
+###  GNU General Public License for more details.                           ###
+###                                                                         ###
+###  You should have received a copy of the GNU General Public              ###
+###  License along with this program. If not, see                           ###
+###  http://www.gnu.org/licenses/.                                          ###
+###									    ###
+###############################################################################
+
+
+###
+### Thix virtual terminal configuration file.
+###
+
+
+
+###
+### If your terminal supports the standard ANSI color sequences, set
+### AnsiColors to ON ([GITxxx-Color] descriptions will be used).  If it
+### doesn't, AnsiColors should be OFF ([GITxxx-Monochrome] descriptions
+### will be used instead).
+###
+
+
+[Setup]
+AnsiColors		= ON	# empty means OFF
+UseLastScreenChar	= OFF 	# use the last character on the screen
+StartupScrollStep	=	# empty means half the number of lines
+
+
+###
+### WARNING: empty lines are considered to be end of sections!
+###
+
+[GITFM-Setup]
+StartupFileDisplayMode	= Size	# OwnerGroup, DateTime, Size, AbbrevSize, Mode or FullName
+StartupFileSortMethod	= Name	# Name, Extension, Size, Date, Mode, OwnerId, GroupId, OwnerName or GroupName
+MaxUnscaledDigits       = 9
+GroupDigits             = ON
+ConfirmOnExit		=	# empty means OFF
+HistoryFile		= ~/.githistory
+InfoDisplay		= ON
+LeadingDotMatch		= ON	# OFF means that leading '.' is matched only explicitly
+TypeSensitivity		= ON	# Automatically set to OFF when AnsiColors is OFF
+NormalModeHelp		= F3 View  F4 Edit  F5 Copy  F6 Move  F7 MkDir  F8 Del  F10 Exit ^CH Ln ^CS SymLn
+CommandLineModeHelp	= ^G-STOP ^B/^F-MOVE ^P/^N-HISTORY ^A-BOL ^E-EOL ^O-RESTORE ^X^C-EXIT ^Z-SUSPEND
+#NormalModeHelp		= System: \s   Host: \h   Machine: \m   Date: \d
+#CommandLineModeHelp	= System: \s   Host: \h   Machine: \m   Date: \d
+
+
+[GITPS-Setup]
+Help = Arrows-MOVE  Enter-SIGNALS  ^L-REFRESH  ^X^C/F10-QUIT  ^Xk-KILL
+RefreshAfterKill        = ON # Refresh process list after killing processes
+
+
+[GITVIEW-Setup]
+Help = Arrows/PgUp/PgDown/Home/End-MOVE ^L-REFRESH ^X^C/F10-QUIT 0-9/a-f/A-F-OFFSET
+
+
+###
+### To ignore a section just comment its name
+###
+
+[GITFM-FTI]
+
+
+################################################
+### Thix virtual terminal with color monitor ###
+################################################
+
+
+[GITFM-Color]
+TitleForeground			= CYAN
+TitleBackground			= BLUE
+TitleBrightness			= ON
+UserName			= YELLOW
+TtyName				= YELLOW
+ClockForeground			= BLACK
+ClockBackground			= CYAN
+ClockBrightness			= OFF
+PanelFrame 			= WHITE
+PanelBackground			= BLUE
+PanelThumbForeground		= BLACK
+PanelThumbBackground		= WHITE
+PanelThumbBrightness		= OFF
+PanelSelectedFile		= YELLOW
+PanelSelectedFileBrightness	= ON
+PanelNotSelectedFile		= WHITE
+PanelNotSelectedFileBrightness	= ON
+PanelCurrentSelectedFile	= YELLOW
+PanelCurrentNotSelectedFile	= WHITE
+PanelCurrentFile		= CYAN
+PanelPath			= RED
+PanelPathBrightness		= OFF
+PanelDeviceFreeSpace		= RED
+PanelDeviceFreeSpaceBrightness	= OFF
+PanelFileInfo			= RED
+PanelFileInfoBrightness		= OFF
+PanelFilesInfo			= BLACK
+PanelFilesInfoBrightness	= OFF
+InputLineForeground		= WHITE
+InputLineBackground		= BLACK
+InputLineBrightness		= ON
+InputLineErrorForeground	= WHITE
+InputLineErrorBackground	= RED
+InputLineErrorBrightness	= ON
+StatusBarForeground		= BLACK
+StatusBarBackground		= CYAN
+StatusBarBrightness		= OFF
+StatusBarWarningForeground	= BLACK
+StatusBarWarningBackground	= WHITE
+StatusBarWarningBrightness	= OFF
+StatusBarErrorForeground	= WHITE
+StatusBarErrorBackground	= RED
+StatusBarErrorBrightness	= ON
+
+
+[GITPS-Color]
+TitleForeground			= CYAN
+TitleBackground			= BLUE
+TitleBrightness			= ON
+HeaderForeground		= CYAN
+HeaderBackground		= RED
+HeaderBrightness		= ON
+ScreenForeground		= BLACK
+ScreenBackground		= CYAN
+ScreenBrightness		= OFF
+StatusForeground		= CYAN
+StatusBackground		= BLUE
+StatusBrightness		= ON
+
+
+[GITVIEW-Color]
+TitleForeground			= CYAN
+TitleBackground			= BLUE
+TitleBrightness			= ON
+HeaderForeground		= CYAN
+HeaderBackground		= RED
+HeaderBrightness		= ON
+ScreenForeground		= BLACK
+ScreenBackground		= CYAN
+ScreenBrightness		= OFF
+StatusForeground		= CYAN
+StatusBackground		= BLUE
+StatusBrightness		= ON
+
+
+################################################################
+### Thix virtual terminal with monochrome monitor or b/w tty ###
+################################################################
+
+
+[GITFM-Monochrome]
+TitleForeground			= WHITE
+TitleBackground			= BLACK
+TitleBrightness			= ON
+UserName			= WHITE
+TtyName				= WHITE
+ClockForeground			= BLACK
+ClockBackground			= WHITE
+ClockBrightness			= OFF
+PanelFrame 			= WHITE
+PanelBackground 		= BLACK
+PanelThumbForeground		= BLACK
+PanelThumbBackground		= WHITE
+PanelThumbBrightness		= OFF
+PanelSelectedFile 		= WHITE
+PanelSelectedFileBrightness	= ON
+PanelNotSelectedFile		= WHITE
+PanelNotSelectedFileBrightness	= OFF
+PanelCurrentSelectedFile	= WHITE
+PanelCurrentNotSelectedFile	= BLACK
+PanelCurrentFile		= WHITE
+PanelPath 			= BLACK
+PanelPathBrightness 		= OFF
+PanelDeviceFreeSpace        	= BLACK
+PanelDeviceFreeSpaceBrightness	= OFF
+PanelFileInfo 			= BLACK
+PanelFileInfoBrightness 	= OFF
+PanelFilesInfo			= BLACK
+PanelFilesInfoBrightness	= OFF
+InputLineForeground		= WHITE
+InputLineBackground		= BLACK
+InputLineBrightness		= ON
+InputLineErrorForeground	= WHITE
+InputLineErrorBackground	= BLACK
+InputLineErrorBrightness	= ON
+StatusBarForeground 		= BLACK
+StatusBarBackground 		= WHITE
+StatusBarBrightness 		= OFF
+StatusBarWarningForeground 	= BLACK
+StatusBarWarningBackground 	= WHITE
+StatusBarWarningBrightness 	= OFF
+StatusBarErrorForeground 	= BLACK
+StatusBarErrorBackground 	= WHITE
+StatusBarErrorBrightness 	= OFF
+
+
+[GITPS-Monochrome]
+TitleForeground			= BLACK
+TitleBackground			= WHITE
+TitleBrightness			= OFF
+HeaderForeground		= WHITE
+HeaderBackground		= BLACK
+HeaderBrightness		= ON
+ScreenForeground		= WHITE
+ScreenBackground		= BLACK
+ScreenBrightness		= OFF
+StatusForeground		= BLACK
+StatusBackground		= WHITE
+StatusBrightness		= OFF
+
+
+[GITVIEW-Monochrome]
+TitleForeground			= BLACK
+TitleBackground			= WHITE
+TitleBrightness			= OFF
+HeaderForeground		= WHITE
+HeaderBackground		= BLACK
+HeaderBrightness		= ON
+ScreenForeground		= WHITE
+ScreenBackground		= BLACK
+ScreenBrightness		= OFF
+StatusForeground		= BLACK
+StatusBackground		= WHITE
+StatusBrightness		= OFF
+
+
+###
+### COMMAND FORMAT:
+### key = command name; formatted command; new dir; save screen; pause; hide
+###
+### DEFAULTS:
+### save screen = y
+### pause       = n
+### hide        = n
+###
+### PLEASE READ THE INFO DOCUMENTATION FOR DETAILS
+### BRIEF:
+###
+### 	FORMAT SPECIFIERS:
+### 	- %s{question,default_answer}
+###	- %?{confirmation}
+###
+### 	- %f file (not directory)
+### 	- %d directory (not file)
+### 	- %l symbolic link
+###	- %t fifo
+###	- %z socket
+### 	- %a any type of directory entry (file, directory, link, fifo, socket)
+### 	- %m current entry mode
+### 	- %g current entry group
+### 	- %o current entry owner
+###	- %p current panel path
+###	- %b current panel directory name
+###	- %i current panel selected or current entry
+###
+### 	**** For the other panel: *****
+###
+### 	- %F file (not directory)
+###	- %D directory (not file)
+### 	- %L symbolic link
+###	- %T fifo
+###	- %Z socket
+### 	- %A any type of directory entry (file, directory, link, fifo, socket)
+### 	- %M current entry mode
+### 	- %G current entry group
+### 	- %O current entry owner
+###	- %P the other panel path
+###	- %B the other panel directory name
+###	- %I the other panel selected or current entry
+###
+### For faster startup, try to keep this entries sorted alphabetically,
+### at least locally.  The order is given by the key sequence.
+###
+
+
+###
+### Key sequences starting with characters between ' ' and '~' are IGNORED!
+###
+
+[GITFM-Keys]
+^[[21~ 	    = exit					# F10
+^[@k	    = GITPS; gitps;;n				# F11
+^[@l 	    = READ-MAIL; $GNUIT_RMAIL;;n			# F12
+
+
+###
+### Only key sequences starting with characters between ' ' and '~' are
+### ALLOWED.
+###
+
+[GITPS-Keys]
+^[[21~	    = exit					# F10
+
+
+###
+### Key sequences starting with characters between ' ' and '~' are IGNORED!
+###
+
+[GITVIEW-Keys]
+^[[21~	    = exit					# F10

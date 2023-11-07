@@ -1,0 +1,91 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" +----------
+.\" |
+.\" |			  GITINTERNAL man page
+.\" |
+.\" |	      Copyright 1993-1999,2006-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH GITINTERNAL 1 "Sep 30, 2007"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+gitwhich, gitmkdirs, gitxgrep \- Helper programs for gnuit
+.SH SYNOPSIS
+.B gitwhich
+.I file ...
+.br
+.B gitmkdirs
+.I path ...
+.br
+.B gitxgrep
+.I grepcmd args ...
+.SH DESCRIPTION
+This manual page documents briefly the
+.BR gitwhich ", " gitmkdirs " and " gitxgrep
+commands.
+These commands are internal to gnuit and should generally not be run directly.
+.PP
+
+.PP
+.TP
+.BI gitwhich " file ..."
+gitwitch returns with an exit status of 0 if any of its \fBfile\fP arguments
+exist in the PATH, otherwise it returns 1.
+.TP
+.BI gitmkdirs " path ..."
+Creates the directory \fBpath\fP and any required parent directories.
+.TP
+.BI gitxgrep " grepcmd args ..."
+Used as a helper script by \fBgitrgrep\fP(1), \fBgitregrep\fP(1),
+and \fBgitrfgrep\fP(1). Calls \fIgrepcmd\fP, passing \fIargs\fP to it.
+.PP
+.BR gitwhich ", " gitmkdirs " and " gitxgrep
+are part of \fBgnuit\fP, the GNU Interactive Tools.
+
+.SH SEE ALSO
+.BR gitfm (1)
+.PP
+\fBThese tools are documented fully in
+.IR "GNU Interactive Tools" ,
+available via the Info system.
+
+.SH BUGS
+Please send bug reports to:
+.br
+.I gnuit-dev@gnu.org
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)
+

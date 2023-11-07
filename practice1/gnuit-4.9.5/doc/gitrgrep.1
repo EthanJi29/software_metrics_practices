@@ -1,0 +1,58 @@
+.\" +----------
+.\" |
+.\" |			       GITRGREP man page
+.\" |
+.\" |	       Copyright 1993-1999, 2006-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.TH gitrgrep 1
+.SH NAME
+gitrgrep \- GNU Interactive Tools - recursive grep
+.SH SYNTAX
+.I gitrgrep [grep-like options]
+
+.SH DESCRIPTION
+.I gitrgrep
+is a very small script that calls grep recursively. It accepts grep-like
+options/parameters, the only difference being that file specifications
+should be quoted:
+
+	gitrgrep main '*.c'
+
+or
+
+	gitrgrep errno '*.c *.h'
+
+
+.SH BUGS
+
+/bin/sh should support functions in order to run
+.IR gitrgrep .
+Use bash to be sure.
+
+Please send bug reports to
+.I gnuit-dev@gnu.org
+
+.SH SEE ALSO
+gitfm(1) gitps(1) gitview(1) gitkeys(1) gitaction(1) gitmount(1) gitunpack(1)
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)

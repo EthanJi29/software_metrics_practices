@@ -1,0 +1,766 @@
+###############################################################################
+###									    ###
+###	        GNU Interactive Tools @VERSION@ configuration file		    ###
+###     Copyright (c) 1993-2000, 2006-2007 Free Software Foundation, Inc.   ###
+###                                                                         ###
+###                  This file is part of gnuit.                            ###
+###                                                                         ###
+###  gnuit is free software: you can redistribute it and/or modify it       ###
+###  under the terms of the GNU General Public License as published         ###
+###  by the Free Software Foundation, either version 3 of the               ###
+###  License, or (at your option) any later version.                        ###
+###                                                                         ###
+###  gnuit is distributed in the hope that it will be useful, but           ###
+###  WITHOUT ANY WARRANTY; without even the implied warranty of             ###
+###  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          ###
+###  GNU General Public License for more details.                           ###
+###                                                                         ###
+###  You should have received a copy of the GNU General Public              ###
+###  License along with this program. If not, see                           ###
+###  http://www.gnu.org/licenses/.                                          ###
+###                                                                         ###
+###############################################################################
+
+
+###
+### ansi configuration file.
+###
+
+
+###
+### If your terminal supports the standard ANSI color sequences, set
+### AnsiColors to ON ([GITxxx-Color] descriptions will be used).  If it
+### doesn't, AnsiColors should be OFF ([GITxxx-Monochrome] descriptions
+### will be used instead).  Ansi terminals usually support color
+### sequences so AnsiColors is ON here.
+###
+
+
+[Setup]
+AnsiColors		= ON	# empty means OFF
+UseLastScreenChar	= OFF	# use the last character on the screen
+StartupScrollStep	=	# empty means half the number of lines
+
+
+###
+### WARNING: empty lines are considered to be end of sections!
+###
+
+[GITFM-Setup]
+StartupFileDisplayMode	= Size	# OwnerGroup, DateTime, Size, AbbrevSize, Mode or FullName
+StartupFileSortMethod	= Name	# Name, Extension, Size, Date, Mode, OwnerId, GroupId, OwnerName or GroupName
+MaxUnscaledDigits       = 9
+GroupDigits             = ON
+ConfirmOnExit		=	# empty means OFF
+HistoryFile		= ~/.githistory
+InfoDisplay		= ON
+LeadingDotMatch		= ON	# OFF means that leading '.' is matched only explicitly
+TypeSensitivity		= ON	# Automatically set to OFF when AnsiColors is OFF
+NormalModeHelp		= F3 View  F4 Edit  F5 Copy  F6 Move  F7 MkDir  F8 Del  F10 Exit ^CH Ln ^CS SymLn
+CommandLineModeHelp	= ^G-STOP ^B/^F-MOVE ^P/^N-HISTORY ^A-BOL ^E-EOL ^O-RESTORE ^X^C-EXIT ^Z-SUSPEND
+#NormalModeHelp		= System: \s   Host: \h   Machine: \m   Date: \d
+#CommandLineModeHelp	= System: \s   Host: \h   Machine: \m   Date: \d
+
+
+[GITPS-Setup]
+Help = Arrows-MOVE  Enter-SIGNALS  ^L-REFRESH  ^X^C/F10-QUIT  ^Xk-KILL
+RefreshAfterKill        = ON # Refresh process list after killing processes
+
+
+[GITVIEW-Setup]
+Help = Arrows/PgUp/PgDown/Home/End-MOVE ^L-REFRESH ^X^C/F10-QUIT 0-9/a-f/A-F-OFFSET
+
+###
+### To ignore a section just comment its name
+###
+
+###
+### shell-pattern = [foreground]; [background]; [brightness]
+###
+
+[GITFM-FTI]
+*.[chlysp]	   = GREEN;;
+*.[chlysp].[bg]z   = GREEN;;
+*.[chlysp].bz2	   = GREEN;;
+*.[chlysp].Z	   = GREEN;;
+*.cc		   = GREEN;;
+*.cc.[bg]z	   = GREEN;;
+*.cc.bz2	   = GREEN;;
+*.cc.Z		   = GREEN;;
+*.cpp		   = GREEN;;
+*.cpp.[bg]z	   = GREEN;;
+*.cpp.bz2	   = GREEN;;
+*.cpp.Z		   = GREEN;;
+*.c++		   = GREEN;;
+*.c++.[bg]z	   = GREEN;;
+*.c++.bz2	   = GREEN;;
+*.c++.Z		   = GREEN;;
+*.java		   = GREEN;;
+*.java.[bg]z	   = GREEN;;
+*.java.bz2	   = GREEN;;
+*.java.Z	   = GREEN;;
+*.pov		   = GREEN;;
+*.pov.[bg]z	   = GREEN;;
+*.pov.bz2	   = GREEN;;
+*.pov.Z		   = GREEN;;
+*.m4		   = GREEN;;
+*.m4.[bg]z	   = GREEN;;
+*.m4.bz2	   = GREEN;;
+*.m4.Z		   = GREEN;;
+*.pl		   = GREEN;;
+*.pl.[bg]z	   = GREEN;;
+*.pl.bz2	   = GREEN;;
+*.pl.Z		   = GREEN;;
+*.inc		   = GREEN;;
+*.inc.[bg]z	   = GREEN;;
+*.inc.bz2	   = GREEN;;
+*.inc.Z		   = GREEN;;
+*.el		   = GREEN;;
+*.el.[bg]z	   = GREEN;;
+*.el.bz2	   = GREEN;;
+*.el.Z		   = GREEN;;
+*.elc		   = GREEN;;
+*.elc.[bg]z	   = GREEN;;
+*.elc.bz2	   = GREEN;;
+*.elc.Z		   = GREEN;;
+*.py.[bg]z	   = GREEN;;
+*.py.bz2	   = GREEN;;
+*.py.Z		   = GREEN;;
+*.idl		   = GREEN;;
+*.idl.[bg]z	   = GREEN;;
+*.idl.bz2	   = GREEN;;
+*.idl.Z		   = GREEN;;
+*.in		   = GREEN;;
+*.in.[bg]z	   = GREEN;;
+*.in.bz2	   = GREEN;;
+*.in.Z		   = GREEN;;
+*.pas		   = GREEN;;
+*.pas.[bg]z	   = GREEN;;
+*.pas.bz2	   = GREEN;;
+*.pas.Z		   = GREEN;;
+*.pm		   = GREEN;;
+*.pm.[bg]z	   = GREEN;;
+*.pm.bz2	   = GREEN;;
+*.pm.Z		   = GREEN;;
+*,v		   = CYAN;;
+*,v.[bg]z	   = CYAN;;
+*,v.bz2		   = CYAN;;
+*,v.Z		   = CYAN;;
+Makefile	   = CYAN;;
+Makefile.am	   = GREEN;;
+Makefile.*	   = CYAN;;
+*.o		   = CYAN;;
+*.o.[bg]z	   = CYAN;;
+*.o.bz2		   = CYAN;;
+*.o.Z		   = CYAN;;
+*.lo		   = CYAN;;
+*.lo.[bg]z	   = CYAN;;
+*.lo.bz2	   = CYAN;;
+*.lo.Z		   = CYAN;;
+*.la		   = CYAN;;
+*.la.[bg]z	   = CYAN;;
+*.la.bz2	   = CYAN;;
+*.la.Z		   = CYAN;;
+*.class		   = CYAN;;
+*.class.[bg]z	   = CYAN;;
+*.class.bz2	   = CYAN;;
+*.class.Z	   = CYAN;;
+*.a		   = CYAN;;
+*.a.[bg]z	   = CYAN;;
+*.a.bz2		   = CYAN;;
+*.a.Z		   = CYAN;;
+*.sa		   = CYAN;;
+*.sa.*		   = CYAN;;
+*.so		   = CYAN;;
+*.so.[0-9]*	   = CYAN;;
+*.texi		   = WHITE;;
+*.texi.[bg]z	   = WHITE;;
+*.texi.bz2	   = WHITE;;
+*.texi.Z	   = WHITE;;
+*.texinfo	   = WHITE;;
+*.texinfo.[bg]z	   = WHITE;;
+*.texinfo.bz2	   = WHITE;;
+*.texinfo.Z	   = WHITE;;
+*.info*		   = WHITE;;
+*.dir		   = WHITE;;
+*.dir.[bg]z	   = WHITE;;
+*.dir.bz2	   = WHITE;;
+*.dir.Z		   = WHITE;;
+*.man		   = WHITE;;
+*.man.[bg]z	   = WHITE;;
+*.man.bz2	   = WHITE;;
+*.man.Z		   = WHITE;;
+*.ms		   = WHITE;;
+*.ms.[bg]z	   = WHITE;;
+*.ms.bz2	   = WHITE;;
+*.ms.Z		   = WHITE;;
+*.[0-9n]	   = WHITE;;
+*.[0-9n].[bg]z	   = WHITE;;
+*.[0-9n].bz2	   = WHITE;;
+*.[0-9n].Z	   = WHITE;;
+*.[0-9n][xm]	   = WHITE;;
+*.[0-9n][xm].[bg]z = WHITE;;
+*.[0-9n][xm].bz2   = WHITE;;
+*.[0-9n][xm].Z	   = WHITE;;
+*.[0-9n]tk	   = WHITE;;
+*.[0-9n]tk.[bg]z   = WHITE;;
+*.[0-9n]tk.bz2     = WHITE;;
+*.[0-9n]tk.Z	   = WHITE;;
+*.[0-9n]tcl	   = WHITE;;
+*.[0-9n]tcl.[bg]z  = WHITE;;
+*.[0-9n]tcl.bz2    = WHITE;;
+*.[0-9n]tcl.Z	   = WHITE;;
+*.[0-9n]tclx	   = WHITE;;
+*.[0-9n]tclx.[bg]z = WHITE;;
+*.[0-9n]tclx.bz2   = WHITE;;
+*.[0-9n]tclx.Z	   = WHITE;;
+*.[0-9n]itcl	   = WHITE;;
+*.[0-9n]itcl.[bg]z = WHITE;;
+*.[0-9n]itcl.bz2   = WHITE;;
+*.[0-9n]itcl.Z	   = WHITE;;
+*.[0-9n]blt	   = WHITE;;
+*.[0-9n]blt.[bg]z  = WHITE;;
+*.[0-9n]blt.bz2    = WHITE;;
+*.[0-9n]blt.Z	   = WHITE;;
+*.doc		   = WHITE;;
+*.doc.[bg]z	   = WHITE;;
+*.doc.bz2	   = WHITE;;
+*.doc.Z		   = WHITE;;
+*.ppt		   = WHITE;;
+*.ppt.[bg]z	   = WHITE;;
+*.ppt.bz2	   = WHITE;;
+*.ppt.Z		   = WHITE;;
+*.aw		   = WHITE;;
+*.aw.[bg]z	   = WHITE;;
+*.aw.bz2	   = WHITE;;
+*.aw.Z		   = WHITE;;
+*.lyx		   = WHITE;;
+*.lyx.[bg]z	   = WHITE;;
+*.lyx.bz2	   = WHITE;;
+*.lyx.Z		   = WHITE;;
+*.orig		   = WHITE;;
+*.orig.[bg]z	   = WHITE;;
+*.orig.bz2	   = WHITE;;
+*.orig.Z	   = WHITE;;
+*.txt		   = WHITE;;
+*.txt.[bg]z	   = WHITE;;
+*.txt.bz2	   = WHITE;;
+*.txt.Z		   = WHITE;;
+*.text		   = WHITE;;
+*.text.[bg]z	   = WHITE;;
+*.text.bz2	   = WHITE;;
+*.text.Z	   = WHITE;;
+*.log		   = WHITE;;
+*.log.[bg]z	   = WHITE;;
+*.log.bz2	   = WHITE;;
+*.log.Z		   = WHITE;;
+*.aux		   = WHITE;;
+*.aux.[bg]z	   = WHITE;;
+*.aux.bz2	   = WHITE;;
+*.aux.Z		   = WHITE;;
+*.lsm		   = WHITE;;
+*.lsm.[bg]z	   = WHITE;;
+*.lsm.bz2	   = WHITE;;
+*.lsm.Z		   = WHITE;;
+*.tex		   = WHITE;;
+*.tex.[bg]z	   = WHITE;;
+*.tex.bz2	   = WHITE;;
+*.tex.Z		   = WHITE;;
+*.diff		   = WHITE;;
+*.diff.[bg]z	   = WHITE;;
+*.diff.bz2	   = WHITE;;
+*.diff.Z	   = WHITE;;
+*.html		   = WHITE;;
+*.html.[bg]z	   = WHITE;;
+*.html.bz2	   = WHITE;;
+*.html.Z	   = WHITE;;
+*.htm		   = WHITE;;
+*.htm.[bg]z	   = WHITE;;
+*.htm.bz2	   = WHITE;;
+*.htm.Z		   = WHITE;;
+README*		   = WHITE;;
+*.README	   = WHITE;;
+*.README.[bg]z	   = WHITE;;
+*.README.bz2	   = WHITE;;
+*.README.Z	   = WHITE;;
+ChangeLog	   = WHITE;;
+ChangeLog.[bg]z	   = WHITE;;
+ChangeLog.bz2	   = WHITE;;
+ChangeLog.Z	   = WHITE;;
+INSTALL*	   = WHITE;;
+*NEWS		   = WHITE;;
+PLATFORMS	   = WHITE;;
+PROBLEMS	   = WHITE;;
+TODO*		   = WHITE;;
+LSM		   = WHITE;;
+TAGS		   = WHITE;;
+TAGS.		   = WHITE;;
+COPYING		   = WHITE;;
+COPYING.[bg]z	   = WHITE;;
+COPYING.bz2	   = WHITE;;
+COPYING.Z	   = WHITE;;
+[SR]MAIL*	   = WHITE;;
+INBOX*	   	   = WHITE;;
+OUTBOX*	   	   = WHITE;;
+*.pgp		   = CYAN;;
+*.pgp.[bg]z	   = CYAN;;
+*.pgp.bz2	   = CYAN;;
+*.pgp.Z		   = CYAN;;
+*.ps		   = MAGENTA;;
+*.ps.[bg]z	   = MAGENTA;;
+*.ps.bz2	   = MAGENTA;;
+*.ps.Z		   = MAGENTA;;
+*.eps		   = MAGENTA;;
+*.eps.[bg]z	   = MAGENTA;;
+*.eps.bz2	   = MAGENTA;;
+*.eps.Z		   = MAGENTA;;
+*.fig		   = MAGENTA;;
+*.fig.[bg]z	   = MAGENTA;;
+*.fig.bz2	   = MAGENTA;;
+*.fig.Z		   = MAGENTA;;
+*.dvi		   = MAGENTA;;
+*.dvi.[bg]z	   = MAGENTA;;
+*.dvi.bz2	   = MAGENTA;;
+*.dvi.Z		   = MAGENTA;;
+*.pdf		   = MAGENTA;;
+*.pdf.[bg]z	   = MAGENTA;;
+*.pdf.bz2	   = MAGENTA;;
+*.pdf.Z		   = MAGENTA;;
+*.gif		   = MAGENTA;;
+*.gif.[bg]z	   = MAGENTA;;
+*.gif.bz2	   = MAGENTA;;
+*.gif.Z		   = MAGENTA;;
+*.jpg		   = MAGENTA;;
+*.jpg.[bg]z	   = MAGENTA;;
+*.jpg.bz2	   = MAGENTA;;
+*.jpg.Z		   = MAGENTA;;
+*.jpeg		   = MAGENTA;;
+*.jpeg.[bg]z	   = MAGENTA;;
+*.jpeg.bz2	   = MAGENTA;;
+*.jpeg.Z	   = MAGENTA;;
+*.djv		   = MAGENTA;;
+*.djv.[bg]z	   = MAGENTA;;
+*.djv.bz2	   = MAGENTA;;
+*.djv.Z		   = MAGENTA;;
+*.tif		   = MAGENTA;;
+*.tif.[bg]z	   = MAGENTA;;
+*.tif.bz2	   = MAGENTA;;
+*.tif.Z		   = MAGENTA;;
+*.tiff		   = MAGENTA;;
+*.tiff.[bg]z	   = MAGENTA;;
+*.tiff.bz2	   = MAGENTA;;
+*.tiff.Z	   = MAGENTA;;
+*.bmp		   = MAGENTA;;
+*.bmp.[bg]z	   = MAGENTA;;
+*.bmp.bz2	   = MAGENTA;;
+*.bmp.Z		   = MAGENTA;;
+*.png		   = MAGENTA;;
+*.png.[bg]z	   = MAGENTA;;
+*.png.bz2	   = MAGENTA;;
+*.png.Z		   = MAGENTA;;
+*.pnm		   = MAGENTA;;
+*.pnm.[bg]z	   = MAGENTA;;
+*.pnm.bz2	   = MAGENTA;;
+*.pnm.Z		   = MAGENTA;;
+*.ppm		   = MAGENTA;;
+*.ppm.[bg]z	   = MAGENTA;;
+*.ppm.bz2	   = MAGENTA;;
+*.ppm.Z		   = MAGENTA;;
+*.pgm		   = MAGENTA;;
+*.pgm.[bg]z	   = MAGENTA;;
+*.pgm.bz2	   = MAGENTA;;
+*.pgm.Z		   = MAGENTA;;
+*.pbm		   = MAGENTA;;
+*.pbm.[bg]z	   = MAGENTA;;
+*.pbm.bz2	   = MAGENTA;;
+*.pbm.Z		   = MAGENTA;;
+*.xbm		   = MAGENTA;;
+*.xbm.[bg]z	   = MAGENTA;;
+*.xbm.bz2	   = MAGENTA;;
+*.xbm.Z		   = MAGENTA;;
+*.xpm		   = MAGENTA;;
+*.xpm.[bg]z	   = MAGENTA;;
+*.xpm.bz2	   = MAGENTA;;
+*.xpm.Z		   = MAGENTA;;
+*.fit		   = MAGENTA;;
+*.fit.[bg]z	   = MAGENTA;;
+*.fit.bz2	   = MAGENTA;;
+*.fit.Z		   = MAGENTA;;
+*.icon		   = MAGENTA;;
+*.icon.[bg]z	   = MAGENTA;;
+*.icon.bz2	   = MAGENTA;;
+*.icon.Z	   = MAGENTA;;
+*.cursor	   = MAGENTA;;
+*.cursor.[bg]z	   = MAGENTA;;
+*.cursor.bz2	   = MAGENTA;;
+*.cursor.Z	   = MAGENTA;;
+*.ras		   = MAGENTA;;
+*.ras.[bg]z	   = MAGENTA;;
+*.ras.bz2	   = MAGENTA;;
+*.ras.Z		   = MAGENTA;;
+*.tga		   = MAGENTA;;
+*.tga.[bg]z	   = MAGENTA;;
+*.tga.bz2	   = MAGENTA;;
+*.tga.Z		   = MAGENTA;;
+*.xcf		   = MAGENTA;;
+*.xcf.[bg]z	   = MAGENTA;;
+*.xcf.bz2	   = MAGENTA;;
+*.xcf.Z		   = MAGENTA;;
+*.pr		   = MAGENTA;;
+*.pr.[bg]z	   = MAGENTA;;
+*.pr.bz2	   = MAGENTA;;
+*.pr.Z		   = MAGENTA;;
+*.rgb		   = MAGENTA;;
+*.rgb.[bg]z	   = MAGENTA;;
+*.rgb.bz2	   = MAGENTA;;
+*.rgb.Z		   = MAGENTA;;
+*.fts		   = MAGENTA;;
+*.fts.[bg]z	   = MAGENTA;;
+*.fts.bz2	   = MAGENTA;;
+*.fts.Z		   = MAGENTA;;
+*.mov		   = CYAN;;
+*.mov.[bg]z	   = CYAN;;
+*.mov.bz2	   = CYAN;;
+*.mov.Z		   = CYAN;;
+*.mpg		   = CYAN;;
+*.mpg.[bg]z	   = CYAN;;
+*.mpg.bz2	   = CYAN;;
+*.mpg.Z		   = CYAN;;
+*.mpeg		   = CYAN;;
+*.mpeg.[bg]z	   = CYAN;;
+*.mpeg.bz2	   = CYAN;;
+*.mpeg.Z	   = CYAN;;
+*.avi		   = CYAN;;
+*.avi.[bg]z	   = CYAN;;
+*.avi.bz2	   = CYAN;;
+*.avi.Z		   = CYAN;;
+*.fli		   = CYAN;;
+*.fli.[bg]z	   = CYAN;;
+*.fli.bz2	   = CYAN;;
+*.fli.Z		   = CYAN;;
+*.flc		   = CYAN;;
+*.flc.[bg]z	   = CYAN;;
+*.flc.bz2	   = CYAN;;
+*.flc.Z		   = CYAN;;
+*.au		   = CYAN;;
+*.au.[bg]z	   = CYAN;;
+*.au.bz2	   = CYAN;;
+*.au.Z		   = CYAN;;
+*.mp3		   = CYAN;;
+*.mp3.[bg]z	   = CYAN;;
+*.mp3.bz2	   = CYAN;;
+*.mp3.Z		   = CYAN;;
+*.ra		   = CYAN;;
+*.ra.[bg]z	   = CYAN;;
+*.ra.bz2	   = CYAN;;
+*.ra.Z		   = CYAN;;
+*.ram		   = CYAN;;
+*.ram.[bg]z	   = CYAN;;
+*.ram.bz2	   = CYAN;;
+*.ram.Z		   = CYAN;;
+*.mod		   = CYAN;;
+*.mod.[bg]z	   = CYAN;;
+*.mod.bz2	   = CYAN;;
+*.mod.Z		   = CYAN;;
+*.mtm		   = CYAN;;
+*.mtm.[bg]z	   = CYAN;;
+*.mtm.bz2	   = CYAN;;
+*.mtm.Z		   = CYAN;;
+*.xm		   = CYAN;;
+*.xm.[bg]z	   = CYAN;;
+*.xm.bz2	   = CYAN;;
+*.xm.Z		   = CYAN;;
+*.mid		   = CYAN;;
+*.mid.[bg]z	   = CYAN;;
+*.mid.bz2	   = CYAN;;
+*.mid.Z		   = CYAN;;
+*.midi		   = CYAN;;
+*.midi.[bg]z	   = CYAN;;
+*.midi.bz2	   = CYAN;;
+*.midi.Z	   = CYAN;;
+*.s3m		   = CYAN;;
+*.s3m.[bg]z	   = CYAN;;
+*.s3m.bz2	   = CYAN;;
+*.s3m.Z		   = CYAN;;
+*.voc		   = CYAN;;
+*.voc.[bg]z	   = CYAN;;
+*.voc.bz2	   = CYAN;;
+*.voc.Z		   = CYAN;;
+*.aiff		   = CYAN;;
+*.aiff.[bg]z	   = CYAN;;
+*.aiff.bz2	   = CYAN;;
+*.aiff.Z	   = CYAN;;
+*.aifc		   = CYAN;;
+*.aifc.[bg]z	   = CYAN;;
+*.aifc.bz2	   = CYAN;;
+*.aifc.Z	   = CYAN;;
+*.wav		   = CYAN;;
+*.wav.[bg]z	   = CYAN;;
+*.wav.bz2	   = CYAN;;
+*.wav.Z		   = CYAN;;
+*.rmd		   = CYAN;;
+*.rmd.[bg]z	   = CYAN;;
+*.rmd.bz2	   = CYAN;;
+*.rmd.Z		   = CYAN;;
+*.pvf		   = CYAN;;
+*.pvf.[bg]z	   = CYAN;;
+*.pvf.bz2	   = CYAN;;
+*.pvf.Z		   = CYAN;;
+*.tar.[bg]z	   = RED;;
+*.tar.bz2	   = RED;;
+*.tar.Z		   = RED;;
+*.tgZ		   = RED;;
+*.ta[rZ]	   = RED;;
+*.trZ		   = RED;;
+*.[bg]z		   = RED;;
+*.bz2		   = RED;;
+*.Z		   = RED;;
+*.zip		   = RED;;
+*.jar		   = RED;;
+*.arj		   = RED;;
+*.a[0-9][1-9]	   = RED;;
+*.rar		   = RED;;
+*.r[0-9][0-9]	   = RED;;
+*.shar		   = RED;;
+*.uu		   = RED;;
+*.rpm		   = RED;;
+*.deb		   = RED;;
+.*		   = CYAN;;
+
+
+###############################
+### ansi with color monitor ###
+###############################
+
+
+[GITFM-Color]
+TitleForeground			= CYAN
+TitleBackground			= BLACK
+TitleBrightness			= OFF
+UserName			= RED
+TtyName				= RED
+ClockForeground			= BLACK
+ClockBackground			= CYAN
+ClockBrightness			= OFF
+PanelFrame			= WHITE
+PanelBackground			= BLACK
+PanelThumbForeground		= BLACK
+PanelThumbBackground		= WHITE
+PanelThumbBrightness		= OFF
+PanelSelectedFile		= YELLOW
+PanelSelectedFileBrightness	= OFF
+PanelNotSelectedFile		= WHITE
+PanelNotSelectedFileBrightness	= OFF
+PanelCurrentSelectedFile	= YELLOW
+PanelCurrentNotSelectedFile	= WHITE
+PanelCurrentFile		= BLUE
+PanelPath			= RED
+PanelPathBrightness		= OFF
+PanelDeviceFreeSpace		= RED
+PanelDeviceFreeSpaceBrightness	= OFF
+PanelFileInfo			= RED
+PanelFileInfoBrightness		= OFF
+PanelFilesInfo			= BLACK
+PanelFilesInfoBrightness	= OFF
+InputLineForeground		= WHITE
+InputLineBackground		= BLACK
+InputLineBrightness		= OFF
+InputLineErrorForeground	= WHITE
+InputLineErrorBackground	= RED
+InputLineErrorBrightness	= OFF
+StatusBarForeground		= BLACK
+StatusBarBackground		= CYAN
+StatusBarBrightness		= OFF
+StatusBarWarningForeground	= BLACK
+StatusBarWarningBackground	= WHITE
+StatusBarWarningBrightness	= OFF
+StatusBarErrorForeground	= WHITE
+StatusBarErrorBackground	= RED
+StatusBarErrorBrightness	= OFF
+
+
+[GITPS-Color]
+TitleForeground			= CYAN
+TitleBackground			= BLUE
+TitleBrightness			= OFF
+HeaderForeground		= CYAN
+HeaderBackground		= RED
+HeaderBrightness		= OFF
+ScreenForeground		= BLACK
+ScreenBackground		= CYAN
+ScreenBrightness		= OFF
+StatusForeground		= CYAN
+StatusBackground		= BLUE
+StatusBrightness		= OFF
+
+
+[GITVIEW-Color]
+TitleForeground			= CYAN
+TitleBackground			= BLUE
+TitleBrightness			= OFF
+HeaderForeground		= CYAN
+HeaderBackground		= RED
+HeaderBrightness		= OFF
+ScreenForeground		= BLACK
+ScreenBackground		= CYAN
+ScreenBrightness		= OFF
+StatusForeground		= CYAN
+StatusBackground		= BLUE
+StatusBrightness		= OFF
+
+
+###############################################
+### ansi with monochrome monitor or b/w tty ###
+###############################################
+
+
+[GITFM-Monochrome]
+TitleForeground			= WHITE
+TitleBackground			= BLACK
+TitleBrightness			= ON
+UserName			= WHITE
+TtyName				= WHITE
+ClockForeground			= BLACK
+ClockBackground			= WHITE
+ClockBrightness			= OFF
+PanelFrame 			= WHITE
+PanelBackground 		= BLACK
+PanelThumbForeground		= BLACK
+PanelThumbBackground		= WHITE
+PanelThumbBrightness		= OFF
+PanelSelectedFile 		= WHITE
+PanelSelectedFileBrightness	= ON
+PanelNotSelectedFile		= WHITE
+PanelNotSelectedFileBrightness	= OFF
+PanelCurrentSelectedFile	= WHITE
+PanelCurrentNotSelectedFile	= BLACK
+PanelCurrentFile		= WHITE
+PanelPath 			= BLACK
+PanelPathBrightness 		= OFF
+PanelDeviceFreeSpace        	= BLACK
+PanelDeviceFreeSpaceBrightness	= OFF
+PanelFileInfo 			= BLACK
+PanelFileInfoBrightness 	= OFF
+PanelFilesInfo			= BLACK
+PanelFilesInfoBrightness	= OFF
+InputLineForeground		= WHITE
+InputLineBackground		= BLACK
+InputLineBrightness		= ON
+InputLineErrorForeground	= WHITE
+InputLineErrorBackground	= BLACK
+InputLineErrorBrightness	= ON
+StatusBarForeground 		= BLACK
+StatusBarBackground 		= WHITE
+StatusBarBrightness 		= OFF
+StatusBarWarningForeground 	= BLACK
+StatusBarWarningBackground 	= WHITE
+StatusBarWarningBrightness 	= OFF
+StatusBarErrorForeground 	= BLACK
+StatusBarErrorBackground 	= WHITE
+StatusBarErrorBrightness 	= OFF
+
+
+[GITPS-Monochrome]
+TitleForeground			= BLACK
+TitleBackground			= WHITE
+TitleBrightness			= OFF
+HeaderForeground		= WHITE
+HeaderBackground		= BLACK
+HeaderBrightness		= ON
+ScreenForeground		= WHITE
+ScreenBackground		= BLACK
+ScreenBrightness		= OFF
+StatusForeground		= BLACK
+StatusBackground		= WHITE
+StatusBrightness		= OFF
+
+
+[GITVIEW-Monochrome]
+TitleForeground			= BLACK
+TitleBackground			= WHITE
+TitleBrightness			= OFF
+HeaderForeground		= WHITE
+HeaderBackground		= BLACK
+HeaderBrightness		= ON
+ScreenForeground		= WHITE
+ScreenBackground		= BLACK
+ScreenBrightness		= OFF
+StatusForeground		= BLACK
+StatusBackground		= WHITE
+StatusBrightness		= OFF
+
+
+###
+### COMMAND FORMAT:
+### key = command name; formatted command; new dir; save screen; pause; hide
+###
+### DEFAULTS:
+### save screen = y
+### pause       = n
+### hide        = n
+###
+### PLEASE READ THE INFO DOCUMENTATION FOR DETAILS
+### BRIEF:
+###
+### 	FORMAT SPECIFIERS:
+### 	- %s{question,default_answer}
+###	- %?{confirmation}
+###
+### 	- %f file (not directory)
+### 	- %d directory (not file)
+### 	- %l symbolic link
+###	- %t fifo
+###	- %z socket
+### 	- %a any type of directory entry (file, directory, link, fifo, socket)
+### 	- %m current entry mode
+### 	- %g current entry group
+### 	- %o current entry owner
+###	- %p current panel path
+###	- %b current panel directory name
+###	- %i current panel selected or current entry
+###
+### 	**** For the other panel: *****
+###
+### 	- %F file (not directory)
+###	- %D directory (not file)
+### 	- %L symbolic link
+###	- %T fifo
+###	- %Z socket
+### 	- %A any type of directory entry (file, directory, link, fifo, socket)
+### 	- %M current entry mode
+### 	- %G current entry group
+### 	- %O current entry owner
+###	- %P the other panel path
+###	- %B the other panel directory name
+###	- %I the other panel selected or current entry
+###
+### For faster startup, try to keep this entries sorted alphabetically,
+### at least locally.  The order is given by the key sequence.
+###
+
+###
+### Key sequences starting with characters between ' ' and '~' are IGNORED!
+###
+
+[GITFM-Keys]
+^[[009q	    = MAKE; make %s{Options: ,-k };;;y		# F9
+^[[010q	    = exit					# F10
+^[[011q	    = GITPS; gitps;;n				# F11
+^[[012q	    = READ-MAIL; $GNUIT_RMAIL;;n			# F12
+
+
+###
+### Only key sequences starting with characters between ' ' and '~' are
+### ALLOWED.
+###
+
+[GITPS-Keys]
+^[[010q	    = exit					# F10
+
+
+###
+### Key sequences starting with characters between ' ' and '~' are IGNORED!
+###
+
+[GITVIEW-Keys]
+^[[010q	    = exit					# F10

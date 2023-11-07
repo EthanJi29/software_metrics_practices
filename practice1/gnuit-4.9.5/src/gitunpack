@@ -1,0 +1,109 @@
+#! /bin/sh
+
+###############################################################################
+###									    ###
+###			GNU Interactive Tools unpack script	    	    ###
+###	 Copyright (C) 1997-2000, 2006-2007 Free Software Foundation, Inc.  ###
+###                                                                         ###
+###                  This file is part of gnuit.                            ###
+###                                                                         ###
+###  gnuit is free software: you can redistribute it and/or modify it       ###
+###  under the terms of the GNU General Public License as published         ###
+###  by the Free Software Foundation, either version 3 of the               ###
+###  License, or (at your option) any later version.                        ###
+###                                                                         ###
+###  gnuit is distributed in the hope that it will be useful, but           ###
+###  WITHOUT ANY WARRANTY; without even the implied warranty of             ###
+###  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          ###
+###  GNU General Public License for more details.                           ###
+###                                                                         ###
+###  You should have received a copy of the GNU General Public              ###
+###  License along with this program. If not, see                           ###
+###  http://www.gnu.org/licenses/.                                          ###
+###									    ###
+###		    Written by Tudor Hulubei and Viorel Anghel.		    ###
+###									    ###
+###############################################################################
+
+
+# We can have one or two arguments.
+if test "$#" -lt 2; then
+    echo "usage: $0 destdir archives..."
+    exit 1
+fi
+
+destdir="$1"
+srcdir=`pwd`
+
+cd "$destdir" 2> /dev/null
+if test "$?" -ne 0; then
+    gitmkdirs "$destdir"
+    if test "$?" -ne 0; then
+	exit 1;
+    fi
+
+    cd "$destdir"
+    if test "$?" -ne 0; then
+	exit 1;
+    fi
+fi
+
+exit_code=0
+while true; do
+    archive=$2
+
+    if test -d "$archive"; then
+	echo "$0: $archive: not a regular file" >&2
+	exit_code=1
+    else
+	# `ln' will fail if $destdir is the same as $srcdir.
+	ln -s "$srcdir/$archive" "$archive" 2> /dev/null
+	link_created=$?
+
+	case "$archive" in
+	*.[tT][aA][rR])                  tar -xvf "$archive";;
+	*.[tT][aA][rR].[bB][zZ])         bzip -dc "$archive"|tar -xvf -;;
+	*.[tT][aA][rR].[bB][zZ]2)        bzip2 -dc "$archive"|tar -xvf -;;
+	*.[tT][aA][rR].[gG][zZ])         gzip -dc -- "$archive"|tar -xvf -;;
+	*.[tT][aA][rR].[zZ])             uncompress -dc "$archive"|tar -xvf -;;
+	*.[cC][pP][iI][oO])		 cat "$archive"|cpio -i -d;;
+	*.[cC][pP][iI][oO].[bB][zZ])     bzip -dc "$archive"|cpio -i -d;;
+	*.[cC][pP][iI][oO].[bB][zZ]2)    bzip2 -dc "$archive"|cpio -i -d;;
+	*.[cC][pP][iI][oO].[gG][zZ])     gzip -dc -- "$archive"|cpio -i -d;;
+	*.[cC][pP][iI][oO].[zZ])         uncompress -dc "$archive"|cpio -i -d;;
+	*.[tT][gG][zZ])                  gzip -dc -- "$archive"|tar -xvf -;;
+	*.[tT][aA][zZ])                  uncompress -dc "$archive"|tar -xvf -;;
+	*.[tT][rR][zZ])                  uncompress -dc "$archive"|tar -xvf -;;
+	*.[jJ][aA][rR])                  jar -xvf "$archive";;
+	*.[zZ][iI][pP])                  unzip -o "$archive";;
+	*.[aA][rR][jJ]|*.[aA][0-9][0-9]) unarj x "$archive";;
+	*.[rR][aA][rR]|*.[rR][0-9][0-9]) rar x -y -r -v "$archive";;
+	*.[lL][hH][aA]) 		 lha -xvf "$archive";;
+	*.[lL][zZ][hH])		         lha -xvf "$archive";;
+	*.[zZ])			         uncompress "$archive";;
+	*.[bB][zZ])			 bzip -d "$archive";;
+	*.[bB][zZ]2)		         bzip2 -d "$archive";;
+	*.[gG][zZ])			 gunzip "$archive";;
+	*.[sS][hH][aA][rR])		 sh "$archive";;
+	*.[uU][uU])			 uudecode "$archive";;
+	*.[rR][pP][mM])		         rpm2cpio "$archive"|cpio -v -i -d;;
+	*.[dD][eE][bB])		         ar -xv "$archive";;
+	*.[aA])			         ar -xv "$archive";;
+	*) echo "$0: $archive: unknown archive type" >&2
+	   exit_code=1
+	esac
+
+	if test $? -ne 0; then
+	    exit_code=$?
+	fi
+
+	if test "$link_created" -eq 0; then
+	    rm "$archive"
+	fi
+    fi
+
+    shift
+    if test $# -eq 1; then
+	exit $exit_code
+    fi
+done

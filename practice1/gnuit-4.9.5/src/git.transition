@@ -1,0 +1,26 @@
+#!/bin/sh
+
+cat >&2 << EOT
+
+git, the filemanager with GNU Interactive Tools, is now called gitfm.
+
+If you are looking for git, Linus Torvald's content tracker,
+go to http://git.or.cz/. If it is already installed, see git(7).
+
+This transition script will be removed in a later release.
+
+EOT
+
+# If we are attached to a terminal, run gitfm, else run git-scm
+if [ -t 0 ] && [ -t 1 ];then
+   echo "Press RETURN to run gitfm" >&2
+   read dummy
+   exec gitfm "$@"
+else
+	if [ -x /usr/bin/git-scm ]
+	then
+		exec -a git git-scm "$@"
+	fi
+fi
+
+exit 1

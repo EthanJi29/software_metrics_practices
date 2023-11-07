@@ -1,0 +1,83 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" +----------
+.\" |
+.\" |			  GITWIPE man page
+.\" |
+.\" |	      Copyright 1993-1999,2006-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH GITWIPE 1 "Sep 30, 2007"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+gitwipe \- An utility for wiping files
+.SH SYNOPSIS
+.B gitwipe
+.I  "file ..."
+
+.SH DESCRIPTION
+This manual page documents briefly the
+.B gitwipe
+command.
+
+\fBgitwipe\fP is an utility for wiping files.  It overwrites the file
+contents with a random sequence of numbers and then calls `sync'().
+
+.PP
+Note that \fBgitwipe\fP does \fBnot\fP remove the wiped file since (under
+`Linux' at least) the `sync'() system call might return before actually
+writing the new file contents to disk.  Removing the file might be
+dangerous because some file systems can detect that the blocks in the
+removed wiped file are no longer used and never write them back to disk
+in order to improve performance.  It is up to you to remove the file(s)
+at a later moment.
+
+.PP
+.B gitwipe
+is part of the GNU Interactive Tools.
+
+.SH SEE ALSO
+.BR gitfm (1)
+.PP
+\fBgitwipe\fP and \fBgitfm\fP are documented fully by
+.IR "GNU Interactive Tools" ,
+available via the Info system.
+
+.SH BUGS
+Please send bug reports to:
+.br
+.I gnuit-dev@gnu.org
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)

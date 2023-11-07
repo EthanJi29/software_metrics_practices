@@ -1,0 +1,4668 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@setfilename gnuit.info
+@settitle GNU Interactive Tools
+@c For double-sided printing, uncomment:
+@c @setchapternewpage odd
+@c %**end of header
+
+@set EDITION 2.9.4
+@set VERSION 4.9.5
+@set UPDATED January 2008
+
+@iftex
+@finalout
+@end iftex
+
+@ifinfo
+@dircategory Utilities
+@format
+START-INFO-DIR-ENTRY
+* gnuit: (gnuit).         GNU Interactive Tools
+END-INFO-DIR-ENTRY
+@end format
+@end ifinfo
+
+@copying
+GNUIT: A set of interactive tools, by Tudor Hulubei and Andrei Pitis.
+
+This file documents the GNU Interactive Tools package.
+
+Copyright (C) 1993-1998, 2006-2008 Free Software Foundation, Inc.
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled
+``Copying This Manual''.
+@end quotation
+@end copying
+
+@titlepage
+@title GNU Interactive Tools
+@subtitle A Set of Interactive Programs
+@subtitle Edition @value{EDITION}, for GNUIT version @value{VERSION}
+@subtitle @value{UPDATED}
+@author by Tudor Hulubei, Andrei Pitis and Ian Beckwith
+
+@page
+@vskip 0pt plus 1filll
+
+@insertcopying
+@end titlepage
+
+
+@node Top, Introduction, , (dir)
+@comment  node-name,  next,  previous,  up
+
+@ifinfo
+@code{GNUIT} is a package containing a file system browser, a
+process viewer/killer and an ASCII/HEX file viewer.  This is edition
+@value{EDITION}, for GNU Interactive Tools version @value{VERSION}.
+
+@end ifinfo
+
+@menu
+* Introduction::                An introduction to GNUIT concepts.
+* Distrib::                     How to get the latest GNUIT distribution.
+
+* Description::                 How to use GNUIT.
+* Customization::               How to customize GNUIT.
+* Limitations::                 Known GNUIT limitations.
+* Bugs::                        How to report a bug.
+* Copying This Manual::         The GNU Free Documentation License.
+* Key Index::                   An item for each standard GNUIT key sequence.
+* Command Index::               An item for each command name.
+* Variable Index::              An item for each documented variable.
+* Concept Index::               An item for each concept.
+@end menu
+
+
+@node Introduction, Distrib, Top, Top
+@chapter Introduction
+
+@code{GNUIT} is a set of interactive tools.  It contains an extensible
+file system browser, an ascii/hex file viewer, a process viewer/killer
+and some other related utilities and shell scripts.  It can be used to
+increase the speed and efficiency of most of the daily tasks such as
+copying and moving files and directories, invoking editors, compressing
+and uncompressing files, creating and expanding archives, compiling
+programs, sending mail, etc.  It looks nice, has colors (if the standard
+ANSI color sequences are supported) and is user-friendly.
+
+@code{GNUIT} runs on a wide variety of @code{UNIX} systems because it uses
+the @code{GNU Autoconf} package to get system specific information.
+Please refer to the PLATFORMS file included in the standard distribution
+for a detailed list of systems on which @code{GNUIT} has been tested.
+
+One of the main advantages of @code{GNUIT} is its flexibility.  It is not
+limited to a given set of commands.  The configuration file can be
+easily enhanced, allowing the user to add new commands or file
+operations, depending on its needs or preferences.
+
+@code{GNUIT} also provides a shell like command prompt, just to make sure
+that the entire power of the @code{UNIX} shell commands is still there.
+
+
+@node Distrib, Key Index, Introduction, Top
+@chapter Distributing GNU Interactive Tools
+
+@code{GNUIT} is "free software"; this means that everyone is free to use
+it and free to redistribute it on certain conditions.  @code{GNUIT} is not
+in the public domain; it is copyrighted and there are restrictions on
+its distribution, but these restrictions are designed to permit
+everything that a good cooperating citizen would want to do.  What is
+not allowed is to try to prevent others from further sharing any version
+of @code{GNUIT} that they might get from you.  The precise conditions are
+found in the GNU General Public License that comes with @code{GNUIT} and
+also appears following this section.
+
+The easiest way to get a copy of @code{GNUIT} is from someone else who has
+it.  You need not ask for our permission to do so, or tell any one else;
+just copy it.  If you have access to the Internet, you can get the
+latest distribution version of @code{GNUIT} from host @samp{ftp.gnu.org}
+using anonymous login.  See the file `/pub/gnu/GETTING.GNU.SOFTWARE' on
+that host to find out about your options for copying and which files to
+use.
+
+You may also receive @code{GNU Interactive Tools} when you buy a
+computer.  Computer manufacturers are free to distribute copies on the
+same terms that apply to everyone else.  These terms require them to
+give you the full sources, including whatever changes they may have
+made, and to permit you to redistribute the GNU Interactive Tools
+received from them under the usual terms of the General Public License.
+In other words, the program must be free for you when you get it, not
+just free for the manufacturer.
+
+
+@node Description, Customization, Concept Index, Top
+@chapter Using GNU Interactive Tools
+
+
+The @code{GNUIT} package contains three interactive programs and a few
+additional utilities.  Here there is a description of each of them.
+
+@menu
+* gitfm::                       A file system browser.
+* gitps::                       A process viewer/killer.
+* gitview::                     An ASCII/HEX file viewer.
+* gitkeys::                     An utility for displaying key sequences.
+* gitwipe::                     An utility for wiping files.
+* gitmount::                    A script for mounting file systems.
+* gitaction::                   A per file type action script.
+* gitunpack::                   Unified archive unpacking.
+* gitrgrep::                    A recursive grep script.
+@end menu
+
+
+@node gitfm, gitps, , Description
+@section The GIT file system browser
+@cindex gitfm
+
+@code{gitfm} is a file system browser with some shell like features
+designed to make your work much easier and much efficient.  It displays
+one or two panels, each one containing a file system directory.  You can
+browse the directory tree with the usual cursor keys, pressing
+@kbd{ENTER} when you want to enter or leave a directory and @kbd{TAB}
+when you want to change the panels.
+
+Under the two panels there is a shell like input line which you can use
+to type normal shell commands.  The input line can handle an unlimited
+number of characters and keeps a history of typed commands (using the
+GNU history library).
+
+Under the input line there is a status bar.  You can see there the
+status of the currently executed command, the warnings and errors and
+you will be prompted if a decision has to be taken.
+
+@menu
+* Conventions::                 Key binding conventions.
+
+* Command line::                The command line arguments.
+* Modes::                       How panels can look like.
+* Sorting::                     How files can be sorted in a panel.
+* Moving::                      How to move the cursor in the panel.
+* Selecting::                   How to select (mark) files in a panel.
+* Isearch::                     How to search a file name in a panel.
+* Input Line::                  How to use the input line.  Basic editing.
+* Files::                       How to copy/move/delete/compress/@dots{} files.
+* Directories::                 How to operate with directories.
+* Compiling::                   How to compile programs.
+* Mail::                        How to send/receive ascii/binary mail.
+* Shell::                       How to start a sub-shell.
+* Grep::                        How to use grep/recursive grep.
+* Locking::                     How to lock your console.
+* Refreshing::                  How to refresh the screen contents.
+* Resetting::                   How to reset your terminal.
+* Mounting::                    How to mount/unmount a file system.
+* Sysinfo::                     How to get some useful system information.
+* Environment::                 How to look at the environment variables.
+* Processes::                   How to view/kill processes.
+* Sync::                        How to synchronize your file systems.
+
+* Documentation::               How to read documentation.
+
+* Exit::                        How to exit GNU Interactive Tools.
+@end menu
+
+
+@node Conventions, Command line, , gitfm
+@subsection Key binding conventions
+
+@code{gitfm} now follows a new, easy to remember, scheme to bind commands
+on keys.  This is only a convention, if you define new key bindings you
+may, or may not follow it.
+
+All the file commands start with @kbd{^C}.  This prefix can be followed
+by some modifiers, in order to affect the default behavior of the given
+command.  These modifiers are @kbd{b} and @kbd{r}.
+
+@kbd{b} - this modifier specifies that the command will run in background:
+
+@example
+	^CM = CHMOD; chmod %s@{New mode of %i: ,%m@} %i;;;;y
+@end example
+
+@noindent
+defines a command that changes the current selected files mode in
+foreground, while
+
+@example
+	^CbM = B-CHMOD; chmod %s@{New mode of %i: ,%m@} %i&;;;;y
+@end example
+
+@noindent
+defines a background command that does the same thing.
+
+
+@kbd{r} - this modifier specifies that the command will be run recursively:
+
+@example
+	^CrM = R-CHMOD; chmod -R %s@{New mode of %i: ,@} %i;;;;y
+@end example
+
+@noindent
+defines a command that recursively changes the mode of the selected
+entries.
+
+
+The @kbd{b} and @kbd{r} modifiers can be combined, the resulting command
+running recursively and in background:
+
+@example
+	^CbrM = B-R-CHMOD; chmod -R %s@{New mode of %i: ,@} %i&;;;;y
+@end example
+
+
+You should also note that for some commands (like @code{gzip}) there is
+no need for a non-recursive version.  Running @code{gzip} recursively on
+files is harmless.  If there is a directory between these files,
+@code{gzip} will recursively compress that directory, so you can use the
+same key binding for recursively and non-recursively compressing.  In
+fact, it is a matter of selecting files or directories.
+
+Unfortunately, we can't run @code{chmod} recursively trying to change
+the mode of all the files in a directory to 0644 because that directory
+might contain subdirectories and removing the execution permission from
+them is a bad idea.  So, in this case, we need separate commands.
+
+
+
+
+@node Command line, Modes, Conventions, gitfm
+@subsection Command line
+
+This is a brief description of the command line arguments.
+
+@noindent
+@code{-h}         print this help message
+
+@noindent
+@code{-v}         print the version number
+
+@noindent
+@code{-c}         use ANSI colors
+
+@noindent
+@code{-b}         don't use ANSI colors
+
+@noindent
+@code{-l}         don't use the last screen character
+
+@noindent
+@code{-p}         output final path at exit
+
+
+The @code{-p} option can be used to make gitfm force bash (assuming that
+you're using it as your shell) chdir to the last directory gitfm was in
+before quitting.  In order to do this, you need to invoke gitfm using this
+function (put it into your .profile):
+
+@display
+function g
+@{
+    gitfm -p $@ 3> /tmp/gitfm.p.$$
+
+    if test -s /tmp/gitfm.p.$$; then
+	if test -d "`cat /tmp/gitfm.p.$$`"; then
+	    cd "`cat /tmp/gitfm.p.$$`"
+	else
+	    cd
+	fi
+    fi
+
+    rm -f /tmp/gitfm.p.$$
+@}
+@end display
+
+This will not work if you suspend gitfm.  Nothing bad will happen, just
+the chdir will not be performed.
+
+
+@node Modes, Sorting, Command line, gitfm
+@subsection Panel modes
+
+@code{gitfm} has three major modes of displaying the panels.  In the first
+(default) mode, two panels are displayed, each one using half of the
+screen.  In the second mode, only one panel uses the entire screen.  In
+the third mode, only the status bar and the input line are displayed,
+both panels being hidden.
+
+Briefly, a panel can use the entire screen or just half of it.  Even
+when a panel is hidden, it still exists.
+
+@cindex Major modes
+@cindex Half screen
+@cindex Entire screen
+
+
+Users can switch between these three major modes as needed:
+
+@noindent
+@kbd{^X 0}
+@display
+Enlarges the other panel to use the entire screen.  It also changes the
+minor mode to @samp{Enable all}.  The current panel will become
+invisible (@samp{enlarge-other-panel}).
+@end display
+@cindex One panel
+@cindex Enlarge other panel
+@findex enlarge-other-panel
+@kindex ^X 0
+
+@noindent
+@kbd{^X 1}
+@display
+Enlarges the current panel to use the entire screen.  It also changes
+the minor mode to @samp{Enable all}.  The other panel will become
+invisible (@samp{enlarge-panel}).
+@end display
+@cindex One panel
+@cindex Enlarge panel
+@findex enlarge-panel
+@kindex ^X 1
+
+@noindent
+@kbd{^X 2}
+@display
+Switches back to the two panel mode (@samp{two-panel-mode}).
+@end display
+@cindex Two panel mode
+@cindex Two panels
+@findex two-panel-mode
+@kindex ^X 2
+
+@noindent
+@kbd{^O}, @kbd{ESC o}
+@display
+Switches to the tty mode (no panels on the screen) (@samp{tty-mode}).
+@end display
+@cindex No panels mode
+@cindex tty mode
+@findex tty-mode
+@kindex ^O, ESC o
+
+
+A panel displays the files and subdirectories in a directory.
+You can optionally specify some additional information about each entry
+(file, directory, @dots{}) to be displayed (a minor mode).
+
+When using the full screen mode, all the minor modes here can be used.
+In half screen mode, the @samp{panel-enable-all} mode is not available.
+
+These are the panel minor modes:
+@cindex Minor modes
+
+@noindent
+@kbd{ESC e o}
+@display
+Display the entry owner and group (@samp{panel-enable-owner-group}).
+@end display
+@cindex Owner, group
+@cindex Group, owner
+@cindex Owner and group
+@cindex Group and owner
+@findex panel-enable-owner-group
+@kindex ESC e o
+
+@noindent
+@kbd{ESC e d}
+@display
+Display the entry date and time (@samp{panel-enable-date-time}).
+@end display
+@cindex Date, time
+@cindex Time, date
+@cindex Date and time
+@cindex Time and date
+@findex panel-enable-date-time
+@kindex ESC e d
+
+@noindent
+@kbd{ESC e s}
+@display
+Display the entry size (@samp{panel-enable-size}).
+@end display
+@cindex File size
+@cindex Directory size
+@cindex File or directory size
+@findex panel-enable-size
+@kindex ESC e s
+
+@noindent
+@kbd{ESC e S}
+@display
+Display the entry size, scaled (e.g. @samp{123M}) (@samp{panel-enable-abbrevsize}).
+@end display
+@cindex File size
+@cindex Directory size
+@cindex File or directory size
+@findex panel-enable-abbrevsize
+@kindex ESC e S
+
+@noindent
+@kbd{ESC e m}
+@display
+Display the entry mode (@samp{panel-enable-mode}).
+@end display
+@cindex File mode
+@cindex Directory mode
+@cindex File or directory mode
+@findex panel-enable-mode
+@kindex ESC e m
+
+@noindent
+@kbd{ESC e f}
+@display
+Display the entry full name (@samp{panel-enable-full-name}).
+@end display
+@cindex Full name
+@cindex Full file name
+@cindex Full directory name
+@cindex Full file or directory name
+@findex panel-enable-full-name
+@kindex ESC e f
+
+@noindent
+@kbd{ESC e a}
+@display
+Display the entire information about file (@samp{panel-enable-all}).
+This mode is only available if the panel has been enlarged to use the
+entire screen with @samp{enlarge-panel} or @samp{enlarge-other-panel}
+(@samp{panel-enable-all}).
+@end display
+@cindex Full info
+@cindex Full file info
+@cindex Full directory info
+@cindex Enable all
+@findex panel-enable-all
+@kindex ESC e a
+
+There is another way of changing the panel minor modes:
+
+@noindent
+@kbd{^]}, @kbd{^[]}
+@display
+Switches to the next panel minor mode (@samp{panel-enable-next-mode}).
+@end display
+@cindex Enable next mode
+@findex panel-enable-next-mode
+@kindex ^]
+@kindex ^[]
+
+@node Sorting, Moving, Modes, gitfm
+@subsection Sorting methods
+
+@cindex Sorting
+
+Entries in a panel can be sorted in different ways.  These are the
+available options:
+
+@noindent
+@kbd{ESC s n}
+@display
+Display the panel entries sorted by their names
+(@samp{panel-sort-by-name}).
+@end display
+@cindex Sorted by name
+@cindex Sorting by name
+@findex panel-sort-by-name
+@kindex ESC s n
+
+@noindent
+@kbd{ESC s e}
+@display
+Display the panel entries sorted by their extensions
+(@samp{panel-sort-by-extension}).
+@end display
+@cindex Sorted by extension
+@cindex Sorting by extension
+@findex panel-sort-by-extension
+@kindex ESC s e
+
+@noindent
+@kbd{ESC s s}
+@display
+Display the panel entries sorted by their sizes
+(@samp{panel-sort-by-size}).
+@end display
+@cindex Sorted by size
+@cindex Sorting by size
+@findex panel-sort-by-size
+@kindex ESC s s
+
+@noindent
+@kbd{ESC s d}
+@display
+Display the panel entries sorted by their @samp{last modified} stamps
+(@samp{panel-sort-by-date}).
+@end display
+@cindex Sorted by date
+@cindex Sorting by date
+@findex panel-sort-by-date
+@kindex ESC s d
+
+@noindent
+@kbd{ESC s m}
+@display
+Display the panel entries sorted by their modes
+(@samp{panel-sort-by-mode}).
+@end display
+@cindex Sorted by mode
+@cindex Sorting by mode
+@findex panel-sort-by-mode
+@kindex ESC s m
+
+@noindent
+@kbd{ESC s o i}
+@display
+Display the panel entries sorted by their owner ids
+(@samp{panel-sort-by-owner-id}).
+@end display
+@cindex Sorted by owner id
+@cindex Sorting by owner id
+@findex panel-sort-by-owner-id
+@kindex ESC s o i
+
+@noindent
+@kbd{ESC s g i}
+@display
+Display the panel entries sorted by their group ids
+(@samp{panel-sort-by-group-id}).
+@end display
+@cindex Sorted by group id
+@cindex Sorting by group id
+@findex panel-sort-by-group-id
+@kindex ESC s g i
+
+@noindent
+@kbd{ESC s o n}
+@display
+Display the panel entries sorted by their owner names
+(@samp{panel-sort-by-owner-name}).
+@end display
+@cindex Sorted by owner name
+@cindex Sorting by owner name
+@findex panel-sort-by-owner-name
+@kindex ESC s o n
+
+@noindent
+@kbd{ESC s g n}
+@display
+Display the panel entries sorted by their group names
+(@samp{panel-sort-by-group-name}).
+@end display
+@cindex Sorted by group name
+@cindex Sorting by group name
+@findex panel-sort-by-group-name
+@kindex ESC s g n
+
+
+There is also another way to change the sort method:
+
+@noindent
+@kbd{ESC s u}
+@display
+Switch to the next panel sort method (@samp{panel-sort-next-method}).
+@end display
+@cindex Next sort method
+@findex panel-sort-next-method
+@kindex ESC s u
+
+
+@node Moving, Selecting, Sorting, gitfm
+@subsection Moving the cursor in the panel
+
+Moving the cursor in the panel is very easy.  If your keyboard has
+arrows, use them.  If the arrow keys don't work (it might be due to a
+badly configured @var{TERM} environment variable), you can use the Emacs
+commands bindings as well.
+
+@noindent
+@kbd{UP}, @kbd{^P}
+@display
+Move the cursor vertically up one entry (@samp{previous-line}).
+@end display
+@cindex Cursor up one entry
+@findex previous-line
+@kindex UP, ^P
+
+@noindent
+@kbd{DOWN}, @kbd{^N}
+@display
+Move the cursor vertically down one entry (@samp{next-line}).
+@end display
+@cindex Cursor down one entry
+@findex next-line
+@kindex DOWN, ^N
+
+@noindent
+@kbd{HOME}, @kbd{ESC <}
+@display
+Move the cursor on the first entry in the panel
+(@samp{beginning-of-panel}).
+@end display
+@cindex Cursor home
+@cindex First entry
+@cindex Beginning of panel
+@findex beginning-of-panel
+@kindex HOME, ESC <
+
+@noindent
+@kbd{END}, @kbd{ESC >}
+@display
+Move the cursor on the last entry in the panel (@samp{end-of-panel}).
+@end display
+@cindex Cursor end
+@cindex Last entry
+@cindex End of panel
+@findex end-of-panel
+@kindex END, ESC >
+
+@noindent
+@kbd{PGUP}, @kbd{ESC v}
+@display
+Move the cursor vertically down one page (@samp{scroll-down}).
+@end display
+@cindex Cursor down one page
+@findex scroll-down
+@kindex PGUP, ESC v
+
+@noindent
+@kbd{PGDOWN}, @kbd{^V}
+@display
+Move the cursor vertically down one page (@samp{scroll-up}).
+@end display
+@cindex Cursor up one page
+@findex scroll-up
+@kindex PGDOWN, ^V
+
+@noindent
+@kbd{ESC g}
+@display
+Scroll the panel entries to the left (@samp{horizontal-scroll-left}).
+@end display
+@cindex Scroll left
+@findex horizontal-scroll-left
+@kindex ESC g
+
+@noindent
+@kbd{ESC j}
+@display
+Scroll the panel entries to the right (@samp{horizontal-scroll-right}).
+@end display
+@cindex Scroll right
+@findex horizontal-scroll-right
+@kindex ESC j
+
+@noindent
+@kbd{^X P}
+@display
+In order to optimize the screen output, you can modify the scroll step
+(@samp{set-scroll-step}).  This is the number of lines to try scrolling
+a panel when the cursor moves out.  The @samp{StartupScrollStep}
+specifies the initial scroll step, but using @samp{set-scroll-step} you
+can dynamically change it.
+@end display
+@cindex Scroll step
+@findex set-scroll-step
+
+@noindent
+@kbd{TAB}, @kbd{^I}, @kbd{^X o}
+@display
+Move the cursor in the other panel (@samp{other-panel}).
+@end display
+@cindex Cursor to the other panel
+@cindex Go to the other panel
+@findex other-panel
+@kindex TAB, ^I, ^X o
+
+@noindent
+@kbd{^X P}
+@display
+Switch the two panels.  This command works even when @code{gitfm} is not
+in the @samp{two panels} mode (@samp{switch-panels}).
+@end display
+@cindex Toggle panels
+@cindex Switch panels
+@findex switch-panels
+@kindex ^X P
+
+
+@node Selecting, Isearch, Moving, gitfm
+@subsection Selecting files
+
+@noindent
+@kbd{INS}, @kbd{^T}, @kbd{^X \}, @kbd{^\}
+@display
+Toggle the @samp{selected} flag of the current entry
+(@samp{select-entry}).
+@end display
+@cindex Toggle flag
+@cindex Mark entry
+@cindex Unmark entry
+@cindex Select entry
+@findex select-entry
+@kindex INS, ^T, ^X \, ^\
+
+@noindent
+@kbd{^C s}
+@display
+Select (marks) all the files matching at least one pattern from a space
+separated list of shell patterns.  Spaces and \s are allowed in the
+patterns but they have to be escaped with a \.  The user will be
+prompted for a pattern to match against
+(@samp{select-files-matching-pattern}).
+@end display
+@cindex Selects files matching pattern
+@findex select-files-matching-pattern
+@kindex ^C s
+
+@noindent
+@kbd{^C u}
+@display
+Unselect (unmarks) all the files matching at least one pattern from a
+space separated list of shell patterns.  Spaces and \s are allowed in
+the patterns but they have to be escaped with a \.  The user will be
+prompted for a pattern to match against
+(@samp{unselect-files-matching-pattern}).
+@end display
+@cindex Unselects files matching pattern
+@findex unselect-files-matching-pattern
+@kindex ^C u
+
+@noindent
+@kbd{ESC +}
+@display
+Select (marks) all the files having the same extension as the current
+file.  If the current file name doesn't have an extension or starts with
+a dot, no files are selected (@samp{select-extension}).
+@end display
+@cindex Selects files matching extension
+@findex select-extension
+@kindex ESC +
+
+@noindent
+@kbd{ESC -}
+@display
+Unselect (unmarks) all the files having the same extension as the
+current file.  If the current file name doesn't have an extension or
+starts with a dot, no files are unselected (@samp{unselect-extension}).
+@end display
+@cindex Unselects files matching extension
+@findex unselect-extension
+@kindex ESC -
+
+@xref{Selecting Files}, for additional ways of selecting and unselecting
+files.
+
+
+@node Isearch, Input Line, Selecting, gitfm
+@subsection Incremental searching files in a panel
+
+
+Users sometime need to search a file in a panel, especially when the
+panel contains a big number of entries.  For that reason @code{gitfm}
+provides an incremental search feature.  Using forward and backward
+incremental search, files can be very easy located.  Wrapped incremental
+search is also provided.
+@cindex Wrapped isearch
+@cindex Wrapped search
+@cindex Wrapped incremental search
+
+@noindent
+@kbd{^S}, @kbd{^Xs}
+@display
+Incremental search forward a file name in the current panel
+(@samp{isearch-forward}).  Pressing @kbd{^S} or @kbd{^Xs} again will
+force @code{gitfm} to go to the next entry that matches the current
+isearched string.  When the end of the panel is reached, the isearch is
+restarted from its beginning.
+@end display
+@cindex Incremental search forward
+@cindex Isearch forward
+@findex isearch-forward
+@kindex ^S, ^Xs
+
+@noindent
+@kbd{^R}, @kbd{^Xr}
+@display
+Incremental search backward a file name in the current panel
+(@samp{isearch-backward}).  Pressing @kbd{^R} or @kbd{^Xr} again will
+force @code{gitfm} to go to the next entry that matches the current
+isearched string.  When the beginning of the panel is reached, the
+isearch is restarted from its end.
+@end display
+@cindex Incremental search backward
+@cindex Isearch backward
+@findex isearch-backward
+@kindex ^R, ^Xr
+
+
+@node Input Line, Files, Isearch, gitfm
+@subsection Using the input line
+
+The input line is one of the main methods used by @code{gitfm} to interact
+with the user.  All the answers the user should give in order to perform
+some operation and all the shell like commands are built using it.  So
+here is a description of all the basic editing operations that the
+@samp{input line} provides.  They are very much inspired from
+@code{Emacs}, so @code{Emacs} users should have no problem using them.
+
+@menu
+* Inserting Text::              Inserting text by simply typing it.
+* Moving Point::                How to move the cursor to the place where you
+				    want to change something.
+* Erasing::                     Deleting and killing text.
+* Case Changes::                Case conversion of words.
+* History::                     Reusing recent input line arguments.
+* Setting Mark::                Commands to set the mark.
+* Yanking::                     Reinserting recently killed text.
+* Selecting Files::             Selecting files matching patterns.
+@end menu
+
+
+@node Inserting Text, Moving Point, , Input Line
+@subsubsection Inserting Text
+
+Typing characters is the most usual way of inserting text into the input
+line.  Key sequences starting with printable ascii characters are not
+allowed in @code{gitfm} so typing @kbd{a} for example results in inserting
+@kbd{a} at the current point position.  Of course, there are some other
+ways of inserting text into the command line and here there is a
+description of most of them.
+
+
+@noindent
+@kbd{ESC RET}
+@display
+Copy the current entry name into the input line at the current point
+position (@samp{entry-to-input-line}).
+@end display
+@cindex Copy entry name to input line.
+@findex entry-to-input-line
+@kindex ESC RET
+
+@noindent
+@kbd{ESC ESC RET}
+@display
+Copy the other panel path into the input line at the current point
+position (@samp{other-path-to-input-line}).
+@end display
+@cindex Other panel path to input line
+@findex other-path-to-input-line
+@kindex ESC ESC RET
+
+@noindent
+@kbd{^X ^I}
+@display
+Copy the names of all the selected entries into the input line at the
+current point position (@samp{selected-entries-to-input-line}).
+@end display
+@cindex Selected entries to input line
+@findex selected-entries-to-input-line
+@kindex ^X ^I
+
+
+@node Moving Point, Erasing, Inserting Text, Input Line
+@subsubsection Moving Point
+
+@noindent
+@kbd{^B}, @kbd{LEFT}
+@display
+Move the point backward one character (@samp{backward-char}).
+@end display
+@cindex Cursor backward
+@cindex Backward char
+@findex backward-char
+@kindex ^B, LEFT
+
+@noindent
+@kbd{^F}, @kbd{RIGHT}
+@display
+Move the point forward one character (@samp{forward-char}).
+@end display
+@cindex Cursor forward
+@cindex Forward char
+@findex forward-char
+@kindex ^F, RIGHT
+
+@noindent
+@kbd{ESC b}
+@display
+Move the point one word backward (@samp{backward-word}).
+@end display
+@cindex Cursor backward one word
+@cindex Backward word
+@findex backward-word
+@kindex ESC b
+
+@noindent
+@kbd{ESC f}
+@display
+Move the point one word forward (@samp{forward-word}).
+@end display
+@cindex Cursor forward one word
+@cindex Forward word
+@findex forward-word
+@kindex ESC f
+
+@noindent
+@kbd{^A}
+@display
+Move the cursor at the beginning of the input line (@samp{beginning-of-line}).
+@end display
+@cindex Cursor to BOL
+@cindex Beginning of line
+@findex beginning-of-line
+@kindex ^A
+
+@noindent
+@kbd{^E}
+@display
+Move the cursor at the end of the input line (@samp{end-of-line}).
+@end display
+@cindex Cursor to EOL
+@cindex End of line
+@findex end-of-line
+@kindex ^E
+
+
+@node Erasing, Case Changes, Moving Point, Input Line
+@subsubsection Deleting and killing text
+
+@noindent
+@kbd{DEL}, @kbd{^D}
+@display
+Delete the character under the cursor (@samp{delete-char}).
+@end display
+@cindex Delete char
+@findex delete-char
+@kindex DEL, ^D
+
+@noindent
+@kbd{^H}, @kbd{BKSPC}
+@display
+Delete the character before the cursor (@samp{backward-delete-char}).
+@end display
+@cindex Backward delete char
+@findex backward-delete-char
+@kindex ^H, BKSPC
+
+@noindent
+@kbd{ESC BKSPC}
+@display
+Delete backward one word (@samp{backward-kill-word}).
+@end display
+@cindex Delete word backward
+@cindex Backward kill word
+@findex backward-kill-word
+@kindex ESC BKSPC
+
+@noindent
+@kbd{ESC d}
+@display
+Delete forward one word (@samp{kill-word}).
+@end display
+@cindex Delete word forward
+@cindex kill word
+@findex kill-word
+@kindex ESC d
+
+@noindent
+@kbd{ESC k}
+@display
+Delete the entire line (@samp{kill-line}).
+@end display
+@cindex Delete line
+@cindex Kill line
+@findex kill-line
+@kindex ESC k
+
+@noindent
+@kbd{^U}
+@display
+Delete all the characters between the beginning of the input line and
+the point (@samp{kill-to-beginning-of-line}).
+@end display
+@cindex Kill to beginning of line
+@findex kill-to-beginning-of-line
+@kindex ^U
+
+@noindent
+@kbd{^K}
+@display
+Delete all the characters between the point and the end of the input
+line (@samp{kill-to-end-of-line}).
+@end display
+@cindex Kill to end of line
+@findex kill-to-end-of-line
+@kindex ^K
+
+@noindent
+@kbd{ESC SPC}
+@display
+Delete all the spaces around the point, leaving only one space
+(@samp{just-one-space}).
+@end display
+@cindex Just one space
+@findex just-one-space
+@kindex ESC SPC
+
+@noindent
+@kbd{ESC \}
+@display
+Delete all the spaces around the point
+(@samp{delete-horizontal-space}).
+@end display
+@cindex Delete spaces
+@cindex Delete horizontal space
+@findex delete-horizontal-space
+@kindex ESC \
+
+@noindent
+@kbd{^W}
+@display
+Save the region between the point and the mark into the kill "ring" and
+then kills it (@samp{kill-region}).  Note that there is no real
+kill-ring here.  The so-called kill-ring has only one entry.
+@end display
+@cindex Save and delete region
+@cindex Kill region
+@findex kill-region
+@kindex ^W
+
+@noindent
+@kbd{ESC w}
+@display
+Save the region between the point and the mark without killing it
+(@samp{kill-ring-save}).
+@end display
+@cindex Save into the kill ring
+@cindex Kill ring save
+@findex kill-ring-save
+@kindex ESC w
+
+
+@node Case Changes, History, Erasing, Input Line
+@subsubsection Case conversion of words.
+
+@noindent
+@kbd{ESC l}
+@display
+Convert the following word to lower case, moving over.
+(@samp{downcase-word}).
+@end display
+@cindex Convert to lower case
+@cindex Downcase word
+@findex downcase-word
+@kindex ESC l
+
+@noindent
+@kbd{ESC u}
+@display
+Convert the following word to upper case, moving over.
+(@samp{upcase-word}).
+@end display
+@cindex Convert to upper case
+@cindex Upcase word
+@findex upcase-word
+@kindex ESC u
+
+@noindent
+@kbd{ESC c}
+@display
+Capitalize the following word, moving over.
+(@samp{capitalize-word}).
+@end display
+@cindex Capitalize word
+@cindex Capitalize word
+@findex capitalize-word
+@kindex ESC c
+
+
+@node History, Setting Mark, Case Changes, Input Line
+@subsubsection Reusing recent input line arguments
+
+A separate history is kept for both built-in and user-defined commands.
+If you call a command that you have used before, you can re-edit a
+previously entered string in order to minimize the amount of characters
+needed to be typed for the new one.  There is no limit on the number of
+strings that can be kept in the history.
+
+@noindent
+@kbd{ESC p}
+@display
+Walk backward through the history of previously entered strings
+(@samp{previous-history-element}).
+@end display
+@cindex Previous history element
+@findex previous-history-element
+@kindex ESC p
+
+@noindent
+@kbd{ESC n}
+@display
+Walk forward through the history of previously entered strings
+(@samp{next-history-element}).
+@end display
+@cindex Next history element
+@findex next-history-element
+@kindex ESC n
+
+
+@node Setting Mark, Yanking, History, Input Line
+@subsubsection Commands to set the mark
+
+@noindent
+@kbd{^SPC}
+@display
+Set the mark at the current point position (@samp{set-mark}).
+@end display
+@cindex Set the mark
+@cindex Set mark
+@findex set-mark
+@kindex ^SPC
+
+@noindent
+@kbd{^X ^X}
+@display
+Exchange the current point position with the mark one
+(@samp{exchange-point-and-mark}).
+@end display
+@cindex Exchange point and mark
+@findex exchange-point-and-mark
+@kindex ^X ^X
+
+
+@node Yanking, Selecting Files, Setting Mark, Input Line
+@subsubsection Reinserting recently killed text
+
+@noindent
+@kbd{^Y}
+@display
+Reinsert a previously killed text at the current point position
+(@samp{yank}).
+@end display
+@cindex Yanking, reinserting
+@findex yank
+@kindex ^Y
+
+
+@node Selecting Files, , Yanking, Input Line
+@subsubsection Selecting files matching patterns
+
+If the very first character in the input line is a `+', what comes after
+it is considered a (space separated) list of shell patterns, and all the
+files that match at least one pattern from that list will be marked as
+selected.  An empty list of shell patterns (i.e. the `+' by itself) will
+cause all the files to be selected.
+
+If the very first character in the input line is a `-', the space
+separated list of shell patterns that follows is used to unselect files.
+An empty list of shell patterns (i.e. the `-' by itself) will cause all
+the selected files to be unselected.
+
+Finally, if the first and only character in the input line is a `*',
+then all the selected files will become unselected, and all the
+unselected files will become selected.
+
+
+@node Files, Directories, Input Line, gitfm
+@subsection File operations
+
+@menu
+* Copying Files::               How to copy files.
+* Moving Files::                How to move files.
+* Creating Files::              How to create new files.
+* Deleting Files::              How to delete files.
+* Linking Files::               How to create hard and symbolic links.
+* Renaming Files::              How to rename files.
+* Splitting Files::		How to split files into smaller parts.
+* Packing Files::               How to pack files in the min. number of bins.
+* Inode::                       How to change a file's mode, owner, group.
+
+* Editing Files::               How to edit and create files.  Default editor.
+* Viewing Files::               How to view files.  Default viewer.
+* Compressing Files::           How to compress and decompress files.
+* Encoding Files::              How to uuencode/uudecode, mpack/munpack a file.
+* Encrypting Files::            How to encrypt/decrypt files with pgp.
+* Comparing Files::             How to compare two files.
+* Spell Checking Files::        How to spell check a file.
+* Printing Files::		How to print files.
+* Wiping Files::                How to wipe a file.
+* Searching Files::             How to search a file.
+* Archive Files::               How to manage tar based archive files.
+* DEB Packages::                How to work with DEB packages.
+* RPM Packages::                How to install and uninstall RPM packages.
+* File Types::                  How to figure out the file type.
+* MSDOS Files::                 How to access msdos floppies.
+
+* Actions::                     A different action for each file type.
+@end menu
+
+
+@node Copying Files, Moving Files, , Files
+@subsubsection Copying Files
+
+@noindent
+@kbd{F5}, @kbd{ESC 5}, @kbd{^C C}
+@display
+Copy the currently selected entries to the user supplied path
+(@samp{copy}).
+@end display
+@cindex File copy
+@cindex Copying files
+@findex copy
+@kindex F5, ESC 5, ^C C
+
+@noindent
+@kbd{^C b C}
+@display
+Copy the currently selected entries to the user supplied path.  The
+operation is performed in background (@samp{B-COPY}).
+@end display
+@cindex Copying files in background
+@cindex Background file copy
+@findex B-COPY
+@kindex ^C b C
+
+
+@node Moving Files, Creating Files, Copying Files, Files
+@subsubsection Moving Files
+
+@noindent
+@kbd{F6}, @kbd{ESC 6}, @kbd{^C T}
+@display
+Move the currently selected entries to the user supplied path
+(@samp{move}).
+@end display
+@cindex File move
+@cindex Moving files
+@findex move
+@kindex F6, ESC 6, ^C T
+
+@noindent
+@kbd{^C b T}
+@display
+Move the currently selected entries to the user supplied path.  The
+operation is performed in background (@samp{B-MOVE}).
+@end display
+@cindex Moving files in background
+@cindex Background file move
+@findex B-MOVE
+@kindex ^C b T
+
+
+@node Creating Files, Deleting Files, Moving Files, Files
+@subsubsection Creating Files
+
+The easiest way to create a new file is to start an editor passing the
+file name as an argument.  Most editors will try to create the file if
+the file doesn't exist.  @xref{Editing Files}, for more information.
+
+
+@node Deleting Files, Linking Files, Creating Files, Files
+@subsubsection Deleting Files
+
+@noindent
+@kbd{F8}, @kbd{ESC 8}, @kbd{^C D}
+@display
+Delete the currently selected entries (@samp{delete}).
+@end display
+@cindex Deleting files
+@cindex File delete
+@findex delete
+@kindex F8, ESC 8, ^C D
+
+@noindent
+@kbd{^C b D}
+@display
+Delete the currently selected entries.  The operation is performed in
+background (@samp{B-DELETE}).
+@end display
+@cindex Deleting files in background
+@cindex Background file delete
+@findex B-DELETE
+@kindex ^C b D
+
+
+@node Linking Files, Renaming Files, Deleting Files, Files
+@subsubsection Linking Files
+
+@noindent
+@kbd{^C H}
+@display
+Create a hard link from the current files to a user supplied file
+name (@samp{LINK}).
+@end display
+@cindex Hard links to files
+@findex LINK
+@kindex ^C H
+
+@noindent
+@kbd{^C b H}
+@display
+Create a hard link from the current files to a user supplied file name
+(@samp{B-LINK}).  The action is performed in background.
+@end display
+@cindex Linking files in background
+@findex B-LINK
+@kindex ^C b H
+
+@noindent
+@kbd{^C S}
+@display
+Create a symbolic link from the current files to a user supplied file
+name (@samp{SYMLINK}).
+@end display
+@cindex Symbolic links to files
+@findex SYMLINK
+@kindex ^C S
+
+@noindent
+@kbd{^C b S}
+@display
+Create a symbolic link from the current files to a user supplied file
+name (@samp{B-SYMLINK}).  The action is performed in background.
+@end display
+@findex B-SYMLINK
+@kindex ^C b S
+
+
+@node Renaming Files, Splitting Files, Linking Files, Files
+@subsubsection Renaming Files
+
+@noindent
+@kbd{^C R}
+@display
+Rename the current file or directory with the user supplied name
+(@samp{RENAME}).
+@end display
+@cindex Renaming files
+@cindex File rename
+@findex RENAME
+@kindex ^C R
+
+@noindent
+@kbd{^C b R}
+@display
+Rename the current file or directory with the user supplied name.  The
+operation is performed in background (@samp{B-RENAME}).
+@end display
+@cindex Renaming files in background
+@cindex Background file rename
+@findex B-RENAME
+@kindex ^C b R
+
+@noindent
+@kbd{^C n d}
+@display
+Change the name of all the selected entries to lowercase.
+(@samp{name-downcase}).
+@end display
+@cindex Downcase file names
+@findex name-downcase
+@kindex ^C n d
+
+@noindent
+@kbd{^C n u}
+@display
+Change the name of all the selected entries to uppercase.
+(@samp{name-upcase}).
+@end display
+@cindex Upcase file names
+@findex name-upcase
+@kindex ^C n u
+
+
+@node Splitting Files, Packing Files, Renaming Files, Files
+@subsubsection Splitting files into smaller parts
+
+@noindent
+@kbd{^C /}
+@display
+Split the current file into several smaller files of a given size and
+named based on a given prefix (@samp{SPLIT}).
+@end display
+@cindex Splitting files
+@cindex File split
+@findex SPLIT
+@kindex ^C /
+
+@noindent
+@kbd{^C b /}
+@display
+Split the current file into several smaller files of a given size and
+named based on a given prefix.  The operation is performed in background
+(@samp{B-SPLIT}).
+@end display
+@cindex Splitting files in background
+@cindex Background file split
+@findex B-SPLIT
+@kindex ^C b /
+
+
+@node Packing Files, Inode, Splitting Files, Files
+@subsubsection Packing files into the minimum number of bins
+
+@noindent
+@kbd{^C ~}
+@display
+Pack the files into the smallest number of bins.  This is an
+approximation - the problem is NP-complete and no known algorithm can
+guarantee a solution better than @samp{(11/9) * OPTIMAL + 4}.
+
+To make things even worse, for large files, there is no portable way
+to predict how many blocks the file system implementation will require
+for indirect blocks, directories, etc.  So keep in mind that this is
+only an approximation.
+
+Bin packing can be useful when you want to put a bunch of files on
+floppies or zip disks and you want to optimize things a little bit
+(@samp{bin-packing}).
+
+@samp{gitfm} assumes that you want to pack all the files in the current
+directory - if there is any selected file in that directory it will be
+unselected first.  Then @samp{gitfm} will ask for a bin size, and select
+the files that should go in the first bin.  You are supposed to place
+those files in the first bin (e.g. a tar archive), remove them from the
+current directory, then run @samp{bin-packing} again, to obtain the list
+of the files that should go into the second bin, etc.
+@end display
+@cindex Pack files into bins
+@findex bin-packing
+@kindex ^C ~
+
+
+@node Inode, Editing Files, Packing Files, Files
+@subsubsection Changing a file's mode, owner and group
+
+@noindent
+@kbd{^C M}
+@display
+Change the mode of the currently selected entries (@samp{CHMOD}).
+@end display
+@cindex chmod
+@cindex Changing the file's mode
+@cindex Changing the inode's mode
+@findex CHMOD
+@kindex ^C M
+
+@noindent
+@kbd{^C b M}
+@display
+Change the mode of the currently selected entries.  The operation is
+performed in background (@samp{B-CHMOD}).
+@end display
+@cindex Changing the mode in background
+@findex B-CHMOD
+@kindex ^C b M
+
+@noindent
+@kbd{^C r M}
+@display
+Recursively change the modes of the selected entries if one of them is a
+directory (@samp{R-CHMOD}).
+@end display
+@cindex Changing the mode recursively
+@findex R-CHMOD
+@kindex ^C r M
+
+@noindent
+@kbd{^C b r M}
+@display
+Recursively change the modes of the selected entries if one of them is a
+directory.  The operation is performed in background (@samp{B-R-CHMOD}).
+@end display
+@cindex Changing the mode recursively in background
+@findex B-R-CHMOD
+@kindex ^C b r M
+
+@noindent
+@kbd{^C O}
+@display
+Change the owner of the currently selected entries (@samp{CHOWN}).
+@end display
+@cindex chown
+@cindex Changing the file's owner
+@cindex Changing the inode's owner
+@findex CHOWN
+@kindex ^C O
+
+@noindent
+@kbd{^C b O}
+@display
+Change the owner of the currently selected entries.  The operation is
+performed in background (@samp{B-CHOWN}).
+@end display
+@cindex Changing the owner in background
+@findex B-CHOWN
+@kindex ^C b O
+
+@noindent
+@kbd{^C r O}
+@display
+Recursively change the owners of the selected entries if one of them is
+a directory (@samp{R-CHOWN}).
+@end display
+@cindex Changing the owner recursively
+@findex R-CHOWN
+@kindex ^C r O
+
+@noindent
+@kbd{^C b r O}
+@display
+Recursively change the owners of the selected entries if one of them is
+a directory.  The operation is performed in background
+(@samp{B-R-CHOWN}).
+@end display
+@cindex Changing the owner recursively in background
+@findex B-R-CHOWN
+@kindex ^C b r O
+
+@noindent
+@kbd{^C G}
+@display
+Change the group of the currently selected entries (@samp{CHGRP}).
+@end display
+@cindex chgrp
+@cindex Changing the file's group
+@cindex Changing the inode's group
+@findex CHGRP
+@kindex ^C G
+
+@noindent
+@kbd{^C b G}
+@display
+Change the group of the currently selected entries.  The operation is
+performed in background (@samp{B-CHGRP}).
+@end display
+@cindex Changing the group in background
+@findex B-CHGRP
+@kindex ^C b G
+
+@noindent
+@kbd{^C r G}
+@display
+Recursively change the groups of the selected entries if one of them is
+a directory (@samp{R-CHGRP}).
+@end display
+@cindex Changing the group recursively
+@findex R-CHGRP
+@kindex ^C r G
+
+@noindent
+@kbd{^C b r G}
+@display
+Recursively change the groups of the selected entries if one of them is
+a directory.  The operation is performed in background
+(@samp{B-R-CHGRP}).
+@end display
+@cindex Changing the group recursively in background
+@findex B-R-CHGRP
+@kindex ^C b r G
+
+
+@node Editing Files, Viewing Files, Inode, Files
+@subsubsection Editing Files
+
+@noindent
+@kbd{F4}, @kbd{ESC 4}
+@display
+Call the default editor with the current file name as an argument
+(@samp{EDIT}).
+@end display
+@cindex File edit
+@cindex Editing a file
+@findex EDIT
+@kindex F4, ESC 4
+
+@noindent
+@kbd{^X e}
+@display
+Call the default editor with the selected entry names as arguments
+(@samp{MULTIPLE-EDIT}).
+@end display
+@cindex Editing multiple files
+@cindex Multiple edit
+@findex MULTIPLE-EDIT
+@kindex ^X e
+
+@noindent
+@kbd{^X ^F}
+@display
+Create a new file by calling the default editor with the user supplied
+file name as an argument (@samp{FILE-CREATE}).
+@end display
+@cindex File create
+@cindex Create file
+@findex FILE-CREATE
+@kindex ^X ^F
+
+@noindent
+@kbd{^X 4 a}
+@display
+Call the default editor in order to edit the @file{ChangeLog} file
+(@samp{CHANGE-LOG}).
+@end display
+@cindex Editing the ChangeLog
+@findex CHANGE-LOG
+@kindex ^X 4 a
+
+The default editor can be specified using the @var{EDITOR} or
+@var{GNUIT_EDITOR} environment variables.  @xref{Environment Variables},
+for more information.
+
+@var{$GNUIT_EDITOR} used to be called @var{$GIT_EDITOR}. The old
+name is still accepted for backwards-compatibility.
+
+@node Viewing Files, Compressing Files, Editing Files, Files
+@subsubsection Viewing Files
+
+@noindent
+@kbd{F3}, @kbd{ESC 3}
+@display
+Call the default viewer (@code{gitview}) with the current file name as
+argument (@samp{VIEW}).
+@end display
+@cindex Viewing files
+@cindex File view
+@findex VIEW
+@kindex F3, ESC 3
+
+@noindent
+@kbd{^X v}
+@display
+Call the default pager (@code{more}) with the currently selected entry
+names as arguments (@samp{MULTIPLE-VIEW}).
+@end display
+@cindex Viewing multiple files
+@findex MULTIPLE-VIEW
+@kindex ^X v
+
+
+@node Compressing Files, Encoding Files, Viewing Files, Files
+@subsubsection Compressing Files
+
+@noindent
+@kbd{^C z}
+@display
+Compress the currently selected entries with @code{gzip}
+(@samp{COMPRESS}).
+@end display
+@cindex Compressing files
+@cindex Compressing directories
+@cindex gzip
+@cindex compress
+@findex COMPRESS
+@kindex ^C z
+
+@noindent
+@kbd{^C b z}
+@display
+Compress the currently selected entries with @code{gzip}.  The operation
+is performed in background (@samp{B-COMPRESS}).
+@end display
+@cindex Compressing files in background
+@cindex Compressing directories in background
+@findex B-COMPRESS
+@kindex ^C b z
+
+@noindent
+@kbd{^C Z}
+@display
+Uncompress the currently selected entries with @code{gunzip}
+(@samp{UNCOMPRESS}).
+@end display
+@cindex Uncompressing files
+@cindex Uncompressing directories
+@cindex Decompressing files
+@cindex Decompressing directories
+@cindex gunzip
+@findex UNCOMPRESS
+@kindex ^C Z
+
+@noindent
+@kbd{^C b Z}
+@display
+Uncompress the currently selected entries with @code{gunzip}.  The
+operation is performed in background (@samp{B-UNCOMPRESS}).
+@end display
+@cindex Uncompressing files in background
+@cindex Uncompressing directories in background
+@cindex Decompressing files in background
+@cindex Decompressing directories in background
+@findex B-UNCOMPRESS
+@kindex ^C b Z
+
+@noindent
+@kbd{^C f Z}
+@display
+Uncompress the currently selected entries with @code{gunzip}
+(@samp{F-UNCOMPRESS}).  Force uncompression of links.
+@end display
+@cindex Uncompressing files/links
+@cindex Uncompressing directories/links
+@cindex Decompressing files/links
+@cindex Decompressing directories/links
+@cindex gunzip
+@findex F-UNCOMPRESS
+@kindex ^C f Z
+
+@noindent
+@kbd{^C b f Z}
+@display
+Uncompress the currently selected entries with @code{gunzip}.  Force
+uncompression of links.  The operation is performed in background
+(@samp{BF-UNCOMPRESS}).
+@end display
+@cindex Uncompressing files/links in background
+@cindex Uncompressing directories/links in background
+@cindex Decompressing files/links in background
+@cindex Decompressing directories/links in background
+@findex BF-UNCOMPRESS
+@kindex ^C b f Z
+
+@noindent
+@kbd{^C .}
+@display
+Compress the currently selected entries with @code{bzip2}
+(@samp{BZIP2-COMPRESS}).
+@end display
+@cindex Compressing files
+@cindex Compressing directories
+@cindex bzip2
+@cindex compress
+@findex BZIP2-COMPRESS
+@kindex ^C .
+
+@noindent
+@kbd{^C b .}
+@display
+Compress the currently selected entries with @code{bzip2}.  The
+operation is performed in background (@samp{B-BZIP2-COMPRESS}).
+@end display
+@cindex Compressing files in background
+@cindex Compressing directories in background
+@findex B-BZIP2-COMPRESS
+@kindex ^C b .
+
+@noindent
+@kbd{^C o}
+@display
+Uncompress the currently selected entries with @code{bunzip2}
+(@samp{BZIP2-UNCOMPRESS}).
+@end display
+@cindex Uncompressing files
+@cindex Uncompressing directories
+@cindex Decompressing files
+@cindex Decompressing directories
+@cindex gunzip
+@findex BZIP2-UNCOMPRESS
+@kindex ^C o
+
+@noindent
+@kbd{^C b o}
+@display
+Uncompress the currently selected entries with @code{bunzip2}.  The
+operation is performed in background (@samp{B-BZIP2-UNCOMPRESS}).
+@end display
+@cindex Uncompressing files in background
+@cindex Uncompressing directories in background
+@cindex Decompressing files in background
+@cindex Decompressing directories in background
+@findex B-BZIP2-UNCOMPRESS
+@kindex ^C b o
+
+
+@node Encoding Files, Encrypting Files, Compressing Files, Files
+@subsubsection Encoding Files
+
+@noindent
+@kbd{^C e}
+@display
+Encode the currently selected file (@samp{UUENCODE}).
+@end display
+@cindex Encoding files
+@cindex uuencode
+@findex UUENCODE
+@kindex ^C e
+
+@noindent
+@kbd{^C b e}
+@display
+Encode the currently selected file.  The operation is performed in
+background (@samp{B-UUENCODE}).
+@end display
+@cindex Encoding files in background
+@findex B-UUENCODE
+@kindex ^C b e
+
+@noindent
+@kbd{^C E}
+@display
+Decode the currently selected file (@samp{UUDECODE}).
+@end display
+@cindex uudecode
+@cindex Decoding files
+@findex UUDECODE
+@kindex ^C E
+
+@noindent
+@kbd{^C b E}
+@display
+Decode the currently selected file.  The operation is performed in
+background (@samp{B-UUDECODE}).
+@end display
+@cindex Decoding files in background
+@findex B-UUDECODE
+@kindex ^C b E
+
+@noindent
+@kbd{^C k}
+@display
+Encode the currently selected file using mpack (@samp{MIME-PACK}).
+@end display
+@cindex Encoding files
+@cindex mpack
+@findex MPACK
+@kindex ^C k
+
+@noindent
+@kbd{^C b k}
+@display
+Encode the currently selected file using mpack.  The operation is
+performed in background (@samp{B-MIME-PACK}).
+@end display
+@cindex Encoding files in background
+@findex B-MIME-PACK
+@kindex ^C b k
+
+@noindent
+@kbd{^C K}
+@display
+Decode the currently selected file using munpack (@samp{MIME-UNPACK}).
+@end display
+@cindex munpack
+@cindex Decoding files
+@findex MUNPACK
+@kindex ^C K
+
+@noindent
+@kbd{^C b K}
+@display
+Decode the currently selected file using munpack.  The operation is
+performed in background (@samp{B-MIME-UNPACK}).
+@end display
+@cindex Decoding files in background
+@findex B-MIME-UNPACK
+@kindex ^C b K
+
+
+@node Encrypting Files, Comparing Files, Encoding Files, Files
+@subsubsection Encrypting Files
+
+@noindent
+@kbd{^C p}
+@display
+Encrypt (using @code{pgp}) the current file (@samp{ENCRYPT}).
+@end display
+@cindex Encrypting the current file
+@findex ENCRYPT
+@kindex ^C p
+
+@noindent
+@kbd{^C P}
+@display
+Decrypt (using @code{pgp}) the current file (@samp{DECRYPT}).
+@end display
+@cindex Decrypting the current file
+@findex DECRYPT
+@kindex ^C P
+
+
+@node Comparing Files, Spell Checking Files, Encrypting Files, Files
+@subsubsection Comparing Files
+
+@noindent
+@kbd{^C =}
+@display
+Compare (using @code{diff}) the current ASCII file with the other
+panel's current file (@samp{DIFF}).  If both entries are directories, a
+recursive diff is performed.
+@end display
+@cindex diff
+@cindex Differences between ascii files
+@findex DIFF
+@kindex ^C =
+
+@noindent
+@kbd{^C ESC =}
+@display
+Compare (using @code{diff}) the current ASCII file with its latest
+backup.  The latest backup is the file having the same name and a '~' at
+the end (@samp{LAST-BACKUP-DIFF}).
+@end display
+@cindex Last backup diff
+@cindex Differences between file and backup
+@findex LAST-BACKUP-DIFF
+@kindex ^C ESC =
+
+@noindent
+@kbd{^C B}
+@display
+Compare the current file with the other panel current file.  A binary
+comparison is performed (@samp{compare}).
+@end display
+@cindex Binary comparison
+@findex compare
+@kindex ^C B
+
+
+@node Spell Checking Files, Printing Files, Comparing Files, Files
+@subsubsection Spell Checking Files
+
+@noindent
+@kbd{^X I}
+@display
+Run the @code{ispell} command with the current file name as an
+argument.
+@end display
+@cindex Spell checking
+@cindex ispell
+@findex ISPELL
+@kindex ^X I
+
+
+@node Printing Files, Wiping Files, Spell Checking Files, Files
+@subsubsection Printing Files
+
+@noindent
+@kbd{^C j}
+@display
+Print the selected files via @code{lpr} to the user specified printer or
+to the default one if no @code{lpr} options are given (@samp{PRINT-JOB}).
+@end display
+@cindex Printing files
+@cindex lpr
+@cindex printing
+@findex PRINT-JOB
+@kindex ^C j
+
+
+@noindent
+@kbd{^C J}
+@display
+Print the list of active printing jobs via @code{lpq}.  The default
+printer is queried if no @code{lpq} options are given
+(@samp{PRINT-JOB-LIST}).
+@end display
+@cindex Printing files
+@cindex lpr
+@cindex printing
+@findex PRINT-JOB-LIST
+@kindex ^C J
+
+
+@node Wiping Files, Searching Files, Printing Files, Files
+@subsubsection Wiping Files
+
+@noindent
+@kbd{^C W}
+@display
+Call @code{gitwipe} to wipe the selected files.  Asks for confirmation
+before actually wiping them in order to avoid errors (@samp{WIPE}).
+@end display
+@xref{gitwipe}, for more information.
+@cindex Wiping files
+@cindex File wipe
+@findex WIPE
+@kindex ^C W
+
+
+@node Searching Files, Archive Files, Wiping Files, Files
+@subsubsection Searching Files
+
+@noindent
+@kbd{ESC %}
+@display
+Search files on the file system, starting from the current directory
+(@samp{FIND}).
+@end display
+@cindex find
+@cindex File search
+@cindex Searching files
+@findex FIND
+@kindex ESC %
+
+@noindent
+@kbd{ESC &}
+@display
+Use 'locate' to search files on the file system, starting from the
+current directory (@samp{LOCATE}).
+@end display
+@cindex locate
+@cindex Locating files
+@cindex File search
+@cindex Searching files
+@findex LOCATE
+@kindex ESC &
+
+@noindent
+@kbd{^X w}
+@display
+Locate the binary, source, and manual page files for a command
+(@samp{WHEREIS}).
+@end display
+@cindex Program search
+@cindex whereis
+@findex WHEREIS
+@kindex ^X w
+
+@noindent
+@kbd{^X W}
+@display
+Locate a command; display its pathname or alias (@samp{WHICH}).
+@end display
+@cindex Searching programs
+@cindex Searching binaries
+@cindex which
+@findex WHICH
+@kindex ^X W
+
+
+@node Archive Files, DEB Packages, Searching Files, Files
+@subsubsection Managing tar based archive files
+
+@noindent
+@kbd{^C a}
+@display
+Create a @code{tar} archive containing all the currently selected
+entries (@samp{TAR}).
+@end display
+@cindex Tar archive
+@cindex Archive
+@cindex Creating tar archives
+@findex TAR
+@kindex ^C a
+
+@noindent
+@kbd{^C b a}
+@display
+Create a @code{tar} archive containing all the currently selected
+entries.  The operation is performed in background (@samp{B-TAR}).
+@end display
+@cindex Creating tar archives in background
+@findex B-TAR
+@kindex ^C b a
+
+@noindent
+@kbd{^C x}
+@display
+Create a compressed @code{tar} archive containing the current entry,
+provided it is a directory (@samp{TAR-COMPRESS}).
+@end display
+@cindex Creating compressed tar archives
+@findex TAR-COMPRESS
+@kindex ^C x
+
+@noindent
+@kbd{^C b x}
+@display
+Create a compressed @code{tar} archive containing the current entry,
+provided it is directory.  The operation is performed in background
+(@samp{B-TAR-COMPRESS}).
+@end display
+@cindex Creating compressed tar archives in background
+@findex B-TAR-COMPRESS
+@kindex ^C b x
+
+@noindent
+@kbd{^C -}
+@display
+Create a bzip2 compressed @code{tar} archive containing the current
+entry, provided it is a directory (@samp{TAR-BZIP2}).
+@end display
+@cindex Creating bzip2 compressed tar archives
+@findex TAR-BZIP2
+@kindex ^C -
+
+@noindent
+@kbd{^C b -}
+@display
+Create a bzip2 compressed @code{tar} archive containing the current
+entry, provided it is a directory.  The operation is performed in
+background (@samp{B-TAR-BZIP2}).
+@end display
+@cindex Creating bzip2 compressed tar archives in background
+@findex B-TAR-BZIP2
+@kindex ^C b -
+
+@noindent
+@kbd{^C X}
+@display
+Expand the selected archives into the current directory.  The utility
+used is selected based on the extension of the file
+(@samp{GENERIC-UNPACK}).
+@end display
+@cindex Extracting files from archives
+@findex GENERIC-UNPACK
+@kindex ^C X
+
+@noindent
+@kbd{^C b X}
+@display
+Expand the selected archives into the current directory.  The utility
+used is based on the extension of the file.  The operation is performed
+in background (@samp{B-GENERIC-UNPACK}).
+@end display
+@findex B-GENERIC-UNPACK
+@kindex ^C b X
+
+
+@noindent
+@kbd{^C V}
+@display
+Expand the selected archives into an user supplied current directory.
+The utility used is selected based on the extension of the file
+(@samp{GENERIC-UNPACK-INTO}).
+@end display
+@cindex Extracting files from archives
+@findex GENERIC-UNPACK-INTO
+@kindex ^C V
+
+@noindent
+@kbd{^C b V}
+@display
+Expand the selected archives into an user supplied directory.  The
+utility used is based on the extension of the file.  The operation is
+performed in background (@samp{B-GENERIC-UNPACK-INTO}).
+@end display
+@findex B-GENERIC-UNPACK-INTO
+@kindex ^C b V
+
+
+@node DEB Packages, RPM Packages, Archive Files, Files
+@subsubsection Working with DPKG
+
+@code{dpkg} provides commands for manipulating and querying the dpkg
+database, @code{gitfm}'s DPKG commands allow quick access to most of
+those which operate on binary packages, files, or require package
+names as arguments. All commands expecting package names can also be
+given binary packages, the package names will be automatically
+extracted. Most commands use their single character @code{dpkg} option
+letter as the key command.
+
+@noindent
+@kbd{^C ^D i}
+@display
+Install the @code{deb} file(s) selected or pointed by the cursor
+(@samp{DPKG-INSTALL}).
+@end display
+@findex DPKG-INSTALL
+@kindex ^C ^D i
+
+@noindent
+@kbd{^C ^D R i}
+@display
+Recursively install the @code{deb} file(s) in the directories selected or
+pointed by the cursor (@samp{R-DPKG-INSTALL}).
+@end display
+@findex R-DPKG-INSTALL
+@kindex ^C ^D R i
+
+@noindent
+@kbd{^C ^D u}
+@display
+Unpack the @code{deb} file(s) selected or pointed by the cursor, but
+don't configure it (@samp{DPKG-UNPACK}).
+@end display
+@findex DPKG-UNPACK
+@kindex ^C ^D u
+
+@noindent
+@kbd{^C ^D R u}
+@display
+Recursively unpack the @code{deb} file(s) in the directories selected or
+pointed by the cursor, but don't configure them (@samp{R-DPKG-UNPACK}).
+@end display
+@findex R-DPKG-UNPACK
+@kindex ^C ^D R u
+
+@noindent
+@kbd{^C ^D C}
+@display
+Configure the unpacked package(s) selected or pointed by the cursor
+(@samp{DPKG-CONFIGURE}).
+@end display
+@findex DPKG-CONFIGURE
+@kindex ^C ^D C
+
+@noindent
+@kbd{^C ^D r}
+@display
+Remove the package(s) selected or pointed by the cursor
+(@samp{DPKG-REMOVE}).
+@end display
+@findex DPKG-REMOVE
+@kindex ^C ^D r
+
+@noindent
+@kbd{^C ^D P}
+@display
+Purge the package(s) selected or pointed by the cursor
+(@samp{DPKG-PURGE}).
+@end display
+@findex DPKG-PURGE
+@kindex ^C ^D P
+
+@noindent
+@kbd{^C ^D A}
+@display
+Update dpkg and dselect's idea of which packages are available with
+information from the @code{deb} file(s) selected or pointed by the
+cursor (@samp{DPKG-RECORDAVAIL}).
+@end display
+@findex DPKG-RECORDAVAIL
+@kindex ^C ^D A
+
+@noindent
+@kbd{^C ^D R A}
+@display
+Recursively update dpkg and dselect's idea of which packages are
+available with information from the @code{deb} file(s) in the directories
+selected or pointed by the cursor (@samp{R-DPKG-RECORDAVAIL}).
+@end display
+@findex R-DPKG-RECORDAVAIL
+@kindex ^C ^D R A
+
+@noindent
+@kbd{^C ^D h}
+@display
+Display quick help file for GITFM's DPKG commands.
+(@samp{DPKG-HELP}).
+@end display
+@findex DPKG-HELP
+@kindex ^C ^D h
+
+@noindent
+@kbd{^C ^D c}
+@display
+Lists the contents of the filesystem tree archive portion of the
+@code{deb} file pointed by the cursor (@samp{DPKG-CONTENTS}).
+@end display
+@findex DPKG-CONTENTS
+@kindex ^C ^D c
+
+@noindent
+@kbd{^C ^D f}
+@display
+Extracts control file information from a @code{deb} file pointed by
+the cursor (@samp{DPKG-FIELD}). You are presented with the file name and
+can either hit ENTER to see all fields, or add control file field names
+(space separated) to see only those fields.
+@end display
+@findex DPKG-FIELD
+@kindex ^C ^D f
+
+@noindent
+@kbd{^C ^D I}
+@display
+Provides information about a @code{deb} file pointed by the cursor
+(@samp{DPKG-INFO}).
+@end display
+@findex DPKG-INFO
+@kindex ^C ^D I
+
+@noindent
+@kbd{^C ^D l}
+@display
+List the package(s) selected or pointed by the cursor
+(@samp{DPKG-LISTPKGS}).
+@end display
+@findex DPKG-LISTPKGS
+@kindex ^C ^D l
+
+@noindent
+@kbd{^C ^D s}
+@display
+Display status details for the package(s) selected or pointed by the
+cursor (@samp{DPKG-STATUS}).
+@end display
+@findex DPKG-STATUS
+@kindex ^C ^D s
+
+@noindent
+@kbd{^C ^D L}
+@display
+List files owned by the package(s) selected or pointed by the cursor
+(@samp{DPKG-LISTFILES}).
+@end display
+@findex DPKG-LISTFILES
+@kindex ^C ^D L
+
+@noindent
+@kbd{^C ^D S}
+@display
+Find package owning file pointed to by the cursor
+(@samp{DPKG-SEARCH}).
+@end display
+@findex DPKG-SEARCH
+@kindex ^C ^D S
+
+@noindent
+@kbd{^C ^D p}
+@display
+Display available version details of package(s) selected or pointed by
+the cursor (@samp{DPKG-PRINTAVAIL}).
+@end display
+@findex DPKG-PRINTAVAIL
+@kindex ^C ^D p
+
+
+@node RPM Packages, File Types, DEB Packages, Files
+@subsubsection Installing and Uninstalling RPM packages
+
+Red Hat Linux Distributions use a very powerful package manager called
+@code{rpm}.  It is used whenever you need to install/remove/upgrade/etc
+a software package.  The packages used by @code{rpm} use the extension
+@samp{.rpm}.  @code{gitfm} provides default key bindings for some of the
+basic operations @code{rpm} can perform on packages: install, uninstall,
+upgrade and query.
+
+@noindent
+@kbd{^C I}
+@display
+Install the @code{rpm} package pointed by the cursor
+(@samp{RPM-INSTALL}).
+@end display
+@findex RPM-INSTALL
+@kindex ^C I
+
+@noindent
+@kbd{^C b I}
+@display
+Install the @code{rpm} package pointed by the cursor
+(@samp{B-RPM-INSTALL}).  The operation is performed in background.
+@end display
+@findex B-RPM-INSTALL
+@kindex ^C b I
+
+@noindent
+@kbd{^C i}
+@display
+Uninstall the @code{rpm} package pointed by the cursor
+(@samp{RPM-UNINSTALL}).
+@end display
+@findex RPM-UNINSTALL
+@kindex ^C i
+
+@noindent
+@kbd{^C b i}
+@display
+Uninstall the @code{rpm} package pointed by the cursor
+(@samp{B-RPM-UNINSTALL}).  The operation is performed in background.
+@end display
+@findex B-RPM-UNINSTALL
+@kindex ^C b i
+
+@noindent
+@kbd{^C N}
+@display
+Upgrade the @code{rpm} package pointed by the cursor
+(@samp{RPM-UPGRADE}).
+@end display
+@findex RPM-UPGRADE
+@kindex ^C N
+
+@noindent
+@kbd{^C b N}
+@display
+Upgrade the @code{rpm} package pointed by the cursor
+(@samp{B-RPM-UPGRADE}).  The operation is performed in background.
+@end display
+@findex B-RPM-UPGRADE
+@kindex ^C b N
+
+@noindent
+@kbd{^C q}
+@display
+Query the @code{rpm} package manager (@samp{RPM-QUERY}).  The default
+options used are @samp{-qil}.  See the @code{rpm} manual page for
+more details on using @code{rpm}.
+@end display
+@findex RPM-QUERY
+@kindex ^C q
+
+
+@node File Types, MSDOS Files, RPM Packages, Files
+@subsubsection File Types
+
+@noindent
+@kbd{^C t}
+@display
+Print the type of a file using the @code{file} utility
+(@samp{FILE-TYPE}).
+@end display
+@findex FILE-TYPE
+@kindex ^C t
+
+
+@node MSDOS Files, Actions, File Types, Files
+@subsubsection Accessing MSDOS Files
+
+@noindent
+@kbd{^C m d}, @kbd{^C m ^D}
+@display
+Change the current @code{MSDOS} directory to a given directory
+(@samp{MTOOLS-CHDIR}).
+@end display
+@findex MTOOLS-CHDIR
+@kindex ^C m d, ^C m ^D
+
+@noindent
+@kbd{^C m P}
+@display
+Put the currently selected files on a @code{MSDOS} floppy
+(@samp{MTOOLS-PUT}).
+@end display
+@findex MTOOLS-PUT
+@kindex ^C m P
+
+@noindent
+@kbd{^C b m P}
+@display
+Put the currently selected files on a @code{MSDOS} floppy
+(@samp{B-MTOOLS-PUT}).  The operation is performed in background.
+@end display
+@findex B-MTOOLS-PUT
+@kindex ^C b m P
+
+@noindent
+@kbd{^C m G}
+@display
+Get some files from a @code{MSDOS} floppy and put them in a given
+directory (@samp{MTOOLS-GET}).
+@end display
+@findex MTOOLS-GET
+@kindex ^C m G
+
+@noindent
+@kbd{^C b m G}
+@display
+Get some files from a @code{MSDOS} floppy and put them in a given
+directory (@samp{B-MTOOLS-GET}).  The operation is performed in
+background.
+@end display
+@findex B-MTOOLS-GET
+@kindex ^C b m G
+
+@noindent
+@kbd{^C m D}
+@display
+Delete files from a @code{MSDOS} floppy (@samp{MTOOLS-DELETE}).
+@end display
+@findex MTOOLS-DELETE
+@kindex ^C m D
+
+@noindent
+@kbd{^C b m D}
+@display
+Delete files from a @code{MSDOS} floppy (@samp{B-MTOOLS-DELETE}).  The
+operation is performed in background.
+@end display
+@findex B-MTOOLS-DELETE
+@kindex ^C b m D
+
+@noindent
+@kbd{^C m L}
+@display
+List files and directories on a @code{MSDOS} floppy (@samp{MTOOLS-DIR}).
+@end display
+@findex MTOOLS-DIR
+@kindex ^C m L
+
+@noindent
+@kbd{^C m F}
+@display
+Format a @code{MSDOS} floppy (@samp{MTOOLS-FORMAT}).
+@end display
+@findex MTOOLS-FORMAT
+@kindex ^C m F
+
+@noindent
+@kbd{^C b m F}
+@display
+Format a @code{MSDOS} floppy (@samp{B-MTOOLS-FORMAT}).  The operation is
+performed in background.
+@end display
+@findex B-MTOOLS-FORMAT
+@kindex ^C b m F
+
+@noindent
+@kbd{^C m M}
+@display
+Create a directory on a @code{MSDOS} floppy (@samp{MTOOLS-MKDIR}).
+@end display
+@findex MTOOLS-MKDIR
+@kindex ^C m M
+
+@noindent
+@kbd{^C b m M}
+@display
+Create a directory on a @code{MSDOS} floppy (@samp{B-MTOOLS-MKDIR}).
+The operation is performed in background.
+@end display
+@findex B-MTOOLS-MKDIR
+@kindex ^C b m M
+
+@noindent
+@kbd{^C m K}
+@display
+Remove a directory from a @code{MSDOS} floppy (@samp{MTOOLS-RMDIR}).
+All the files and subdirectories in that directory are removed as well.
+@end display
+@findex MTOOLS-RMDIR
+@kindex ^C m K
+
+@noindent
+@kbd{^C b m K}
+@display
+Remove a directory from a @code{MSDOS} floppy (@samp{B-MTOOLS-RMDIR}).
+All the files and subdirectories in that directory are removed as well.
+The operation is performed in background.
+@end display
+@findex B-MTOOLS-RMDIR
+@kindex ^C b m K
+
+@noindent
+@kbd{^C m R}
+@display
+Rename a file or directory on a @code{MSDOS} floppy
+(@samp{MTOOLS-RENAME}).
+@end display
+@findex MTOOLS-RENAME
+@kindex ^C m R
+
+@noindent
+@kbd{^C b m R}
+@display
+Rename a file or directory on a @code{MSDOS} floppy
+(@samp{B-MTOOLS-RENAME}).  The operation is performed in background.
+@end display
+@findex B-MTOOLS-RENAME
+@kindex ^C b m R
+
+@noindent
+@kbd{^C m T}
+@display
+Display the contents of a file located on a @code{MSDOS} floppy
+(@samp{MTOOLS-TYPE}).
+@end display
+@findex MTOOLS-TYPE
+@kindex ^C m T
+
+
+@node Actions, , MSDOS Files, Files
+@subsubsection A different action for each file type
+
+Many files on @code{UNIX} systems have one or more extensions specifying
+their types.  For example, a file that ends in @samp{.c} is a file
+containing a @code{C} program, while a file ending in @samp{.tar.gz} is
+a @code{tar} archive compressed with the @code{gzip} utility.  Having a
+default action for each file type, binded on the same key, seems to be a
+good idea because you can use that key to obtain type specific
+information about a file or to process it in some type specific way much
+easier.  The @code{GNUIT} package contains a script called
+@code{gitaction} that is used to detect the current file type and
+perform a type specific action.  @xref{gitaction}, for more information.
+
+@noindent
+@kbd{F2}, @kbd{ESC 2}, @kbd{^X a}
+@display
+Perform an action on the current file, depending on its type
+(@samp{FILE-ACTION}).
+@end display
+@cindex Type specific file action
+@cindex File action
+@findex FILE-ACTION
+@kindex F2, ESC 2, ^X a
+
+
+@node Directories, Compiling, Files, gitfm
+@subsection Directory operations
+
+@menu
+* Creating Dirs::               How to create new directories.
+* Copying Dirs::                How to copy directories.
+* Deleting Dirs::               How to delete directories.
+* Moving Dirs::                 How to move directories.
+* Renaming Dirs::               How to rename directories.
+* Comparing Dirs::              How to compare directories.
+* Dirs Usage::                  Summarize directory usage.
+* Changing Dirs::               How to go to a new directory.
+* Dirs History::                How to use the directory history.
+* Hot Keys::                    Hot keys for the most used directories.
+@end menu
+
+
+@node Creating Dirs, Copying Dirs, , Directories
+@subsubsection Creating directories
+
+@noindent
+@kbd{F7}, @kbd{ESC 7}, @kbd{^X M}
+@display
+Create a new subdirectory in the current directory with the user
+supplied name (@samp{make-directory}).
+@end display
+@cindex Make directory
+@cindex Create directory
+@cindex Making a directory
+@cindex Creating a directory
+@cindex Make directory
+@findex make-directory
+@kindex F7, ESC 7, ^X M
+
+
+@node Copying Dirs, Deleting Dirs, Creating Dirs, Directories
+@subsubsection Copying directories
+
+@noindent
+@kbd{F5 (for directories)}, @kbd{ESC 5 (for directories)}, @kbd{^C C
+(for directories)}
+@display
+Copy the currently selected entries to the user supplied path
+(@samp{copy}).
+@end display
+@cindex Directory copy
+@cindex Copying directories
+@findex copy (for directories)
+@kindex F5 (for directories)
+@kindex ESC 5 (for directories)
+@kindex ^C C (for directories)
+
+@noindent
+@kbd{^C b C (for directories)}
+@display
+Copy the currently selected entries to the user supplied path.  The
+operation is performed in background (@samp{B-COPY}).
+@end display
+@cindex Copying directories in background
+@cindex Background directory copy
+@findex B-COPY (for directories)
+@kindex ^C b C (for directories)
+
+
+@node Deleting Dirs, Moving Dirs, Copying Dirs, Directories
+@subsubsection Deleting directories
+
+@noindent
+@kbd{F8 (for subdirectories)}, @kbd{ESC 8 (for directories)}, @kbd{^C D
+(for subdirectories)}
+@display
+Delete the currently selected entries (@samp{delete}).
+@end display
+@cindex Deleting directories
+@cindex Directory delete
+@findex delete (for directories)
+@kindex F8 (for directories)
+@kindex ESC 8 (for directories)
+@kindex ^C D (for directories)
+
+@noindent
+@kbd{^C b D (for directories)}
+@display
+Delete the currently selected entries.  The operation is performed in
+background (@samp{B-DELETE}).
+@end display
+@cindex Deleting directories in background
+@cindex Background directory delete
+@findex B-DELETE (for directories)
+@kindex ^C b D (for directories)
+
+
+@node Moving Dirs, Renaming Dirs, Deleting Dirs, Directories
+@subsubsection Moving directories
+
+@noindent
+@kbd{F6 (for directories)}, @kbd{ESC 6 (for directories)}, @kbd{^C T
+(for directories)}
+@display
+Move the currently selected entries to the user supplied path
+(@samp{move}).
+@end display
+@cindex Directory move
+@cindex Moving directories
+@findex move (for directories)
+@kindex F6 (for directories)
+@kindex ESC 6 (for directories)
+@kindex ^C T (for directories)
+
+@noindent
+@kbd{^C b T (for directories)}
+@display
+Move the currently selected entries to the user supplied path.  The
+operation is performed in background (@samp{B-MOVE}).
+@end display
+@cindex Moving directories in background
+@cindex Background directory move
+@findex B-MOVE (for directories)
+@kindex ^C b T (for directories)
+
+
+@node Renaming Dirs, Comparing Dirs, Moving Dirs, Directories
+@subsubsection Renaming directories
+
+@noindent
+@kbd{^C R (for directories)}
+@display
+Rename the current file or directory with the user supplied name
+(@samp{RENAME}).
+@end display
+@cindex Renaming directories
+@cindex Directory rename
+@findex RENAME (for directories)
+@kindex ^C R (for directories)
+
+@noindent
+@kbd{^C b R (for directories)}
+@display
+Rename the current file or directory with the user supplied name.  The
+operation is performed in background (@samp{B-RENAME}).
+@end display
+@cindex Renaming directories in background
+@cindex Background directory rename
+@findex B-RENAME (for directories)
+@kindex ^C b R (for directories)
+
+
+
+@node Comparing Dirs, Dirs Usage, Renaming Dirs, Directories
+@subsubsection Comparing Directories
+
+@noindent
+@kbd{^C c q}
+@display
+Quickly compare the files in the left panel with the files in the right
+one.  Only the file names, sizes and time stamps are considered in the
+comparison.
+@end display
+@cindex Comparing directories quickly
+@cindex Comparing panels quickly
+@findex quick-compare-panels
+@kindex ^C c q
+
+@noindent
+@kbd{^C c t}
+@display
+Compare the files in the left panel with the files in the right one.
+The contents of each file in the current panel will be compared against
+the contents of its counterpart (if any) from the other panel.
+@end display
+@cindex Comparing directories thoroughly
+@cindex Comparing panels thoroughly
+@findex thoroughly-compare-panels
+@kindex ^C c t
+
+@noindent
+@kbd{^C f d}
+@display
+Recursively compare (using @code{diff -r -q}) the current directory with
+the other panel's current directory (@samp{FAST-DIFF}).  Print on
+standard output the names of the files that differ.
+@end display
+@cindex Directory diff
+@cindex Differences between directories
+@findex FAST-DIFF
+@kindex ^C f d
+
+@noindent
+@kbd{^C d}
+@display
+Compare (using @code{diff}) the current directory with the other panel
+current directory.  For successful operation, both panels should contain
+the same directory (@samp{DIR-DIFF}).
+@end display
+@cindex Directory diff
+@cindex Differences between two directories
+@findex DIRR-DIFF
+@kindex ^C d
+
+@noindent
+@kbd{^C b d}
+@display
+Compare (using @code{diff}) the current directory with the other panel
+current directory.  For successful operation, both panels should contain
+the same directory.  The operation is performed in background
+(@samp{DIR-DIFF}).
+@end display
+@cindex Background directory diff
+@findex B-DIRR-DIFF
+@kindex ^C b d
+
+
+@node Dirs Usage, Changing Dirs, Comparing Dirs, Directories
+@subsubsection Summarize directory usage
+
+@noindent
+@kbd{^C U}
+@display
+Display the output of the @code{du -s} command on the status line
+(@samp{DIRECTORY-USAGE}).
+@end display
+@cindex Directory usage
+@cindex du
+@findex DIRECTORY-USAGE
+@kindex ^C U
+
+
+@node Changing Dirs, Dirs History, Dirs Usage, Directories
+@subsubsection Changing directories
+
+@noindent
+@kbd{^X d}, @kbd{^X ^D}
+@display
+Change the current working directory.  The user is asked for a new
+directory name and the new directory is added to the directory history
+(@samp{change-directory}).
+@end display
+@xref{Dirs History}, for more information.
+@cindex chdir
+@cindex Changing directory
+@cindex Changing the directory
+@cindex Changing the current directory
+@findex change-directory
+@kindex ^X d, ^X ^D
+
+@noindent
+@kbd{ESC a c}
+@display
+Change the current directory of the current panel to the directory of
+the other panel (@samp{adapt-current-directory}).
+@end display
+@cindex Change the current panel directory
+@cindex Adapt directory
+@findex adapt-current-directory
+@kindex ESC a c
+
+@noindent
+@kbd{ESC a o}
+@display
+Change the current directory of the other panel to the directory of the
+current panel (@samp{adapt-other-directory}).
+@end display
+@cindex Change the other panel directory
+@findex Adapt-other-directory
+@kindex ESC a o
+
+
+@node Dirs History, Hot Keys, Changing Dirs, Directories
+@subsubsection Directory History
+
+Users usually work on a limited set of subdirectories.  Providing a fast
+method of switching between a number of intensively used directories is
+a good idea and @code{gitfm} has a set of builtin commands for doing it.
+
+Usually new directories are added to the directory history when the
+@samp{change-directory} built-in command is used.  @code{gitfm} also adds
+the current directory to the history list when started, when the
+directory history is reset and when a command having a non empty
+@samp{new-dir} field successfully completes its execution.
+@xref{new-dir}, for more information.
+
+@noindent
+@kbd{^X ^N}
+@display
+Go to the next directory in the history (@samp{next-directory}).
+@end display
+@cindex Next directory history entry
+@findex next-directory
+@kindex ^X N
+
+@noindent
+@kbd{^X ^P}
+@display
+Go to the previous directory in the history
+(@samp{previous-directory}).
+@end display
+@cindex Previous directory history entry
+@findex previous-directory
+@kindex ^X ^P
+
+@noindent
+@kbd{^X ^R}
+@display
+Reset the entire directory history.  As explained above, the current
+directory becomes the only directory in the history
+(@samp{reset-directory-history}).
+@end display
+@cindex Directory history reset
+@cindex Reset the directory history
+@findex reset-directory-history
+@kindex ^X ^R
+
+@node Hot Keys, , Dirs History, Directories
+@subsubsection Hot Keys
+
+@code{gitfm} provides default key bindings for switching to a number of
+important directories as "/", "..", "$HOME", etc.
+@cindex Hot Keys
+
+@noindent
+@kbd{ESC /}
+@display
+Go to the @samp{/} directory (@samp{ROOT-DIR}).
+@end display
+@cindex Go to the root directory
+@cindex Go to /
+@findex ROOT-DIR
+@kindex ESC /
+
+@noindent
+@kbd{ESC .}
+@display
+Go to the @samp{..} directory (@samp{up-one-dir}).
+@end display
+@cindex Go up one directory
+@cindex Go to ..
+@cindex Go to the parent directory
+@findex up-one-dir
+@kindex ESC .
+
+@noindent
+@kbd{ESC h}
+@display
+Go to the @samp{~} ($HOME) directory (@samp{HOME-DIR}).
+@end display
+@cindex Go to the home directory
+@cindex Go to the ~ directory
+@cindex Go to the $HOME directory
+@findex HOME-DIR
+@kindex ESC h
+
+@noindent
+@kbd{ESC i}
+@display
+Go to the @samp{/usr/include} directory (@samp{INCLUDE-DIR}).
+@end display
+@cindex Go to the include directory
+@cindex Go to the /usr/include directory
+@findex INCLUDE-DIR
+@kindex ESC i
+
+@noindent
+@kbd{ESC ESC 1}
+@display
+Go to the @samp{/mnt/fd0} directory (@samp{FIRST-FLOPPY-DIR}).
+@end display
+@cindex Go to the first floppy mount point
+@findex FIRST-FLOPPY-DIR
+@kindex ESC ESC 1
+
+@noindent
+@kbd{ESC ESC 2}
+@display
+Go to the @samp{/mnt/fd1} directory (@samp{SECOND-FLOPPY-DIR}).
+@end display
+@cindex Go to the second floppy mount point
+@findex SECOND-FLOPPY-DIR
+@kindex ESC ESC 2
+
+
+@node Compiling, Mail, Directories, gitfm
+@subsection Compiling programs
+
+@noindent
+@kbd{F9}, @kbd{ESC 9}, @kbd{^X m}
+@display
+Run the @code{make} command in the current directory.  Use -k as the
+default option (@samp{MAKE}).
+@end display
+@cindex Compiling programs
+@cindex make
+@cindex Compile
+@findex MAKE
+@kindex F9, ESC 9, ^X m
+
+@noindent
+@kbd{^X b m}
+@display
+Run the @code{make} command in background in the current directory
+(@samp{B-MAKE}).
+@end display
+@xref{gitaction}, for more information.
+@cindex Background make
+@findex B-MAKE
+@kindex ^X b m
+
+
+@node Mail, Shell, Compiling, gitfm
+@subsection Sending/receiving ascii/binary mail
+
+@noindent
+@kbd{^C 2 a}
+@display
+Send the current current ascii file by mail to an user supplied email
+address (@samp{ASCII-MAIL}).
+@end display
+@cindex Sending ascii mail
+@cindex Sending text by mail
+@findex ASCII-MAIL
+@kindex ^C 2 a
+
+@noindent
+@kbd{^C b 2 a}
+@display
+The same as @samp{ASCII-MAIL}, the only difference being that the
+command runs in background (@samp{B-ASCII-MAIL}).
+@end display
+@cindex Sending ascii mail in background
+@cindex Sending mail
+@cindex Sending files by mail
+@findex B-ASCII-MAIL
+@kindex ^C b 2 a
+
+@noindent
+@kbd{^C 2 b}
+@display
+Send the current current binary file by mail to an user supplied list of
+email addresses.  The file is uuencoded first (@samp{BINARY-MAIL}).
+@end display
+@cindex Sending binary mail
+@cindex Binary files by mail
+@findex BINARY-MAIL
+@kindex ^C 2 b
+
+@noindent
+@kbd{^C b 2 b}
+@display
+The same as @samp{BINARY-MAIL}, the only difference being that the
+command runs in background (@samp{B-BINARY-MAIL}).
+@end display
+@cindex Sending binary mail in background
+@findex B-BINARY-MAIL
+@kindex ^C b 2 b
+
+@noindent
+@kbd{^C 2 m}
+@display
+Send the current current binary file by mail to an user supplied list of
+email addresses.  The file is encoded with mpack first
+(@samp{MIME-MAIL}).
+@end display
+@cindex Sending mime mail
+@cindex Mime encoded files by mail
+@findex MIME-MAIL
+@kindex ^C 2 m
+
+@noindent
+@kbd{^C b 2 m}
+@display
+The same as @samp{MIME-MAIL}, the only difference being that the command
+runs in background (@samp{B-MIME-MAIL}).
+@end display
+@cindex Sending mime mail in background
+@findex B-MIME-MAIL
+@kindex ^C b 2 m
+
+@noindent
+@kbd{ESC x r m}
+@display
+Run the @code{emacs -f rmail} command.  This will start the Emacs's
+@samp{rmail} function so that you can read your mail (@samp{READ-MAIL}).
+@end display
+@cindex Emacs rmail
+@cindex Reading mail
+@findex READ-MAIL
+@kindex ESC x r m
+
+
+@node Shell, Grep, Mail, gitfm
+@subsection Starting a sub-shell
+
+@noindent
+@kbd{^X z}
+@display
+Call a sub-shell as specified by the @var{$GNUIT_SHELL} environment
+variable (@samp{SUB-SHELL}).
+
+@var{$GNUIT_SHELL} used to be called @var{$GIT_SHELL}. The old
+name is still accepted for backwards-compatibility.
+
+@end display
+@xref{Environment Variables}, for more information.
+@cindex Shell
+@cindex bash
+@cindex csh
+@cindex tcsh
+@cindex sh
+@findex SUB-SHELL
+@kindex ^X z
+
+
+@node Grep, Locking, Shell, gitfm
+@subsection Using grep and recursive grep
+
+@noindent
+@kbd{^X g}
+@display
+Search using @code{grep} all the selected files for a given pattern
+(@samp{GREP}).
+@end display
+@cindex grep
+@cindex Searching regular expressions
+@cindex Searching patterns in files
+@cindex regexp
+@findex GREP
+@kindex ^X g
+
+@noindent
+@kbd{^X g}
+@display
+Search recursively using @code{gitrgrep} all the user specified files
+and directories for a given pattern (@samp{RECURSIVE-GREP}).
+@end display
+@xref{gitrgrep}, for more information.
+@cindex Recursive grep
+@findex RECURSIVE-GREP
+@kindex ^X G
+
+
+@node Locking, Refreshing, Grep, gitfm
+@subsection Locking your console
+
+Having a lock feature might be a good idea and, since not all the
+@code{UNIX} systems provide one, @code{gitfm} tries to get around the
+problem @dots{}
+
+@noindent
+@kbd{^X p}
+@display
+Prompt the user for a password and locks the console until the same
+password is reinserted (@samp{lock}).
+@end display
+@cindex Locking the console
+@cindex Console lock
+@findex lock
+@kindex ^X p
+
+
+@node Refreshing, Resetting, Locking, gitfm
+@subsection Refreshing the screen contents
+
+Sometimes your screen needs to be refreshed.  Just think about what
+happens when somebody wants to talk with you and the talk daemon writes
+something like this
+
+@display
+Message from Talk_Daemon@@galei.cs.vu.nl at 12:15 ...
+talk: connection requested by andrei@@galei.cs.vu.nl.
+talk: respond with:  talk andrei@@galei.cs.vu.nl
+@end display
+
+@noindent
+on your screen.  And sometimes you might also want to re-read the
+current directories.  @code{gitfm} provides a built-in command for
+refreshing the screen contents.
+
+@noindent
+@kbd{^L}
+@display
+Re-read the directories contents and refresh the screen (@samp{refresh}).
+@end display
+@cindex Re-reading directories.
+@cindex Refreshing the screen.
+@findex refresh
+@kindex ^L
+
+@node Resetting, Mounting, Refreshing, gitfm
+@subsection Resetting your terminal
+
+@noindent
+@kbd{^X ^L}
+@display
+Call @code{reset} in order to reset the terminal to its default
+settings (@samp{TTY-RESET}).
+@end display
+@cindex Resetting the terminal
+@cindex Terminal reset
+@findex TTY-RESET
+@kindex ^X ^L
+
+
+@node Mounting, Sysinfo, Resetting, gitfm
+@subsection Mounting/unmounting file systems
+
+People dealing with lots of files usually need to save/restore/copy
+files from/to other file systems.  In order to be more efficient,
+@code{gitfm} provides a set of key bindings for mounting and unmounting
+file systems.  @xref{gitmount}, for more information.
+
+The default key bindings set has been designed to work under
+@code{Linux}, but it can be easily changed for other @code{UNIX} systems
+with different device names.  Reading the configuration file
+@file{gnuitrc.common} should be enough.  @xref{Hot Keys}, for more
+information.
+
+As a convention, the @samp{/mnt} directory is used to store an empty
+subdirectory for each mountable file system.  Each file system is
+actually mounted in its counterpart @samp{/mnt} subdirectory.  Try to
+follow this convention since the @code{gitmount} script is heavily based
+on it.  @xref{Customization}, for more information.
+
+@noindent
+@kbd{ESC m a}
+@display
+Call @code{mount}(1) in order to mount the first floppy
+(@samp{/dev/fd0}) in the @samp{/mnt/fd0} directory (@samp{MOUNT-A}).
+@end display
+@cindex Mounting the first floppy
+@cindex Mounting the floppy
+@findex MOUNT-A
+@kindex ESC m a
+
+@noindent
+@kbd{ESC m b}
+@display
+Call @code{mount}(1) in order to mount the second floppy
+(@samp{/dev/fd1}) in the @samp{/mnt/fd1} directory (@samp{MOUNT-B}).
+@end display
+@cindex Mounting the second floppy
+@findex MOUNT-B
+@kindex ESC m b
+
+@noindent
+@kbd{ESC m c}
+@display
+Call @code{mount}(1) in order to mount the cdrom
+(@samp{/dev/cdrom}) in the @samp{/mnt/cdrom} directory (@samp{MOUNT-CDROM}).
+@end display
+@cindex Mounting the cdrom
+@findex MOUNT-CDROM
+@kindex ESC m c
+
+@noindent
+@kbd{ESC m f}
+@display
+Call @code{mount}(1) in order to mount the first floppy
+(@samp{/dev/fd0}) in the @samp{/mnt/floppy} directory (@samp{MOUNT-FLOPPY}).
+@end display
+@cindex Mounting the first floppy
+@cindex Mounting the floppy
+@findex MOUNT-FLOPPY
+@kindex ESC m f
+
+@noindent
+@kbd{ESC m z}
+@display
+Call @code{mount}(1) in order to mount the zip drive
+(@samp{/dev/zip}) in the @samp{/mnt/zip} directory (@samp{MOUNT-ZIP}).
+@end display
+@cindex Mounting the zip drive
+@findex MOUNT-ZIP
+@kindex ESC m z
+
+@noindent
+@kbd{ESC m j}
+@display
+Call @code{mount}(1) in order to mount the jaz drive
+(@samp{/dev/jaz}) in the @samp{/mnt/jaz} directory (@samp{MOUNT-JAZ}).
+@end display
+@cindex Mounting the jaz drive
+@findex MOUNT-JAZ
+@kindex ESC m j
+
+@noindent
+@kbd{ESC m t}
+@display
+Call @code{mount}(1) in order to mount the file systems corresponding to
+the selected subdirectories.  For example, if you are in the @samp{/mnt}
+directory and the @samp{cdrom} and @samp{zip} subdirectories are
+selected, the cdrom and the zip disk will be mounted (@samp{MOUNT-THESE}).
+@end display
+@cindex mount
+@cindex Mounting these file systems
+@cindex Mounting subdirectories
+@findex MOUNT-THESE
+@kindex ESC m t
+
+@noindent
+@kbd{ESC r a}
+@display
+Call @code{umount}(1) in order to remove (unmount) the first floppy
+(@samp{/dev/fd0}) (@samp{UMOUNT-A}).
+@end display
+@cindex Unmounting the first floppy
+@cindex Unmounting the floppy
+@cindex umount
+@findex UMOUNT-A
+@kindex ESC r a
+
+@noindent
+@kbd{ESC r b}
+@display
+Call @code{umount}(1) in order to remove (unmount) the second floppy
+(@samp{/dev/fd1}) (@samp{UMOUNT-B}).
+@end display
+@cindex Unmounting the second floppy
+@findex UMOUNT-B
+@kindex ESC r b
+
+@noindent
+@kbd{ESC r c}
+@display
+Call @code{umount}(1) in order to remove (unmount) the cdrom
+(@samp{/dev/cdrom}) (@samp{UMOUNT-CDROM}).
+@end display
+@cindex Unmounting the cdrom
+findex UMOUNT-CDROM
+@kindex ESC r c
+
+@noindent
+@kbd{ESC r f}
+@display
+Call @code{umount}(1) in order to remove (unmount) the first floppy
+(@samp{/dev/fd0}) (@samp{UMOUNT-FLOPPY}).
+@end display
+@cindex Unmounting the first floppy
+@cindex Unmounting the floppy
+@cindex umount
+@findex UMOUNT-FLOPPY
+@kindex ESC r f
+
+@noindent
+@kbd{ESC r z}
+@display
+Call @code{umount}(1) in order to remove (unmount) the zip drive
+(@samp{/dev/zip}) (@samp{UMOUNT-ZIP}).
+@end display
+@cindex Unmounting the zip drive
+@findex UMOUNT-ZIP
+@kindex ESC r z
+
+@noindent
+@kbd{ESC r j}
+@display
+Call @code{umount}(1) in order to remove (unmount) the jaz drive
+(@samp{/dev/jaz}) (@samp{UMOUNT-JAZ}).
+@end display
+@cindex Unmounting the jaz drive
+@findex UMOUNT-JAZ
+@kindex ESC r j
+
+@noindent
+@kbd{ESC r t}
+@display
+Call @code{umount}(1) in order to remove (unmount) the file systems
+mounted into the selected subdirectories.  For example, if the current
+directory is @samp{/mnt} and the @samp{cdrom} and @samp{zip}
+subdirectories are selected, the cdrom and the zip disk will be
+unmounted (@samp{UMOUNT-THESE}).
+@end display
+@cindex Unmounting these file systems
+@cindex Unmounting subdirectories
+@findex UMOUNT-THESE
+@kindex ESC r t
+
+
+@node Sysinfo, Environment, Mounting, gitfm
+@subsection Getting some useful system information
+
+@noindent
+@kbd{^X T}
+@display
+Call @code{date}(1) in order to display the current time/date
+(@samp{DATE}).
+@end display
+@cindex date
+@findex DATE
+@kindex ^X T
+
+@noindent
+@kbd{ESC S f}
+@display
+Call @code{finger}(1) in order to display information about local and
+remote users  (@samp{FINGER}).
+@end display
+@cindex finger
+@findex FINGER
+@kindex ESC S f
+
+@noindent
+@kbd{ESC S m}
+@display
+Call @code{mount}(1) in order to display a list of the currently
+mounted file systems (@samp{MOUNTED-FILE-SYSTEMS}).
+@end display
+@cindex Mounted file systems list
+@findex MOUNTED-FILE-SYSTEMS
+@kindex ESC S m
+
+@noindent
+@kbd{ESC S q}
+@display
+Call @code{quota}(1) in order to display a user file system disk quota
+and quota (@samp{QUOTA}).
+@end display
+@cindex Current disk quota
+@cindex Quota
+@findex QUOTA
+@kindex ESC S q
+
+@noindent
+@kbd{ESC S s}
+@display
+Call @code{df}(1) in order to get the status of the currently mounted
+file systems (@samp{DISK-FREE-SPACE}).
+@end display
+@cindex Free disk space
+@cindex Disk free space
+@cindex File system status
+@findex DISK-FREE-SPACE
+@kindex ESC S s
+
+@noindent
+@kbd{ESC S u}
+@display
+Call @code{users}(1) in order to get the name of the currently logged in
+users (@samp{USERS}).
+@end display
+@cindex System users
+@cindex Logged in users
+@findex USERS
+@kindex ESC S u
+
+@noindent
+@kbd{ESC S v}
+@display
+Call @code{$GNUIT_VMSTAT}(1) in order to get the current virtual memory
+status.  This is very system dependent, @code{Linux} uses @code{free},
+other systems use @code{vmstat}, so the @var{$GNUIT_VMSTAT} variable is
+used to deal with this (@samp{VIRTUAL-MEMORY-STATUS}).
+
+@var{$GNUIT_VMSTAT} used to be called @var{$GIT_VMSTAT}. The old
+name is still accepted for backwards-compatibility.
+@end display
+@xref{Environment Variables}, for more information.
+@cindex Virtual memory status
+@cindex Swapping
+@findex VIRTUAL-MEMORY-STATUS
+@kindex ESC S v
+
+@noindent
+@kbd{ESC S w}
+@display
+Call @code{who}(1) in order to find out who is on the system
+(@samp{WHO}).
+@end display
+@cindex who
+@findex WHO
+@kindex ESC S w
+
+
+@node Environment, Processes, Sysinfo, gitfm
+@subsection How to look at the environment variables
+
+@noindent
+@kbd{^X E}
+@display
+Call @code{env}(1) in order to display the current environment
+(@samp{ENV}).
+@end display
+@cindex env
+@cindex Looking at the environment
+@findex ENV
+@kindex ^X E
+
+@noindent
+@kbd{^X H}
+@display
+Call @code{xhost}(1) in order to add/remove hosts names to the list
+allowed to make connection to the X server (@samp{XHOST}).
+@end display
+@cindex xhost
+@cindex Adding and removing hosts
+@findex XHOST
+@kindex ^X H
+
+
+@node Processes, Sync, Environment, gitfm
+@subsection Viewing/killing processes
+
+There are at least two kinds of @code{ps}(1) utilities.  One that
+accepts (more or less) combinations of the 'a', 'u', and 'x' flags and
+another that accepts combinations of 'e', 'f' and 'l' flags.  Since is
+quite difficult to test which one works fine on a given @code{UNIX}
+system, @code{gitfm} provides key bindings for both of them.  Anyway, if
+your @code{ps}(1) fails to accept the predefined combinations, please
+take a look in its manual and then modify the @file{.gnuitrc.TERM} file as
+needed.
+
+Since the number of possible combinations of flags in the @code{ps}
+command line is quite big and *very* system dependent, there is no real
+reason to display them all here.  We are only interested in giving you
+a starting point in your search through the @file{.gnuitrc.TERM} file.
+
+Note also that you can display a list of processes using @code{ps}(1) or
+browse through a list of them (killing as needed) using @code{gitps}.
+As a convention, we have used the same key sequence for a given set of
+@code{ps}(1) flags for both @code{ps}(1) and @code{gitps}, the only
+difference being that @code{ps}(1) keys end in an uppercase letter.
+@xref{gitps}, for more information.
+
+Under Linux it is possible to see a tree of processes using
+@code{pstree}(1).
+
+Here there are the default key bindings for the 'e', 'f' and 'l'
+@code{ps}(1) flags combinations:
+
+@noindent
+@kbd{ESC P b}, @kbd{ESC P c}, @kbd{ESC P e}
+@display
+Call @code{gitps} or @code{ps}(1) in order to browse through or display
+a list of currently running processes (@samp{GITPS}, @samp{PS}).
+@end display
+@cindex Viewing processes
+@cindex Browsing through the process list
+@findex GITPS, PS
+@kindex ESC P b, ESC P c, ESC P e
+
+@noindent
+... and the default key bindings for the 'a', 'u' and 'x' @code{ps}(1)
+flags combinations:
+
+@noindent
+@kbd{ESC P a}, @kbd{ESC P l}, @kbd{ESC P u}
+@kbd{ESC P x}, @kbd{ESC P y}
+@display
+Call @code{gitps} or @code{ps}(1) in order to browse through or display
+a list of currently running processes (@samp{GITPS}, @samp{PS}).
+@end display
+@cindex Viewing processes
+@cindex Browsing through the process list
+@findex GITPS, PS
+@kindex ESC P a, ESC P l, ESC P u
+@kindex ESC P x, ESC P y
+
+@noindent
+@kbd{ESC P T}
+@display
+Call @code{pstree}(1) in order to display the tree of currently running
+processes (@samp{PSTREE}).
+@end display
+@cindex Viewing the process tree
+@findex PSTREE
+@kindex ESC P T
+
+@noindent
+@kbd{^X k}
+@display
+Call @code{kill}(1) in order to kill a user specified process with a
+given signal (@samp{KILL}).
+@end display
+@cindex Killing processes
+@findex KILL
+@kindex ^X k
+
+
+@node Sync, Documentation, Processes, gitfm
+@subsection Synchronizing the file systems
+
+@noindent
+@kbd{^X S}
+@display
+Call @code{sync}(1) in order to synchronize all the file systems
+(@samp{SYNC}).
+@end display
+@cindex Synchronizing file systems
+@cindex sync
+@findex SYNC
+@kindex ^X S
+
+
+@node Documentation, Exit, Sync, gitfm
+@subsection Reading the documentation
+
+@noindent
+@kbd{^X q}
+@display
+Read a manual page.  The user is prompted for its name (@samp{MAN}).
+@end display
+@cindex Reading the manual pages
+@findex MAN
+@kindex ^X q
+
+@noindent
+@kbd{F1}, @kbd{ESC 1}, @kbd{^X i}
+@display
+Read an info documentation.  The user is prompted for the documentation
+name (@samp{INFO}).
+@end display
+@cindex Reading the info documentation
+@findex INFO
+@kindex F1, ESC 1, ^X i
+
+@noindent
+@kbd{^X h}
+@display
+Read the html documentation using the viewer specified in
+@var{GNUIT_BROWSER}, or with lynx if @var{GNUIT_BROWSER} is not set
+(@samp{HTML}).
+
+@var{$GNUIT_BROWSER} used to be called @var{$GIT_BROWSER}. The old
+name is still accepted for backwards-compatibility.
+
+@end display
+@cindex Reading the html documentation
+@findex HTML
+@kindex ^X h
+
+@noindent
+@kbd{^X ^A}
+@display
+Show the key-bindings for commands matching a specified string
+(@samp{apropos}).
+@end display
+@cindex Searching for key-bindings
+@findex apropos
+@kindex ^X ^A
+
+@node Exit, , Documentation, gitfm
+@subsection Exiting GNU Interactive Tools
+
+@noindent
+@kbd{F10}, @kbd{ESC 0}, @kbd{^X ^C}, @kbd{^X c}
+@display
+Exit GNU Interactive Tools (@samp{exit}).
+@end display
+@cindex Exiting
+@findex exit
+@kindex F10, ESC 0, ^X ^C, ^X c
+
+
+@c de scris de variabila cu pricina
+
+
+@node gitps, gitview, gitfm, Description
+@section The GNUIT process viewer/killer
+@cindex gitps
+
+@code{gitps} is an interactive process viewer/killer.  It calls
+internally the @code{ps}(1) utility.  This is a brief description of the
+command line arguments.
+
+@noindent
+@code{-h}         print this help message
+
+@noindent
+@code{-v}         print the version number
+
+@noindent
+@code{-i}         print the installation directory
+
+@noindent
+@code{-c}         use ANSI colors
+
+@noindent
+@code{-b}         don't use ANSI colors
+
+@noindent
+@code{-l}         don't use the last screen character
+
+@noindent
+@code{-p}         pass the remaining arguments to ps(1)
+
+Running @code{gitps} is self explanatory.  Use the @kbd{arrows},
+@kbd{PageUp}, @kbd{PageDown}, @kbd{Home}, @kbd{End}, @kbd{^N}, @kbd{^P},
+@kbd{^V}, @kbd{ESC v}, @kbd{Space} and @kbd{Backspace} to move in the
+list, @kbd{^L} to refresh it, @kbd{Enter} to change the default signal
+and @kbd{F10}, @kbd{q} or @kbd{^X ^C} to leave.
+
+You can change these keys, just read the GITPS-Setup, GITPS-Color,
+GITPS-Monochrome and GITPS-Keys sections in the configuration files
+@file{gnuitrc.TERM}.
+
+The selected signal can also be changed by pressing its first letter (in
+uppercase), e.g. for @samp{SIGTERM} press @kbd{T}, or by pressing the
+key corresponding to the signal number. For signals > 10, prefix with
+@kbd{^X}, and for signals greater than 20, prefix with @kbd{^C}. For
+instance, to select signal 15 (@samp{SIGTERM}), press @kbd{^X5}.
+
+Keys for signal numbers are hard-coded to the versions in i386 Linux,
+however most correspond to POSIX. Compare signal(7) or signal(5) with
+@uref{http://linux.die.net/man/7/signal}.
+
+
+@node gitview, gitkeys, gitps, Description
+@section The GNUIT ASCII/HEX file viewer
+@cindex gitview
+
+@code{gitview} is an ASCII/HEX file viewer.  Use the @kbd{arrows},
+@kbd{PageUp}, @kbd{PageDown}, @kbd{Home}, @kbd{End}, @kbd{^N}, @kbd{^P},
+@kbd{^V}, @kbd{ESC v}, @kbd{Space} and @kbd{Backspace} to move in the
+file, @kbd{^L} to refresh the screen and @kbd{F10}, @kbd{q} or @kbd{^X
+^C} to leave.
+
+You can change these keys, just read the GITVIEW-Setup, GITVIEW-Color,
+GITVIEW-Monochrome and GITVIEW-Keys sections in the configuration files
+@file{gnuitrc.TERM}.
+
+Here is a brief description of the command line arguments:
+
+@noindent
+@code{-h}         print this help message
+
+@noindent
+@code{-v}         print the version number
+
+@noindent
+@code{-i}         print the installation directory
+
+@noindent
+@code{-c}         use ANSI colors
+
+@noindent
+@code{-b}         don't use ANSI colors
+
+@noindent
+@code{-l}         don't use the last screen character
+
+
+
+@node gitkeys, gitwipe, gitview, Description
+@section The GNUIT key sequences display utility
+@cindex gitkeys
+
+@code{gitkeys} is a program that displays the key sequence sent by the
+pressed key.  This is the key sequence received by @code{GIT} tools, so
+this program is useful when setting up the @file{.gnuitrc.TERM}
+configuration files.
+
+
+@node gitwipe, gitmount, gitkeys, Description
+@section The GNUIT wipe file utility
+@cindex gitwipe
+
+@code{gitwipe} is an utility for wiping files.  It overwrites the file
+contents with a random sequence of numbers and then calls @file{sync}().
+
+Note that @code{gitwipe} does *not* remove the wiped file since (under
+@code{Linux} at least) the @file{sync}() system call might return before
+actually writing the new file contents to disk.  Removing the file might
+be dangerous because some file systems can detect that the blocks in the
+removed wiped file are no longer used and never write them back to disk
+in order to improve performance.  It is up to you to remove the file(s)
+at a later moment.
+
+
+@node gitmount, gitaction, gitwipe, Description
+@section The GNUIT mount utility
+@cindex gitmount
+
+@code{gitmount} is a script that allows you to mount a list of block
+devices (specified in the command line), without specifying the file
+system type.  With a command like `gitmount fd0 cdrom' the first floppy
+will be mounted in @file{/mnt/fd0} and the cdrom will be mounted in
+@file{/mnt/cdrom}.  Make sure your @file{/etc/fstab} settings are
+correct.
+
+You don't need to know the file system type anymore.  If you want to use
+@code{gitmount} with the block device @file{/dev/xxx} then the directory
+@file{/mnt/xxx} is created if it doesn't exist.  @code{gitmount} will
+attempt to create the necessary directories, but root permissions might
+be required.
+
+
+@node gitaction, gitunpack, gitmount, Description
+@section The GNUIT per file type action script
+@cindex gitaction
+
+@code{gitaction} is a script that executes a different action for each
+file type specified.  It is called by the @code{gitfm} program when
+pressing @kbd{F2}, @kbd{ESC 2} or @kbd{^Xa}.
+
+The first parameter is the current directory name and the second one is
+the file name to be matched against the default patterns.  The matching
+is done using the shell 'case' statement.
+
+If you press @kbd{F2}, @kbd{ESC 2} or @kbd{^Xa} on a @file{*.html} file,
+@code{gitfm} will invoke a browser to view it, if you press @kbd{F2},
+@kbd{ESC 2} or @kbd{^Xa} on a @file{*.tar.gz} file, @code{gitfm} will
+list the tar archive contents, if you press the same keys on a
+@file{*.gz} file, @code{gitfm} will display its uncompressed contents on
+the screen, etc @dots{}
+
+If you press @kbd{F2}, @kbd{ESC 2} or @kbd{^Xa} on a @file{*.gif} file
+or @file{*.jpg} file and you have the @code{xzgv} utility installed, you
+will be able to see it.  If you want to change the gif/jpeg viewer, all
+you need to do is to change its name in the @code{gitaction} script.
+
+There are many more file types and viewers that gitaction knows about.
+In addition, if you are running under GNOME, gnome-open is used, and on
+MacOS, open(1) is used. see(1) and metamail(1) are also used as
+fallbacks. If all else fails, the file is displayed using $GNUIT_PAGER.
+
+If you want to find out what the default action for each file type is
+(or if you want to modify it), just read/modify the @code{gitaction}
+script.
+
+Also, you can add a @code{.gitaction} shell script in your home
+directory and/or in any other directory.  Before trying to match a file
+name, @code{gitaction} will attempt to execute @code{./.gitaction}.  If
+that one fails to match the file name against its patterns, it backs up
+to @code{$HOME/.gitaction}.  When this one fails too the patterns in
+@code{gitaction} are tried.  For an example of how to write .gitaction
+scripts take a look at the @code{.gitaction} shell script provided as
+part of the distribution and installed in the
+@samp{$(prefix)/bin} directory. Debian users will find it in
+@samp{/usr/share/doc/gnuit/examples/}.
+
+@node gitunpack, gitrgrep, gitaction, Description
+@section Unified archive unpacking
+@cindex gitunpack
+
+@code{gitunpack} is a shell script that accepts a directory and a set of
+archives as its command line parameters, and then attempts to unpack
+those archives in the given directory, selecting the utility used to
+unpack the archives based on the archive extensions.
+
+@node gitrgrep, , gitunpack, Description
+@section The GIT recursive grep script
+@cindex gitrgrep
+@cindex gitregrep
+@cindex gitrfgrep
+
+@code{gitrgrep} is a very small script that calls @code{grep}
+recursively.  It accepts @code{grep} like options / parameters, the only
+difference being that file specifications should be quoted:
+
+@example
+	@code{gitrgrep} main '*.c'
+
+or
+
+	@code{gitrgrep} errno '*.c *.h'
+@end example
+
+@code{gitregrep} and @code{gitrfgrep} are recursive versions of the
+egrep and fgrep programs.
+
+@node Customization, Limitations, Description, Top
+@chapter Customizing GNU Interactive Tools
+
+
+@menu
+* Environment Variables::       Environment variables used by GNUIT
+* Configuration Files::         GNUIT's configuration files
+@end menu
+
+
+@node Environment Variables, Configuration Files, , Customization
+@section Environment Variables
+
+The configuration files use shell environment variables to call the
+shell, editor, mail reader, html viewer, compress and virtual memory
+status utility.  That means that if you set @var{GNUIT_SHELL},
+@var{GNUIT_EDITOR}, @var{GNUIT_RMAIL}, @var{GNUIT_BROWSER}, or
+@var{GNUIT_VMSTAT} to some value, that value will be used instead of the
+default one.  The defaults are:
+
+@display
+	GNUIT_SHELL='/bin/sh'
+	GNUIT_EDITOR='vi'
+	GNUIT_RMAIL='emacs -f rmail'
+	GNUIT_PAGER='more
+	GNUIT_VMSTAT='free'
+	GNUIT_BROWSER='lynx'
+@end display
+
+if the @code{configure} script is passed @samp{--enable-debian}, some of
+the defaults are changed as follows:
+
+@display
+	GNUIT_EDITOR='sensible-editor'
+	GNUIT_PAGER='sensible-pager'
+	GNUIT_BROWSER='sensible-browser'
+@end display
+
+If @var{SHELL} is defined, @var{GNUIT_SHELL} will be set to that value.
+If @var{PAGER} is defined, @var{GNUIT_PAGER} will be set to that value.
+If @var{EDITOR} is defined, @var{GNUIT_EDITOR} will be set to that value.
+If you want to change the default settings, put something like this into
+your @file{.profile}:
+
+@display
+	export GNUIT_SHELL='/usr/local/bin/bash'
+	export GNUIT_EDITOR='emacs'
+	export GNUIT_RMAIL='elm'
+	export GNUIT_PAGER='less'
+	export GNUIT_VMSTAT='vmstat'
+	export GNUIT_BROWSER='netscape'
+@end display
+
+These variables used to be prefixed with @var{GIT_}
+(e.g. @var{GIT_PAGER}). The old names are still accepted for backwards
+compatibility.
+
+@vindex GNUIT_SHELL
+@vindex GNUIT_EDITOR
+@vindex GNUIT_RMAIL
+@vindex GNUIT_VMSTAT
+@vindex GNUIT_BROWSER
+@vindex SHELL
+@vindex EDITOR
+
+@node Configuration Files, , Environment Variables, Customization
+@section Configuration Files
+
+There is one configuration file per terminal type in @code{GNUIT}.  The
+configuration file(s) reside in the user's home directory or (the
+default versions) in the directory @file{/usr/share/gnuit/}).
+Files in the user's home directory start with a leading ``.''
+
+Their generic name is @file{gnuitrc.TERM}.  @code{GNUIT} allows each
+terminal type to have its own configuration file (@var{TERM} is the
+value of the @var{TERM} environment variable (e.g @samp{vt102}); for the
+@code{Linux} console the configuration file is @file{gnuitrc.console}).
+@vindex TERM
+
+Since most of the key bindings are common to all the terminal types, a
+configuration file called @file{gnuitrc.common} is parsed before parsing
+the normal @file{.gnuitrc.TERM} configuration file, the later one defining
+only those keys that are terminal specific.  However, if a key binding
+is redefined in the @file{gnuitrc.TERM} file, that binding will be used.
+
+If the @code{GNUIT} package have been compiled without passing the
+@samp{--enable-terminfo} option to the @code{configure} script and your
+system has a huge @samp{termcap} database (@file{/etc/termcap}), you can
+copy the termcap definition(s) of your terminal(s) in a file called,
+lets say @file{.termcap} and put it in your home directory.  After that,
+set your @var{TERMCAP} environment variable to point to it.  You should
+add something like this to your @file{.profile}:
+
+@display
+@var{TERMCAP}=@file{/home/mike/.termcap}
+@end display
+
+The interactive programs in the @code{GNUIT} package can run without such
+a file, but on systems with huge @samp{termcap} databases, copying the
+definitions of the most used terminals in a local @file{.termcap} file
+will lead to a faster start.
+
+The @file{.gnuitrc.TERM} is first searched for in the home directory then,
+if not found, in the directory @file{/usr/share/gnuit/}).
+(without the leading ``.'').
+The configuration file is structured in sections, each section
+containing variables in the following format:
+
+@display
+	@samp{variable-name} = @samp{first-field};@samp{second-field}; ...
+@end display
+
+After the @samp{variable-name} at least one space or tab is required.
+All characters after a @samp{#} are ignored and if you comment a section
+name, the whole section is ignored.
+
+Section names are enclosed in rectangular brackets (@samp{[} and
+@samp{]}).  Note that this manual don't include them while refering to
+section names.
+
+The @code{GNUIT} package contains three major programs: @code{gitfm},
+@code{gitps} and @code{gitview}.  Each one has its own sections in the
+configuration files.  There is also a global setup section called
+@samp{Setup} that is used by all these programs.
+
+Note that now @code{git} has been renamed to @code{gitfm},
+the corresponding sections have been renamed to @code{GITFM},
+however for backwards compatibility, the old name (@code{GIT})
+is still checked if the @code{GITFM} section is not found.
+
+@menu
+* Key Sequences::               How to write a key sequence.
+
+* Setup::                       The global setup section.
+
+* gitfm Sections::              gitfm's sections.
+* gitps Sections::              gitps's Sections.
+* gitview Sections::            gitview's Sections.
+@end menu
+
+
+@node Key Sequences, Setup, , Configuration Files
+@subsection Writing key sequences
+
+@code{GNUIT} contains three interactive programs.  Their names are:
+@code{gitfm} (this is the file system browser), @code{gitps} (this is the
+process viewer/killer and @code{gitview} (this is the ASCII/HEX file
+viewer).  Each one of these programs has its own set of key bindings.
+
+The convention used in describing key bindings are very simple.  Here
+there are some examples that will help you to understand them.  The
+corresponding @code{Emacs} conventions will help you even more.
+
+@kbd{^A} means keeping the Ctrl key down and pressing the @kbd{a} key
+(@kbd{C-a}).
+
+The @kbd{ESC} character is represented as @kbd{^[} so that you can use
+the meta character (@kbd{M-} ) where available (or the @kbd{ESC} key):
+
+@kbd{^[a} corresponds to @kbd{M-a} (pressing the @kbd{ESC} key and then
+@kbd{a}).
+
+The @kbd{^} character is represented as @kbd{^^}.
+
+The @kbd{backspace} character is represented as @kbd{^_}.
+
+The @kbd{Ctrl-SPACE} character (@kbd{C-SPC}) is represented as @kbd{^$}.
+
+The space (@kbd{SPC}) character is represented as @kbd{^@@}.
+
+Note that the key bindings notation described here is only used in the
+configuration files.  For the sake of readability this manual uses
+@kbd{ESC} for the @kbd{ESC} key, @kbd{SPC} for the @kbd{SPACE} key and
+@kbd{RET} for the @kbd{RETURN} (@kbd{ENTER}) key.
+
+
+@node Setup, gitfm Sections, Key Sequences, Configuration Files
+@subsection The global setup section
+
+In this section the variables have only one field.
+
+
+@noindent
+@samp{AnsiColors}
+
+This variable should be set to @samp{ON} if the terminal supports
+standard @samp{ANSI} color sequences.  Otherwise it should be
+@samp{OFF}.  If @samp{AnsiColors} is @samp{ON}, @samp{GITxxx-Color}
+sections will be used in the configuration files @file{gnuitrc.TERM}.
+Otherwise, @code{GNUIT} interactive programs will use the
+@samp{GITxxx-Monochrome} sections.
+@vindex AnsiColors
+
+@noindent
+@samp{UseLastScreenChar}
+
+This variable is used for terminals that can't write on the last
+character of the screen without scrolling the entire screen.  If your
+terminal has no problem writing there (@code{Linux} console, vt100,
+vt102, xterm, ...)  set it to @samp{ON}.  Otherwise (hpterm), it should
+be @samp{OFF}.
+@vindex UseLastScreenChar
+
+@noindent
+@samp{StartupScrollStep}
+
+This variable specifies the scroll step initial value for both panels.
+@vindex StartupScrollStep
+
+
+@node gitfm Sections, gitps Sections, Setup, Configuration Files
+@subsection gitfm Sections
+
+@menu
+* GITFM-Setup::                 gitfm's setup section.
+* GITFM-Color::                 gitfm's color section.
+* GITFM-Monochrome::            gitfm's monochrome section.
+* GITFM-Keys::                  gitfm's keys section.
+* GITFM-FTI::                   gitfm's file type information section.
+@end menu
+
+
+@node GITFM-Setup, GITFM-Color, , gitfm Sections
+@subsubsection gitfm Setup
+
+In this section the variables have only one field.
+
+
+@noindent
+@samp{StartupFileDisplayMode}
+
+This variable specifies the file specific information displayed at
+startup.  It can be any of @samp{OwnerGroup}, @samp{DateTime},
+@samp{Size}, @samp{AbbrevSize}, @samp{Mode} or @samp{FullName}.  Its
+value initially affects both panels but it can be changed separately
+afterward.
+@vindex StartupFileDisplayMode
+
+
+@noindent
+@samp{StartupFileSortMethod}
+
+This variable specifies the startup sort method.  It can be any of
+@samp{Name}, @samp{Extension}, @samp{Size}, @samp{Date}, @samp{Mode},
+@samp{OwnerId}, @samp{GroupId}, @samp{OwnerName} or @samp{GroupName}.
+Its value initially affects both panels but it can be changed separately
+afterward.
+@vindex StartupFileSortMethod
+
+@noindent
+@samp{MaxUnscaledDigits}
+
+Maximum number of digits a number may be before being scaled (e.g. to
+@samp{123M}). If you want number to always be scaled, either set this
+to @samp{0}, or set @samp{StartupFileDisplayMode} to @samp{AbbrevSize}.
+Note that scaling may happen anyway if the number is too large for the
+display field.
+@vindex MaxUnscaledDigits
+
+@noindent
+@samp{GroupDigits}
+
+If this variable is @samp{ON}, digits of file sizes will be grouped
+according to your locale, (e.g. @samp{123,456,789}).
+@vindex GroupDigits
+
+@noindent
+@samp{ConfirmOnExit}
+
+If this variable is @samp{ON}, the user is prompted for confirmation at
+exit.
+@vindex ConfirmOnExit
+
+
+@noindent
+@samp{HistoryFile}
+
+This variable specifies the history file name.  The default value is
+@file{~/.githistory}.
+@vindex HistoryFile
+
+
+@noindent
+@samp{InfoDisplay}
+
+If this variable is @samp{OFF}, auxiliary file informations are not
+displayed.  This can be useful if you are using a very slow terminal.
+@vindex InfoDisplay
+
+
+@noindent
+@samp{LeadingDotMatch}
+
+If this variable is @samp{OFF} when matching files for
+select-files-matching-pattern / unselect-files-matching-pattern then the
+leading '.' in the file name is matched only explicitly.
+@vindex LeadingDotMatch
+
+
+@noindent
+@samp{TypeSensitivity}
+
+If this variable is @samp{OFF}, colors are not used when displaying
+files.  Normally, the information in the @samp{GITFM-FTI} section is used
+to display files with different colors, depending on their types.  Note
+that @samp{TypeSensitivity} is automatically set to @samp{OFF} when
+@samp{AnsiColors} is @samp{OFF}.  @xref{GITFM-FTI}, for mor information.
+@vindex TypeSensitivity
+
+
+@noindent
+@samp{NormalModeHelp}
+@noindent
+@samp{CommandLineModeHelp}
+
+These variables describe the status bar contents for each @code{gitfm}
+mode when no errors occurred.  @code{gitfm} can display on the status bar
+a help string and/or some system information (system type, hostname,
+machine type and the current date) using escape characters:
+
+@display
+	\s      ->      the system type
+	\h      ->      the host name
+	\m      ->      the machine type
+	\d      ->      the current date
+@end display
+@xref{Modes}, for more information.
+@vindex NormalModeHelp
+@vindex CommandLineModeHelp
+
+
+@node GITFM-Color, GITFM-Monochrome, GITFM-Setup, gitfm Sections
+@subsubsection Using gitfm on color displays
+
+In this sections the variables have only one field.
+
+These section allows you to customize the colors of @code{gitfm}.  Reading
+the @file{gnuitrc.TERM} configuration file is self explanatory.
+
+
+@node GITFM-Monochrome, GITFM-Keys, GITFM-Color, gitfm Sections
+@subsubsection Using gitfm on monochrome displays
+
+In this sections the variables have only one field.
+
+These section allows you to customize the appearance of @code{gitfm} on
+monochrome displays.  Reading the @file{gnuitrc.TERM} configuration file
+is self explanatory.
+
+
+@node GITFM-Keys, GITFM-FTI, GITFM-Monochrome, gitfm Sections
+@subsubsection Defining keys
+
+These section describes the actions @code{gitfm} takes when a specified
+key is pressed.  A variable can have up to 6 fields separated by ';'.
+Each line in this section looks like:
+
+@display
+@samp{key-sequence} = @samp{command-name};@samp{formatted-command};@samp{new-dir};
+	       @samp{save-screen};@samp{pause};@samp{hide}
+@end display
+
+Note that you can't continue the variable fields description on the next
+line.
+
+@menu
+* key-sequence::                The key-sequence field.
+* command-name::                The command-name field.
+* formatted-command::           The formatted-command field.
+* new-dir::                     The new-dir field.
+* save-screen::                 The save-screen field.
+* pause::                       The pause field.
+* hide::                        The hide field.
+@end menu
+
+
+@node key-sequence, command-name, , GITFM-Keys
+@subsubsection The key-sequence field
+
+@samp{key-sequence} is the key sequence associated with the given
+command.  You can use any key sequence that doesn't start with an ascii
+character (0x20 to 0x7e).
+
+Symbolic key names (@kbd{F0}, @kbd{F1}, @kbd{F2}, ... @kbd{F10},
+@kbd{UP}, @kbd{DOWN}, @kbd{RIGHT}, @kbd{LEFT}, @kbd{INS}, @kbd{DEL},
+@kbd{HOME}, @kbd{END}, @kbd{PGUP} and @kbd{PGDOWN}) can be used instead
+of the key sequence.  If some keys don't have a @samp{termcap}/
+@samp{terminfo} description (like the @kbd{F11}/@kbd{F12} keys on the
+@code{Linux} console) you can specify the key sequence in the usual way.
+
+
+@node command-name, formatted-command, key-sequence, GITFM-Keys
+@subsubsection The command-name field
+
+@samp{command-name} is a command generic name.  Even if it is not always
+used, the @samp{command-name} must be present (if a command is
+associated with a @samp{key-sequence}).  If it is not, no action will be
+taken when pressing @samp{key-sequence}.
+
+There are two types of commands in @code{gitfm}: built-in commands and
+user defined commands.  If the @samp{command-name} section contains a
+built-in command specification, the other fields are ignored.
+
+Note that by convention built-in command names contain only lower case
+letters while user defined command names contain only upper case
+letters.
+
+
+@node formatted-command, new-dir, command-name, GITFM-Keys
+@subsubsection The formatted-command field
+
+@samp{formatted-command} is a shell command which can contain some
+scanf(3)-like format specifiers.  They are used to get the current entry
+name, owner, group, mode, etc.
+
+Note that using uppercase @samp{format specifiers} you will be able to
+access the other panel path, file and directory names, etc.
+
+These are the available @samp{format specifiers}:
+
+@menu
+* %s::                          The %s format specifier.
+* %f::                          The %f format specifier.
+* %d::                          The %d format specifier.
+* %l::                          The %l format specifier.
+* %t::                          The %t format specifier.
+* %z::                          The %z format specifier.
+* %a::                          The %a format specifier.
+* %m::                          The %m format specifier.
+* %g::                          The %g format specifier.
+* %o::                          The %o format specifier.
+* %p::                          The %p format specifier.
+* %b::                          The %b format specifier.
+* %i::                          The %i format specifier.
+* %?::                          The %? format specifier.
+@end menu
+
+
+@node %s, %f, , formatted-command
+@subsubsection The %s format specifier
+
+The format of %s is:  %s@{question,default_answer@}.
+
+When @code{gitfm} encounters a %s in the @samp{formatted-command} it asks
+the user the question @samp{question} whose default answer is
+@samp{default_answer} and replaces the @samp{%s@{ , @}} with the user's
+answer.  Both @samp{question} and @samp{default_answer} can contain any
+other @samp{format specifiers} except %s.
+
+Note that there should be no spaces between %s and '@{'.
+
+
+@node %f, %d, %s, formatted-command
+@subsubsection The %f format specifier
+
+@code{gitfm} will replace %f with the current directory entry name only if
+it is a file (not a directory).
+
+
+@node %d, %l, %f, formatted-command
+@subsubsection The %d format specifier
+
+@code{gitfm} will replace %d with the current directory entry name only if
+it is a directory (not a file).
+
+
+@node %l, %t, %d, formatted-command
+@subsubsection The %l format specifier
+
+@code{gitfm} will replace %l with the current directory entry name only if
+it is a symbolic link with no target.
+
+
+@node %t, %z, %l, formatted-command
+@subsubsection The %t format specifier
+
+@code{gitfm} will replace %t with the current directory entry name only if
+it is a named pipe.
+
+
+@node %z, %a, %t, formatted-command
+@subsubsection The %z format specifier
+
+@code{gitfm} will replace %z with the current directory entry name only if
+it is a socket.
+
+
+@node %a, %m, %z, formatted-command
+@subsubsection The %a format specifier
+
+@code{gitfm} will always replace %a with the current directory entry name.
+
+
+@node %m, %g, %a, formatted-command
+@subsubsection The %m format specifier
+
+@code{gitfm} will always replace %m with the current file mode.
+
+
+@node %g, %o, %m, formatted-command
+@subsubsection The %g format specifier
+
+@code{gitfm} will always replace %g with the current file group.
+
+
+@node %o, %p, %g, formatted-command
+@subsubsection The %o format specifier
+
+@code{gitfm} will always replace %o with the current file owner.
+
+
+@node %p, %b, %o, formatted-command
+@subsubsection The %p format specifier
+
+@code{gitfm} will always replace %p with the current panel path.
+
+
+@node %b, %i, %p, formatted-command
+@subsubsection The %b format specifier
+
+@code{gitfm} will always replace %b with the current panel directory name.
+
+
+@node %i, %?, %b, formatted-command
+@subsubsection The %i format specifier
+
+@code{gitfm} will always replace %i with all the current panel selected
+entry names.
+
+
+@node %?, , %i, formatted-command
+@subsubsection The %? format specifier
+
+The format of %? is: %?@{confirmation@}.
+
+@code{gitfm} uses this format specifier only to ask for confirmation
+before expanding / executing the current command.  The
+@samp{confirmation} string is displayed and, if the user doesn't
+confirm, the command is aborted.  Otherwise, %?@{confirmation@} expands
+to a null string and the command is expanded / executed normally.
+
+
+@node new-dir, save-screen, formatted-command, GITFM-Keys
+@subsubsection The new-dir field
+
+If the @samp{formatted-command} successfully exits (exit code = 0) or it
+has no body and this field is present then @samp{new-dir} will become
+the current panel directory.
+
+The character '~' used at the beginning of the @samp{new-dir} field is
+replaced by the user's home directory.
+
+
+@node save-screen, pause, new-dir, GITFM-Keys
+@subsubsection The save-screen field
+
+This field is a character (usually 'y' or 'n') that tells @code{gitfm} to
+save ('y') or not to save ('n') the terminal's screen after executing
+the @samp{formatted-command}.  Saving the screen is not necessary while
+editing or viewing a file because the information left after the editor
+or the viewer exits is not important.  Saving the screen means that that
+screen will be restored before the execution of the next command.
+Currently this field is used only if you are working as a super user
+under @code{Linux} on a virtual console.  Its default value is 'y'.
+
+
+@node pause, hide, save-screen, GITFM-Keys
+@subsubsection The pause field
+
+Users may wish to read the result of some commands before repainting the
+panels.  If this field is present gitfm will wait for a key to be
+pressed before restoring the panels.  Its default value is 'n'.
+
+
+@node hide, , pause, GITFM-Keys
+@subsubsection The hide field
+
+Some commands that don't displaying any useful information if
+successfully complete their execution: @code{mount}, @code{chmod},
+@code{chown}, @code{chgrp}, @code{sync} ... and, if an error occurs, a
+line or two are sent to stderr.  If this option is 'y', the stdout and
+stderr will be redirected to some files (@file{git.1.pid} and
+@file{git.2.pid}, where pid is @code{gitfm}'s pid) and only if the
+command's exit code is not 0, the @file{git.2.pid} file will be
+displayed, line by line, onto the status bar.  This way the panels will
+not be deleted and then repainted and the command appears to be
+built-in.  @file{git.1.pid} and @file{git.2.pid} are created in the
+temporary directory specified in the @code{TMPDIR} environment variable
+(or "/tmp" if @code{TMPDIR} is not defined).  The default value of the
+@code{hide} field is 'n'.
+
+@node GITFM-FTI, , GITFM-Keys, gitfm Sections
+@subsection Setting up colors for different file types
+
+This sections contains entries of the form:
+
+@example
+@samp{pattern} = @samp{foreground}; @samp{background}; @samp{brightness}
+@end example
+
+@noindent
+where @samp{pattern} is a file name matching pattern, @samp{foreground},
+@samp{background} and @samp{brightness} are the color specification to
+be used when a file whose name match the given @samp{pattern} is
+displayed in a panel.  Colors can be turned off using the
+@samp{TypeSensitivity} variable in the @samp{GITFM-Setup} section.
+
+
+@node gitps Sections, gitview Sections, gitfm Sections, Configuration Files
+@subsection gitps Sections
+
+
+@menu
+* GITPS-Setup::                 gitps's setup section.
+* GITPS-Color::                 gitps's color section.
+* GITPS-Monochrome::            gitps's monochrome section.
+* GITPS-Keys::                  gitps's keys section.
+@end menu
+
+
+@node GITPS-Setup, GITPS-Color, , gitps Sections
+@subsubsection gitps Setup
+
+In this section the variables have only one field.
+
+@noindent
+@samp{Help}
+
+This variable describe @code{gitps}'s status bar contents.
+
+@node GITPS-Color, GITPS-Monochrome, GITPS-Setup, gitps Sections
+@subsubsection Using gitps on color displays
+
+In this sections the variables have only one field.
+
+These section allows you to customize the colors of @code{gitps}.
+Reading the @file{gnuitrc.TERM} configuration file is self explanatory.
+
+
+@node GITPS-Monochrome, GITPS-Keys, GITPS-Color, gitps Sections
+@subsubsection Using gitps on monochrome displays
+
+In this sections the variables have only one field.
+
+These section allows you to customize the appearance of @code{gitps} on
+monochrome displays.  Reading the @file{gnuitrc.TERM} configuration file
+is self explanatory.
+
+
+@node GITPS-Keys, , GITPS-Monochrome, gitps Sections
+@subsubsection Defining keys
+
+
+@node gitview Sections, , gitps Sections, Configuration Files
+@subsection gitview Sections
+
+
+@menu
+* GITVIEW-Setup::               gitview's setup section.
+* GITVIEW-Color::               gitview's color section.
+* GITVIEW-Monochrome::          gitview's monochrome section.
+* GITVIEW-Keys::                gitview's keys section.
+@end menu
+
+
+@node GITVIEW-Setup, GITVIEW-Color, , gitview Sections
+@subsubsection gitview Setup
+
+In this section the variables have only one field.
+
+@noindent
+@samp{Help}
+
+This variable describe @code{gitps}'s status bar contents.
+
+@node GITVIEW-Color, GITVIEW-Monochrome, GITVIEW-Setup, gitview Sections
+@subsubsection Using gitview on color displays
+
+In this sections the variables have only one field.
+
+These section allows you to customize the colors of @code{gitview}.
+Reading the @file{gnuitrc.TERM} configuration file is self explanatory.
+
+
+@node GITVIEW-Monochrome, GITVIEW-Keys, GITVIEW-Color, gitview Sections
+@subsubsection Using gitview on monochrome displays
+
+In this sections the variables have only one field.
+
+These section allows you to customize the appearance of @code{gitview}
+on monochrome displays.  Reading the @file{gnuitrc.TERM} configuration
+file is self explanatory.
+
+@node GITVIEW-Keys, , GITVIEW-Monochrome, gitview Sections
+@subsubsection Defining keys
+
+
+@node Limitations, Bugs, Customization, Top
+@chapter GNU Interactive Tools limitations
+
+Background commands (& terminated)can be specified in the configuration
+file but their result (stdout and stderr redirection), will be
+overwritten by the result of newer commands and, if an error occurs, it
+will not be seen.
+
+When @code{gitfm} is compiled for @code{Linux}, the default built-in color
+descriptions are for color monitors, so you can't (decently) run
+@code{gitfm} on a b/w monitor without the @file{gnuitrc.TERM} file
+correctly configured.  @file{gnuitrc.TERM} should be configured with
+@samp{AnsiColors} = OFF. However, if your system knows about the linux-m
+terminal type, using that may be a better solution.
+
+Job support is implemented only in @code{gitfm}.
+
+Due to the fact that the ';' character is used as a field separator in
+the configuration files, you can't write something like that in the
+@file{gnuitrc.TERM} files:
+
+^AAA = SHOW-USERS-AND-GROUPS; more /etc/passwd; more /etc/group
+
+@noindent
+because 'more /etc/group' will be considered as a directory to switch
+to.  You must write a small script instead:
+
+#! /bin/sh
+
+more /etc/passwd
+more /etc/group
+
+Supposing the script name is @code{show_ug}, the @file{gnuitrc.TERM} line
+will look like this:
+
+^AAA = SHOW-USERS-AND-GROUPS; show_ug
+
+There is no support for appearance modes on magic-cookie terminals.
+
+
+
+@node Bugs, Copying This Manual, Limitations, Top
+@chapter GNU Interactive Tools bugs
+
+Any questions, comments, or bug reports, should be emailed to
+@samp{gnuit-dev@@gnu.org}.  Please include the
+version number.
+
+@node Copying This Manual, , Bugs, Top
+@appendix Copying This Manual
+
+@include fdl.texi
+
+@node Key Index, Command Index, Distrib, Top
+@unnumbered Key Index
+
+@printindex ky
+
+
+@node Command Index, Variable Index, Key Index, Top
+@unnumbered Command Index
+
+@printindex fn
+
+
+@node Variable Index, Concept Index, Command Index, Top
+@unnumbered Variable Index
+
+@printindex vr
+
+
+@node Concept Index, Description, Variable Index, Top
+@unnumbered Concept Index
+
+@printindex cp
+
+
+@summarycontents
+@contents
+@bye

@@ -1,0 +1,184 @@
+-*-outline-*--
+
+* GNU Interactive Tools
+=======================
+
+This file documents the install steps that are specific to the GNUIT
+package, as well as some configuration hints:
+
+
+** The GNUIT package uses the 'configure' script to guess your system
+features.  The 'configure' script was generated from the file
+configure.in (available in the package) using the autoconf utility.
+To install the GNUIT package just type:
+
+	./configure
+	make
+	make install
+
+If you want to install stripped binaries (smaller), type
+	make install-strip
+instead of
+	make install
+
+The configure script first checks for the termcap library.  If the
+termcap library is not found, some terminfo libraries will be searched:
+ncursesw, ncurses, curses, termlib, tinfo, terminfo.  If you want to
+change this default behavior and search for terminfo libraries before
+searching the termcap library, run
+
+	./configure --with-terminfo
+
+instead of
+
+	./configure
+
+Note that it is best to use terminfo instead of termcap under HP-UX.
+
+The filemanager has recently changed name from 'git' to 'gitfm'.
+A transitional script that warns users is installed as 'git'.
+To disable this, use the --disable-transition flag to ./configure.
+
+For more information about the 'configure' script please read the
+INSTALL file in this directory.
+
+** In addition to a termcap/terminfo library and headers,
+the readline library and headers should ideally be installed,
+although gnuit falls back on an internal implementation.
+
+For production of info, pdf and html documentation, you will want the
+texinfo package installed, and optionally the texi2html package.
+
+gitaction will attempt to use many programs/viewers if they are
+installed. Some you will already have on your system, and some are only
+for obscure file formats.
+
+Tools used include:
+
+7z aaxine abiword acroread aktion alsaplayer amp ar audacious aviplay
+bmp bmp-play-files bmp-play-files-2.0 bmp2 bmpx btshowmetainfo bunzip
+bunzip2 bzcat cacaview chmsee cpio db_dump dbview dia display djview
+djview3 djview4 dotty dpkg ee elinks emacs epdfview esdplay evince fbgs
+fbi feh firefox flac123 flip galeon gfontview ggv ghostview gimp gimv gm
+gmplayer gnash gnochm gnumeric gpe-gallery gpg gpgv gs gthumb gtv gunzip
+gv gxine herrie html2text iceape iceweasel info inkscape jar javap
+karbon kbabel kchmviewer kdvi kfax kghostview klyx konqueror kpdf krita
+ktnef kview kwave kword last ldd less lha lynx lyx metamail mgp mikmod
+more mp3blaster mpeg_vga mpg123 mpg321 mplayer noatun nroff objdump
+ogg123 oleo open openoffice pgp pgp5 pgp5i pgpk pgpv play plaympeg
+pod2text pstotext pvftobasic qcad qiv raplayer realplay rhythmbox
+rmdtopvf rpm rvplayer safari seamonkey see sensible-browser sodipodi
+soffice soundtracker sqlite svgdisplay swami swfdec-player swfplayer tar
+ted timidity tnef totem totem-xine unarj uncompress unrar unrtf unzip
+uudecode viewfax vlc vplay vrweb w w3m wavplay x11amp xanim xcfview xchm
+xdvi xemacs xfig xfmedia xgrasp xine xli xloadimage xmms xmp xpdf xv
+xzgv zgv zoo
+
+** There are many configuration files in GNUIT:
+
+a. gnuitrc.generic        - generic configuration file
+b. gnuitrc.linux          - Linux console configuration file
+c. gnuitrc.vt100          - vt100 configuration file
+d. gnuitrc.vt102          - vt102 configuration file (same as vt100)
+e. gnuitrc.xterm          - xterm configuration file
+f. gnuitrc.xterm-color    - xterm configuration file
+g. gnuitrc.hpterm         - hpterm configuration file
+h. gnuitrc.aixterm        - aixterm configuration file
+i. gnuitrc.hft            - hft configuration file
+j. gnuitrc.thix           - thix configuration file
+k. gnuitrc.ansi           - ansi configuration file
+l. gnuitrc.minix          - minix configuration file
+m. gnuitrc.mach           - mach configuration file (for the GNU Hurd)
+.....
+etc.
+
+When git/gitps/gitview are started, they search a file named .gnuitrc.TERM
+first in the home directory and then (without the leading dot) in the
+$(datadir)/gnuit directory ($(datadir) is usually
+/usr/local/share) (see INSTALL).
+
+TERM is the value of your 'TERM' environment variable, e.g. vt102; if
+TERM=vt102, your configuration file should be .gnuitrc.vt102.  The
+package contains many predefined configuration files but, if you are
+using a different terminal type, then you can easily create a
+configuration file for it copying and modifying one of them.
+
+Put a suitable configuration file in your home directory if you want
+to overwrite the default configuration file.  If you don't have a
+configuration file for your terminal, gnuitrc.generic will be used.
+
+If your terminal supports standard ANSI color sequences, set
+AnsiColors to ON in the [Setup] section of .gnuitrc.TERM.  Otherwise,
+AnsiColors should be OFF.
+
+** Create the directories /mnt/fd0 and /mnt/fd1 (for mounting floppy
+disks with gitmount (an auto-mount script).  This works for Linux, on
+other systems it might be different.
+
+** Read the gnuitrc.TERM files to find out how to configure GNUIT's
+colors, keys ...
+
+**  If you are using termcap and your system has a huge termcap
+database, copy the descriptions of your terminal(s) in a file and put
+that file into your home directory.  After that, set your TERMCAP
+environment variable to point to it.  If your login name is mike and
+the file you have just created is .termcap, you must append something
+like this to your .profile :
+
+	TERMCAP=/home/mike/.termcap
+
+This will speed up GNUIT at startup.  If you are using terminfo, don't
+bother.
+
+** In order to be able to read the Info documentation you should
+append the git.dir file (found in the package) to the file
+/usr/info/dir (this works for Linux; on other systems the main Info
+directory could be different).  This is *NOT* done by 'make install'.
+
+** Read the info documentation.  The man pages are obsolete.  They are
+provided only for those people that don't have info, and just to give
+them an idea about what gnuit is.
+
+** If you want to take full advantage of all gnuit's features, it is
+highly recommended that you install the GNU gzip program.  You can
+download it from ftp.gnu.org (/pub/gnu/gzip).
+
+** It might be a good idee to install the GNU termcap library too.  On
+some systems it might make a difference.
+
+** For SCO Unix users: please use -lmalloc when linking gnuit.  See the
+PROBLEMS file for more details.
+
+** For Linux users: you might want to create the special devices for
+reading/writing the virtual console memory.  Use the mkvcs script
+provided with gnuit.  Be aware that current Linux systems do not change
+the owner of these devices at login time as it is usually done for
+ttys.  Therefore, mkvcs creates /dev/vcs?[0-8] with mode 0666.  This
+is a major security hole on multiuser systems!  It is recommended that
+you create these devices only on systems on which security is not
+important.  Maybe future releases of the Linux login program will
+change the owner of these devices...
+
+** In order to use per directory .gitaction scripts you should copy
+the .gitaction example in the target directories and then modify it.
+
+** If gnuit appears to be slow, please consider setting TypeSensitivity
+to OFF in the configuration files.
+
+** If your terminal or terminal emulator supports ANSI colors
+(color_xterm & rxvt under Linux, aixterm under AIX, xterm under
+ULTRIX) you might want to set AnsiColors to ON in the appropriate
+configuration file (gnuitrc.xterm).  If your terminal emulator does not
+support ANSI color sequences, it is best to set AnsiColors to OFF.
+
+** When using gnuit under cygwin, you should set the CYGWIN
+environment variable to "tty". This should be done before running
+cygwin, either in the batch file you use to start cygwin or on
+boot. Emacs has a similar issue, a web search for "emacs cygwin tty"
+should provide further explanation.
+
+Good luck!
+Tudor & Andi
+
+----------------------------------------------------------------------
+Please send bug reports to gnuit-dev@gnu.org

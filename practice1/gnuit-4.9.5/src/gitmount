@@ -1,0 +1,116 @@
+#! /bin/sh
+
+###############################################################################
+###                                                                         ###
+###		     GNU Interactive Tools auto-mount script		    ###
+###      Copyright (C) 1994-2000, 2006-2007 Free Software Foundation, Inc.  ###
+###                                                                         ###
+###                  This file is part of gnuit.                            ###
+###                                                                         ###
+###  gnuit is free software: you can redistribute it and/or modify it       ###
+###  under the terms of the GNU General Public License as published         ###
+###  by the Free Software Foundation, either version 3 of the               ###
+###  License, or (at your option) any later version.                        ###
+###                                                                         ###
+###  gnuit is distributed in the hope that it will be useful, but           ###
+###  WITHOUT ANY WARRANTY; without even the implied warranty of             ###
+###  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          ###
+###  GNU General Public License for more details.                           ###
+###                                                                         ###
+###  You should have received a copy of the GNU General Public              ###
+###  License along with this program. If not, see                           ###
+###  http://www.gnu.org/licenses/.                                          ###
+###									    ###
+###                 Written by Tudor Hulubei and Andrei Pitis.              ###
+###                                                                         ###
+###############################################################################
+
+
+###
+### The ideea of this script is quite general but the script needs
+### some changes in order to run on other UNIX systems.
+### The major change is in the file system types list.
+###
+### If you enhance this script, please send me a patch at
+### gnuit-dev@gnu.org and I'll include it in the next release.
+###
+
+exit_code=0
+name=`basename "$0"`
+mp="/mnt"
+
+if test "$#" -lt 1; then
+    echo "usage: $name devices...      (ex: gitmount fd0)"
+    exit 1
+fi
+
+while true; do
+    device="$1"
+
+    # Remove the `/dev/' prefix, if present.
+    if test `echo "$device" | cut -c1-5` = "/dev/"; then
+	device=`echo "$device" | cut -c6-`
+    fi
+
+    device_alias="$device"
+
+    # Handle aliases: RedHat uses /mnt/floppy as a mount point.
+    if test "/dev/$device" = "/dev/floppy"; then
+	device="fd0"
+    fi
+
+    if test ! -b /dev/"$device"; then
+	echo "$0: /dev/$device: no such device" >&2
+	exit_code=1
+    else
+	success=1
+	if test ! -d "$mp/$device_alias"; then
+	    gitmkdirs "$mp/$device_alias"
+	    if test $? -ne 0; then
+		success=0
+		exit_code=1
+	    fi
+	fi
+
+	if test $success -eq 1; then
+	    success=0
+	    for fstype in ext3 ext2 iso9660 reiserfs xfs vfat msdos\
+		          ntfs minix ext xiafs jfs hpfs xenix sysv\
+		          coherent ufs umsdos affs; do
+		mount -t "$fstype" "/dev/$device" "$mp/$device_alias"\
+			> /dev/null 2>&1
+		if test $? = 0; then
+		    success=1
+		    break
+		fi
+	    done
+
+	    # No luck so far.  Try without specifying the fs type.
+	    if test $success -eq 1; then
+		echo "$device_alias: $fstype"
+	    else
+		mount "/dev/$device" "$mp/$device_alias" > /dev/null 2>&1
+		if test $? = 0; then
+		    echo "$device_alias: default"
+		else
+		    # As a last resort try without specifying the fs
+		    # type and mounting directory.  Hopefully this
+		    # will allow regular users to mount cdroms,
+		    # floppies, and zip drives under Linux.
+		    mount /dev/"$device" > /dev/null 2>&1
+		    if test $? = 0; then
+			echo "$device_alias: default"
+		    else
+			echo "$device_alias: could not mount file system" >&2
+			exit_code=1
+		    fi
+		fi
+	    fi
+	fi
+    fi
+
+    shift
+    if test $# -eq 0; then
+	exit $exit_code
+    fi
+done

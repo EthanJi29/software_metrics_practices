@@ -1,0 +1,131 @@
+.\" +----------
+.\" |
+.\" |			  GITFM man page
+.\" |
+.\" |	      Copyright 1993-1999,2006-2007 Free Software Foundation, Inc.
+.\" |
+.\" |	This file is part of GNUIT (GNU Interactive Tools)
+.\" |
+.\" |	GNUIT is free software; you can redistribute it and/or modify it under
+.\" | the terms of the GNU General Public License as published by the Free
+.\" | Software Foundation; either version 3, or (at your option) any later
+.\" | version.
+.\" |
+.\" | GNUIT is distributed in the hope that it will be useful, but WITHOUT ANY
+.\" | WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+.\" | FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+.\" | details.
+.\" |
+.\" | You should have received a copy of the GNU General Public License along
+.\" | with GNUIT; see the file COPYING. If not, see http://www.gnu.org/licenses/
+.\" |
+.TH gitfm 1
+.SH NAME
+gitfm \- GNU Interactive Tools File Manager
+.SH SYNTAX
+.I gitfm
+[options] [path1] [path2]
+
+.SH DESCRIPTION
+.I gitfm
+is a
+.B file system browser
+with some shell facilities which was designed to make your work
+easier and more efficient.
+
+The GNUIT package also contains
+.I gitps,
+an interactive process viewer/killer and
+.I gitview,
+a hex/ascii file viewer.
+
+.PP
+More extensive documentation on
+.I gitfm
+and the other
+.B gnuit
+tools is available in info format, try
+.I 'info gnuit'.
+
+.SH OPTIONS
+A summary of options is included below.
+For a complete description, see the Info files.
+.TP
+.B \-h
+Show summary of options.
+.TP
+.B \-v
+Show version of program.
+.TP
+.B \-c
+Use ANSI colours.
+.TP
+.B \-b
+Don't use ANSI colours.
+.TP
+.B \-l
+Don't use last screen character.
+.TP
+.B \-p
+Output the final path on exit
+
+.SH NOTE
+The main configuration file of the
+.I GNUIT
+package is
+.B "gnuitrc.TERM"
+where
+.B TERM
+is the value of the environment
+variable
+.BR "" ' TERM '
+e.g for Linux console your environment contains something like
+.BR "" ' "TERM=linux" '
+so the configuration file name is
+.BR "gnuitrc.linux" "."
+You can (and should) have a configuration file for each terminal type you use.
+If you customise git, the version of the config file in your home
+directory should have a leading ".", eg
+.BR ".gnuitrc.linux" "."
+
+.SH FILE-SYSTEM BROWSER
+.I gitfm
+is made of two panels. The left one and the right one. Each
+one contains a file system directory. You can browse the
+directory tree with the usual cursor keys and pressing
+.B ENTER
+when you want to enter or leave a directory.
+You may change the panels by pressing
+.BR TAB .
+See also
+.BR "BUILT-IN COMMANDS" .
+
+.SH INPUT LINE
+Under the two panels there is a shell like input line which
+you can use to type normal shell commands. The input line
+supports unlimited characters and keeps a history of the typed
+commands. gitfm uses the GNU history library for that.
+See also
+.BR "BUILT-IN COMMANDS" .
+
+.SH WARNINGS AND ERRORS REPORTING
+Under the input line there is a status bar. You can see there
+the status of the currently executed command, the warnings and
+errors and you will be prompted if a decision has to be taken.
+
+.SH BUGS
+
+Please send bug reports to:
+.br
+.I gnuit-dev@gnu.org
+
+.SH SEE ALSO
+termcap(5) terminfo(5) sh(1) ps(1) mount(8) umount(8) gitps(1) gitview(1)
+gitaction(1) gitmount(1) gitkeys(1) gitrgrep(1) gitunpack(1)
+
+.SH AUTHORS
+.I Tudor Hulubei <tudor@cs.unh.edu>
+.br
+.I Andrei Pitis <pink@pub.ro>
+.br
+.I Ian Beckwith <ianb@erislabs.net> (Current maintainer)

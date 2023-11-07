@@ -1,0 +1,372 @@
+2009-02-10  Ian Beckwith  <ianb@erislabs.net>
+
+	* Bumped version of Free Documentation License to 1.3 or later,
+	  still with no Invariant Sections, no Front-Cover Texts, no
+	  Back-Cover Texts.
+	* Updated gnulib to commit 69aecd33.
+	* prepare: stop importing memmove module: obsolete.
+	* Makefile.am: add m4/sockpfaf.m4 to EXTRA_DIST.
+	* .gitignore: add lib/fcntl.h and lib/signal.h.
+	* Update NEWS.
+
+2009-02-08  Ian Beckwith  <ianb@erislabs.net>
+
+	* Added filetype info for many more file extensions.
+	  Thanks to Tudor Hulubei (and Wikipedia).
+
+2009-01-12  Ian Beckwith  <ianb@erislabs.net>
+
+	* src/git.transition: remove bashisms (Thanks to Gerald Pfeifer).
+
+2008-10-24  Ian Beckwith  <ianb@erislabs.net>
+
+	* panel_fit_number(): If number with commas is too big,
+	  go straight to autoscale without trying to drop commas first.
+	* panel_update_size(): show available space (fsu.fsu_bavail)
+	  instead of free space (fsu.fsu_bfree), even as root.
+
+2008-09-12  Ian Beckwith  <ianb@erislabs.net>
+
+	* Bump version to 4.9.5.
+	* Fix incorrect INSTALL_PROGRAM calls.
+	  Thanks to James Rowe.
+	* gitaction: add xdg-open, kfmclient, exo-open.
+
+2008-06-16  Ian Beckwith  <ianb@erislabs.net>
+
+	* gitaction:
+	  + support .7z files
+	  + MacOS: don't run open(1) on archives, it expands them.
+
+2008-06-10  Ian Beckwith  <ianb@erislabs.net>
+
+	* Update to gnulib 20080610 commit 765ede78
+	  (fixes strcasestr configure test hang).
+	* gitaction:
+	  + unzip: use -l instead of -v.
+	  + try rar as well as unrar for *.rar|*.cbr.
+
+2008-05-27  Ian Beckwith  <ianb@erislabs.net>
+
+	* Update to gnulib 20080527 commit 9c504099.
+	* gitaction: Don't prompt for keypress after running MacOS open(1).
+
+2008-05-18  Ian Beckwith  <ianb@erislabs.net>
+
+	* Add apropos command (^X^A) for key-binding search.
+	* Change GIT_ env vars to GNUIT_ (eg GNUIT_PAGER).
+	  Fall back to old names for backwards compatibility.
+	* Use mkstemp() for temporary files.
+	* Update to gnulib 20080512 commit 6ea7ea7.
+	* Fix make distcheck: remove absolute-header.m4 from EXTRA_DIST.
+
+2008-05-07  Ian Beckwith  <ianb@erislabs.net>
+
+	* rewrote gitaction, adding more file types and viewers.
+
+2008-04-13  Ian Beckwith  <ianb@erislabs.net>
+
+	* bumped version to 4.9.4
+	* Thanks to Tudor Hulubei for reporting the following:
+	  + Use base 1024 when autoscaling file sizes.
+	  + Fix sorting by filesize.
+	  + Fix current file size display at bottom when no files are selected.
+	  + Fix input in incremental-search (^S) mode.
+	  + Manually append "B" suffix to sizes in panel info/size display.
+	  + Clear screen before restoring, in case restore fails.
+	  + gitaction: MacOS: try and run open(1) first on non-textfiles.
+
+2008-03-29  Ian Beckwith  <ianb@erislabs.net>
+
+	* configure.ac: add AC_SYS_LARGEFILE to fix
+	  64bit IO on 32 bit systems.
+	* Remove obsolete files during install
+	  (eg $(datadir)/.gitrc.common).
+	* Handle config file lines consisting solely of a comment.
+	* README: added note about dependencies.
+	* Thanks to Michael Cook for the above suggestions/reports.
+	* gitaction: added more viewers.
+	* Changed address for bug reports to gnuit-dev@gnu.org.
+	* gnuitrc.*: fix comment
+
+2008-02-26  Ian Beckwith  <ianb@erislabs.net>
+
+	* Updated gnulib to 20080214 commit 501a61c5.
+	* Added license notices to many files.
+	* gitfm:
+	  + Scale file sizes to fit available space.
+	  + New panel minor mode AbbrevSize (accessed with escape-e-S)
+	    Always scale file sizes (to eg 123M).
+	  + panel_update_size: always scale (human_autoscale|human_SI|human_B).
+	* New config variables: GroupDigits, MaxUnscaledDigits.
+	* gnuit.texinfo
+	  + fixed typos (Thanks to Ralf Wildenhues).
+	  + Documented gitfm changes.
+	* README: fixed more references to git (Thanks to MJ Ray).
+	* gitaction: fall back to open (on mac), see, metamail
+	  and finally $GIT_PAGER.
+	* gnuitrc.common.IN: add "-k" to du invocation.
+	* Made scripts in src/ executable.
+	* git.transition: tweak text.
+	* Thanks to Tudor Hulubei for many useful suggestions.
+
+2008-01-23  Ian Beckwith  <ianb@erislabs.net>
+
+	* Updated gnulib to 20080123 commit 16c6ed60fb
+	  (including MacOS putenv fix).
+	* gitfm/gitps/gitview/gitwhich: add program_name global for lib/error.c.
+	* Include m4/utimes.m4 in EXTRA_DIST.
+	* Added license notices to files in term/.
+
+2008-01-22  Ian Beckwith  <ianb@erislabs.net>
+
+	* Release gnuit 4.9.2.
+
+2008-01-21  Ian Beckwith  <ianb@erislabs.net>
+
+	* Rewrite panel_beautify_number to use human_readable() from gnulib.
+	* Call panel_beautify_number in more places.
+
+2008-01-03  Ian Beckwith  <ianb@erislabs.net>
+
+	* gitps.c: add horizontal scroll (ESC-g & ESC-J).
+
+2007-11-28  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* git.c: Fallback to PAGER if GIT_PAGER is not set.
+	* improve mail checking:
+	  + title.c: read and parse $MAIL, then reset access time.
+	  + import utime from gnulib.
+	* src/Makefile.am: if --enable-debian is set. set *_LDFLAGS
+	  to "-Wl,-z,defs -Wl,--as-needed". I gather this is not yet
+	  portable enough for general use. While I could test for it in
+	  configure, it is hard to test it works *and* is bug free.
+	* gitaction: run info on *.info.{gz,bz2}.
+
+2007-11-15  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* gitps.c: handle cygwin ps output, add more error checking.
+	* README: Document the need to set CYGWIN=tty under cygwin.
+
+2007-10-22  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* Relicensed code to GPL version 3,
+	  git.texinfo to GFDL 1.2 with no invariant sections,
+	  no front cover texts and no back cover texts.
+	* Updated to latest gnulib, also import nanosleep.
+
+2007-10-20  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* Bumped version to 4.9.2
+	* gitps.c,term/gnuitrc.*.in: added RefreshAfterKill variable
+	  (Default: ON), to autorefresh after signalling a process.
+	* gitps.c: remove bogus code from kill_process().
+	* */ChangeLog: added note to look here instead.
+	* Renamed texinfo, info, html and spec files to gnuit.
+	* Removed unused file 'version'
+
+2007-10-19  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* Renamed package to gnuit.
+	* Renamed term/gitrc.* to gnuitrc.*
+
+2007-10-03  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* Manually expand variables in gitrc.common.IN
+	  (sed in Makefile.am), otherwise they get expanded to (eg)
+	  $(prefix)/share/doc/gnu-interactive-tools.
+	* gitps:
+	  + Added SIGSTKFLT to supported signals.
+	  + Added numbers as key bindings to select signals.
+
+2007-10-01  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* Remove leading dot from system copy of config files.
+	* Portability fixes (freebsd, amd64).
+	* tilde.[ch] and history.[ch] were not getting included
+	  when needed. Autotools weirdness, I suspect gnulib.
+	  Moved them back to src/ and now use them unconditionally.
+
+2007-09-30  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* add --enable-debian flag to set defaults
+	  for debian (sensible-browser, etc).
+	* merged debian manpages (gitps, gitview, gitwipe, etc) upstream.
+	* merged Bruce Sass's patches for manipulating .deb files
+	* Updated RPM spec file. Warning: untested.
+	* Remove CVS $Id$ tags as we are now using git.
+
+2007-09-29  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* renamed package to gnu-interactive-tools.
+	* added missing tty_end_cursorapp() calls.
+	* dont wrap tty mode in tty_{start,end}cursorapp(), it leaves
+	  the cursor bold when we exit in xterm.
+	* src/panel.c(panel_compare_files): handle special files.
+
+2007-09-28  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* updated config.{guess,sub}.
+	* added .gitignore (that's git the vcs).
+
+2006-10-21  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* src/tty.c(tty_put/get_screen): fix to work with > 8 vcs.
+	* use ti/te codes which save/restore screen under xterm.
+
+2006-10-19  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* added setlocale calls to gitps and gitview.
+	* set version to 4.9.1.
+	* converted all .gitrc to .gitrc.*.in to pick up version in comment.
+	* replaced xid.c with gnulib idcache.
+
+2006-10-18  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* check if copy/mv/rm/command aborted by signal.
+	* removed -traditional from warning flags.
+	* fixed remaining warnings in src/.
+
+2006-10-17  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* src/title.c: added mail checking to title.
+
+2006-10-16  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* src/git.c: Initial setlocale support.
+	* add rxvt-unicode to color xterms.
+
+2006-10-07  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* src/panel.c: fix copying symlinks.
+
+2006-10-06  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* freebsd fixes + AM_MAINTAINER_MODE.
+	* only define _LARGEFILE64_SOURCE if not already defined.
+	* use texi2html for html docs but fall back on makeinfo.
+
+2006-10-04  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* configure.ac:  add --enable-transition option.
+	* */Makefile.am: DESTDIR fixes.
+
+2006-10-03  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* INSTALL: updated.
+	* mkinstalldirs, update-gnulib: removed (use prepare instead).
+	* added cygwin as ansi term.
+	* src/gitview.c: fix warning.
+
+2006-10-02  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* work round autotools stubbornness: put tilde and history in
+	  lib/, patch lib/Makefile.am to include them in EXTRA_DIST with
+	  lib-Makefile.am.patch.
+	* configure.ac: deprecate termcap and look for ncursesw
+	* src/xmalloc.c: call abort() in xalloc_die to silence gcc warning
+
+2006-10-01  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* configure.ac: bumped AC_PREREQ to 2.59 for gnulib.
+	* converted as much as possible to use gnulib.
+	* src/inputline.c: fix inputline to use GITFM-Setup.
+
+2006-09-30  Ian Beckwith  <ianb@nessie.mcc.ac.uk>
+
+	* removed config.h.{top,bot} - now in configure.ac.
+
+2001-06-02  Tudor Hulubei  <tudor.hulubei@ecora.com>
+
+	* panel.c: Added support for displaying file sizes >2Gb.
+
+2000-05-07  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* configure.in: Added support for detecting the 64bit I/O support
+	in Linux/glibc.
+
+1999-10-07  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* doc/texinfo.tex: Updated to version 1999-10-01.07.
+
+1999-10-01  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* configure.in: Added `-ansi' when --enable-gcc-warnings is given.
+
+1999-05-11  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* configure.in (--enable-smp): New option (Linux only).  If given,
+ 	make will attempt to spawn a number of compilations equal to the
+ 	number of processors + 1.
+
+1999-04-25  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* git.spec.in: Updated to reflect the new directory structure.
+
+	* The entire configuration system has been changed to use
+ 	automake.
+
+1998-03-05  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* Makefile.in (ps): New rule.
+
+1997-09-27  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* config.h.in: Added NDEBUG.
+
+1997-09-16  Tudor Hulubei  <tudor@cs.unh.edu>
+
+	* configure.in (efence): Added --enable-efence.
+
+Sat Jan  4 17:45:35 1997  Tudor Hulubei  <tudor@hal.cs.unh.edu>
+
+	* configure.in (HOST): Bug fix: $host_os is `linux-gnu' now.
+
+Mon Dec  2 19:32:31 1996  Tudor Hulubei  <tudor@hal.cs.unh.edu>
+
+	* configure.in: Added code after AC_OUTPUT() to create hard links
+	to the prefix file.
+
+	* configure.in: Regenerated with autoconf 2.12.
+
+Fri Nov 22 17:10:49 1996  Tudor Hulubei  <tudor@hal.cs.unh.edu>
+
+	* Makefile.in (prefix-change): Rule to take care of prefix
+	changes.
+
+Sat Nov  9 21:42:29 1996  Tudor Hulubei  <tudor@kaa.cs.unh.edu>
+
+	* configure.in: Now checks for off_t as well.
+
+Sun Oct 13 14:26:09 1996  Tudor Hulubei  <tudor@kaa.cs.unh.edu>
+
+	* git.spec: New file.  RPM package specification.
+
+	* Makefile.in (distdone): Corrected permissions.
+
+	* configure.in (HOST): HAVE_HPUX test removed.  The `cut' utility
+	should not be used in configure as it appears to be missing on
+	some systems (m68k-next-nextstep3).
+
+Tue Sep 24 02:05:34 1996  Tudor Hulubei  <tudor@kaa.unh.edu>
+
+	* config.guess: Added support for AT&T 3B2 systems, thanks to
+	Gaylen Miller.
+
+	* configure.in: -Wall is no longer automatically appended to
+	CFLAGS when gcc is detected.  Use --enable-gcc-warnings to get
+	the complete set of warnings.
+
+	* configure.in: Added a check for the presence of the sys/wait.h
+	header file.  Gaylen Miller <gaylen@proaxis.com> reported that
+	this header is missing on the AT&T 3B2 systems (we32k-att-sysv3).
+
+Wed Aug 21 11:20:40 1996  Tudor Hulubei  <tudor@chang.pub.ro>
+
+	* version.h.in: TERMDIR removed and appended to DEFS.  This way
+	make prefix=... will no longer fail.
+
+Thu Jun  6 10:21:38 1996  Tudor Hulubei  <tudor@chang.pub.ro>
+
+	* Makefile.in: 	install_strip renamed to install-strip.
+	install now depends on all and on install-only.

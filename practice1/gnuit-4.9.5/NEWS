@@ -1,0 +1,1419 @@
+-*-outline-*--
+
+
+			      GNU Interactive Tools
+			      =====================
+
+* Version 4.9.5
+================
+
+** Increased version of Free Documentation License to 1.3 or later,
+   still with no Invariant Sections, no Front-Cover Texts, and no
+   Back-Cover Texts.
+
+** Added filetype info for many more file extensions.
+   Thanks to Tudor Hulubei (and Wikipedia).
+
+** Portability fixes, thanks to James Rowe and Gerald Pfeifer.
+
+** Filesize display: go straight to scaled numbers if number with commas
+   doesn't fit.
+
+** Fix free space display as root.
+
+** gitaction: support xdg-open, kfmclient and exo-open.
+
+* Version 4.9.4
+================
+
+** New apropos command (^X^A) for key-binding search.
+
+** Environment variables used by gnuit now start with GNUIT_
+   rather than GIT_ (eg GNUIT_PAGER, GNUIT_BROWSER, etc.).
+   The old names are still accepted for backwards compatibility.
+
+** Rewrote gitaction, adding more file types and viewers.
+
+** Fixed input in incremental-search mode.
+
+** Use base 1024 when autoscaling.
+
+** More fixes to large file support.
+
+* Version 4.9.3
+================
+
+** Fixed MacOS support.
+
+** Fixed large file support on 32bit systems.
+
+** On install, remove files belonging to earlier versions.
+
+** gitfm: Scale file sizes when needed to fit available space.
+
+** gitfm: New panel minor mode AbbrevSize: Always scale file sizes (to
+   e.g. 123M). Accessed with escape-e-S (panel-enable-abbrevsize).
+
+** New config variables: GroupDigits, MaxUnscaledDigits.
+
+** Fix parsing of comments in config files.
+
+** gitaction: Added more viewers; If no explicit action defined for
+   filetype, falls back to see(1), metamail(1), [on MacOS] open(1),
+   and finally $GIT_PAGER.
+
+** Added explicit license notice to many files.
+
+* Version 4.9.2
+================
+
+** Renamed package to gnuit.
+
+** Renamed git file manager binary to gitfm.
+   A transitional script to warn users is installed unless configured
+   otherwise with ./configure --disable-transition.  Config file
+   sections now start with "[GITFM-", but "[GIT-" is still accepted.
+
+** Dropped leading dots from system copies of gitrc files,
+   and renamed them to gnuitrc.*
+   Files in home directory still start with ".".
+   ~/.gitrc.TERM will be tried as a fallback if ~/.gnuitrc.TERM
+   doesn't exist.
+
+** Changed code license to GPL version 3 (see COPYING).
+   and documentation license to GFDL 1.2 with no Invariant
+   Sections, no Front-Cover Texts and no Back-Cover Texts.
+
+** Added 64bit I/O support from Tudor Hulubei.
+
+** New terminals: rxvt-unicode, linux-m, cygwin, Eterm.
+
+** Added commands to manipulate .deb files (Thanks to Bruce Sass).
+
+** Support comparing special files in gitfm.
+
+** Restore screen when exiting.
+
+** Fix copying symlinks.
+
+** Add mail checking to title.
+
+** gitps: added numbers as key bindings for signal selection.
+
+** Fixed a scrolling inconsistency in gitview (Tudor Hulubei).
+
+** Fixed a segmentation fault related to directory names containing
+   printf-like sequences (Tudor Hulubei).
+
+** Fixed a segmentation fault in gitps when killed process left you
+   off the end of the list.
+
+** Moved the info and documentation files in /usr/share (Tudor Hulubei).
+
+** Fixed a problem with gitps (refresh was resetting the signal type
+   to SIGTERM) (Tudor Hulubei).
+
+** gitps: added RefreshAfterKill variable (Default: ON), to autorefresh after
+   signalling a process.
+
+** gitps: add horizontal scroll (ESC-g & ESC-J).
+
+** Documentation fixes (Some from Tudor Hulubei).
+
+
+* Version 4.3.20
+================
+
+** Moving across filesystems now preserves file ownership.
+
+** Copying no longer preserves file ownership.
+
+** F7 (`make-directory') creates all the intermediate directories.
+
+** Fixed a long standing bug in the xid code for long user names (I
+   could finally reproduce it myself).
+
+** Fixed a crash in the incremental search code.
+
+
+* Version 4.3.19
+================
+
+** Fixed 2 compilation problems on non-ANSI C compilers.
+
+** Minor fixes in gitaction.
+
+
+* Version 4.3.18
+================
+
+** The build/installation procedure is now based on automake.
+
+** `make prefix=some_path' no longer recompiles git.  According to the
+   new GNU coding standards this is the correct behaviour.
+
+** The key sequence typed so far is displayed in the status bar, if
+   not completed in one second.
+
+** `select-extension'/`unselect-extension': new builtin commands,
+   bound on `Alt-+'/`Alt--' (or `ESC +'/`ESC -').  These commands
+   select/unselect all the files in the current directory that have
+   the same extension as the current file.  That is, if the current
+   file is "git.c", `select-extension' will select all the "*.c" files
+   in the current directory.  If the current file does not have an
+   extension (including the case where its name starts with a dot), no
+   selections/unselections are made.
+
+** The insertion of file/directory names in the command line
+   (Alt-Enter) is a little bit smarter.  Quotes are added only when
+   necessary and when before the current possition there is a /, no
+   space is added before the name, to allow for path building.
+
+** The incremental forward/backwards search mechanism can recall the
+   last searched string if the user types ^S/^R while the string is
+   empty.  This is similar to what Emacs does.
+
+** F2 works on *.pgp files (will ask for a passphrase).
+
+** `ESC m f' mounts the first floppy in /mnt/floppy.  `ESC r f'
+   unmounts it.
+
+** A simple scroll-bar thumb (#) has been added on the right side of
+   the panel's frame.
+
+** The shell command currently being executed is displayed on the
+   title of the xterm window.
+
+** GIT_BROWSER: new environment variable.  If set, git will use this
+   to view html documents.  If GIT_BROWSER is not set, lynx will be
+   used instead.
+
+** A more Unix like key sequence structure in gitps and gitview.  You
+   can scroll up and down with `Space' and `Backspace' and quit with
+   `q'.
+
+** Binary file split on `^C /' and (in background) on `^C b /'.
+
+** The inconsistency between the keys and the signal names in gitps
+   have been fixed.  Signal selection is done with upper case letters
+   only.
+
+** Other bug fixes.
+
+
+* Version 4.3.17
+================
+
+** Many fixes and updates.
+
+** Bzip2 compression on `^C .'.
+
+** `^C -' creates a .tar.bz2 archive of the current directory.  `^C b -'
+   does the same thing in background.
+
+** `Alt-m z' and `Alt-r z' (or `ESC m z' and `ESC r z') will
+   mount/unmount the ZIP drive, provided you link /mnt/zip to the
+   appropriate device in /dev.
+
+** `Alt-m j' and `Alt-r j' (or `ESC m j' and `ESC r j') will
+   mount/unmount the JAZ drive, provided you link /mnt/jaz to the
+   appropriate device in /dev.
+
+** HTML doclumentation included, installed in $(prefix)/lib/git/html.
+   If lynx is installed, `^X h' will point it to the right place.
+
+** Tested on Solaris 2.6.
+
+** Ported to IRIX 6.3 (mips-sgi-irix6.3) (TERM=iris-ansi).
+
+** Ported to UNIX System V 4.0 (i486-pc-sysv4.0).
+
+** If possible, `git' will print the current path on the title of
+   xterm terminal emulators.  `gitps' will print the ps(1) options
+   used, and `gitview' will print the name of the file it is currently
+   viewing.
+
+** GENERIC-UNPACK: New command that unifies archive unpacking.  It
+   unpacks archives based on the extension of the file by calling the
+   `gitunpack' script to do the job.  Currently the `gitunpack' script
+   is able to handle *.tar, *.tar.gz, *.tar.bz, *.tar.bz2, *.tar.Z,
+   *.Z, *.gz, *.bz, *.bz2, *.zip, *.jar, *.arg, *.rar, *.shar, *.deb,
+   *.lha, *.lzh, *.uu and *.a.  The binding for GENERIC-UNPACK is `^C
+   X' - the one used before for UNCOMPRESS-UNTAR which is obsolete and
+   has been removed (together with B-UNCOMPRESS-UNTAR, UNTAR and
+   B-UNTAR).
+
+** It is possible to unpack an archive into a given directory, using
+   GENERIC-UNPACK-INTO (^CV or ^CbV for the background version).  If
+   the directory does not exist, it is created.  Thanks to Viorel
+   Anghel for suggesting this.
+
+** gitunpack (^CX, ^CbX) will unpack all the selected files.
+
+** The rpm-related commands (^CI, ^CbI, ^Ci, ^Cbi, ^CN, ^CbN) will now
+   act (install, uninstall, upgrade) on all the selected files.
+
+** Added command line options.  Try `git -h', `gitps -h' and `gitview
+   -h' for details.
+
+** `git' will use colors if the COLORTERM environment variable is
+   defined.
+
+** `git' now accepts starting directories in the command line.
+
+** For the MS-DOS die-hards: I added support for making the shell
+   `chdir' to the path `git' was in before exiting.  `bash' users need
+   to use this shell function:
+
+	function g
+	{
+	    git -p $@ 3> /tmp/git.p.$$
+
+	    if test -s /tmp/git.p.$$; then
+		if test -d "`cat /tmp/git.p.$$`"; then
+		    cd "`cat /tmp/git.p.$$`"
+		else
+		    cd
+		fi
+	    fi
+
+	    rm -f /tmp/git.p.$$
+	}
+
+   Notice that this won't work if `git' is suspended and then resumed
+   (the `cd' command in the script will be executed immediately after
+   `git' is suspended, not after it exits).
+
+** It is now possible to specify a list of patterns to the `+' and `-'
+   commands, thanks to "Viorel ANGHEL <vang@pizza.pub.ro>".  For
+   instance, typing `+ *.java' in the command line will select all the
+   java files (in addition to whatever files were currently selected).
+
+** Support for SIGWINCH has been added.  `git' can be resized at will,
+   regardless of whether it is currently doing something or not.
+
+** Better support for suspending `git'.  `git' can now be suspended at
+   any time, including while it is doing something (like copying
+   files, etc).  Also before `git' launches new programs, it will set
+   the SIGTSTP handler to SIG_IGN.  Well behaved programs ((X)Emacs,
+   ncftp, the GNU shell utile, etc.) will notice this and ignore
+   suspend signals as well.
+
+** refresh now works even during incremental searches & input line
+   reads (like make-directory, etc.).
+
+** After changing the sorting method, `git' will reposition on the
+   panel entry that was the _current_ entry before the sorting.  A
+   similar repositioning attempt is performed after creating new
+   directories in the current directory.
+
+** It is now possible to view the names of those files/directories
+   that do not fit into the panel's visible area by using the
+   `horizontal-scroll-left' and `horizontal-scroll-right' commands,
+   bound on Alt-g and Alt-j (or `ESC g' and `ESC j' if you don't have
+   a working Alt key).
+
+** The clock is back, with a (hopefully) safer implementation.
+
+** gitmount accepts a list of devices to mount (as usual, without
+   the /dev/prefix).  Also it is possible to select several
+   directories in /mnt (corresponding to devices) and mount/umount
+   all of them with `ESC m t' and `ESC r t'.
+
+
+* Version 4.3.16
+================
+
+** Minor fixes and updates.
+
+
+* Version 4.3.15
+================
+
+** MIME-PACK, B-MIME-PACK, MIME-UNPACK, B-MIME-UNPACK - new user
+   defined commands that pack/unpack mime files.  The corresponding
+   key bindings are: ^Ck, ^Cbk, ^CK and ^CbK.  The mpack package
+   should be installed in order for these to work.
+
+** MIME-MAIL, B-MIME-MAIL - new user defined commands that can send
+   files by mail as mime messages.  The corresponding key bindings
+   are: ^C2m and ^Cb2m.  The mpack package is required for these ones
+   as well.
+
+** FAST-DIFF - new user defined command (on ^Cfd).  Calls diff -r -q
+   and reports differences between directories in terms of files that
+   differ, but does not report the actual differences between them.
+
+** Added support for *.mov to gitaction.
+
+** Added support for bin packing (i.e. packing files in the smallest
+   number of bins).  See the info documentation for details.
+
+** Some user defined commands now protect "weird" file names with the
+   POSIX specified `--' argument that terminates all options.  Thus
+   for some commands the errors that used to occur when dealing with
+   file names beginning with a hyphen are now fixed, depending on
+   whether or not that particular command supports the `--' argument.
+   For the ones that don't (emacs, ghostview, tar, basename, ar, xv,
+   xanim, xfig, lynx, mpeg_play, zip/unzip, ispell, etc), there is
+   nothing I can do.  GIT cannot check whether or not programs
+   actually do support this POSIX feature.
+
+** `git' now works with gzip only.  Support for `compress' as an
+   alternative has been removed.  Most archives today are in `gzip'
+   format anyway.
+
+** Multiple patterns are accepted on `select-files-matching-pattern'.
+   The patterns are separated by spaces.  Spaces and \s should be
+   escaped with a \ if part of the pattern.
+
+** Bug fixes.
+
+
+* Version 4.3.14
+================
+
+** Added support for exec_prefix.
+
+** Added support for make prefix=...
+
+** Added support for most of the commands provided in the mtools
+   package.  See the ^Cm prefixes in term/.gitrc.common.
+
+** File comparison is now built-in (on ^C B, as usual).  gitcmp is gone.
+
+** Added support for the xhost command on ^X H.
+
+** Bug fixes.
+
+
+* Version 4.3.13
+================
+
+** Ported to AT&T 3B2 systems, thanks to Gaylen Miller
+   <gaylen@proaxis.com>.
+
+** Under RedHat Linux 4.0 the rxvt terminal emulator exports
+   TERM=xterm-color which makes it possible to figure out that we have
+   color support.  GIT now supports xterm-color as well.
+
+** M-. (ESC .) works better in the sense that it goes up to the
+   previous directory and automatically positions on the entry
+   corresponding to the old directory.
+
+** ^CI installs the RPM package under the cursor.
+** ^Ci uninstalls the RPM package under the cursor.
+** ^CN upgrades the RPM package under the cursor.
+** ^Cq queries the `rpm' package manager.
+   These commands also have background versions: ^CbI, ^Cbi and ^CbN.
+
+** Tested on NetBSD 1.2.
+
+** Fixes to make GIT compile cleanly to some new architectures thanks
+   to Nelson H. F. Beebe <beebe@math.utah.edu>.
+
+** Minor changes/fixes.
+
+
+* Version 4.3.12
+================
+
+** Added recursive context diffs on ^Cd and ^Cbd (background).  See
+   the documentation for details.
+
+** ^G behaves better as an interrupt key.
+
+** Added support for meta keys with the 8th bit set.
+
+** The commands binded on the function keys are now to the M-number (ESC
+   + number) key sequence as well.  ESC + 1 and ESC + 2 which used to
+   chdir to the /mnt/fdX directories have been moved on ESC ESC 1 and
+   ESC ESC 2.
+
+** `git' can now compare directories: ^Ccq will quickly compare the
+   file names, sizes and time stamps while ^Cct will thoroughly
+   compare the contents of each file with the contents of its
+   couterpart (if any) from the other panel.
+
+** `name-upcase' & `name-downcase': New builtin functions for renaming
+   the selected entries to uppercase & lowercase.
+
+** GIT compiles out of the box under the Hurd.
+
+** Many minor fixes.
+
+
+* Version 4.3.11
+================
+
+** An installation problem has been fixed.  GIT no longer attempts to
+   change the permissions of directories.
+
+** backward-kill-word is now on ESC Ctrl-H as well.
+
+** The `install' rule now depends on `all', which means you can type
+   `make install' and get the entire package compiled and installed.
+
+** There is now a separate rule called install-only that you can use
+   to install GIT without re-checking the dependencies.
+
+** The install_strip rule has been renamed to install-strip.
+
+
+* Version 4.3.10
+================
+
+** Ported to qnx 4.22 thanks to Michael Hunter <mphunter@qnx.com>.
+
+** Ported to B.O.S 02.01 (Bull Operating System - m68k-bull-sysv3).
+
+** Panels are no longer redrawn immediately after commands started
+   from the command line or by pressing RETURN on the executable.
+   Most users seem to prefer it this way.
+
+** Ported to Next Step 3.2 - m68k-next-nextstep3:
+   NeXT Mach 3.2: Mon Oct 18 21:57:41 PDT 1993;
+   root(rcbuilder):mk-149.30.15.obj~2/RC_m68k/RELEASE_M68K
+   Processor type: MC680x0 (68040)
+   thanks to Paul Nevai <nevai@math.ohio-state.edu>
+
+** The file system free space is displayed in a more intuitive way,
+   i.e.  8,881,152 instead of 8881152.  The same thing holds for the
+   sum of selected files.
+
+** Bug fixes.
+
+** Support for the AIX hft teminal, thanks to Andrei Caraman <xax@pub.ro>.
+
+** New inputline functions (inspired from the emacs counterparts):
+
+FUNCTION		BINDING		ACTION
+=======================================================================
+kill-word		ESC d (M-d)	delete next word
+downcase-word		ESC l (M-l)	convert next word to lower case
+upcase-word		ESC u (M-l)	convert next word to upper case
+capitalize-word		ESC c (M-l)	capitalize next word
+
+Unfortunately, this has lots of side effects:
+
+*** panel-display-* names & the corresponding bindings have been changed:
+	- ESC e a	= panel-enable-all
+			  (previously called panel-display-all)
+	- ESC e d	= panel-enable-date-time
+			  (previously called panel-display-date-time)
+	- ESC e f	= panel-enable-full-name
+			  (previously called panel-display-full-name)
+	- ESC e m	= panel-enable-mode
+			  (previously called panel-display-mode)
+	- ESC e o	= panel-enable-owner-group
+			  (previously called panel-display-owner-group)
+	- ESC e s	= panel-enable-size
+			  (previously called panel-display-size)
+
+*** conform-*-directory names & the corresponding bindings have been changed:
+	- ESC a c	adapt-current-directory
+			(previously called conform-current-directory)
+	- ESC a o	adapt-other-directory
+			(previously called conform-other-directory)
+
+*** the user defined UMOUNT bindings have been changed:
+	- ESC r a	remove (umount) /dev/fd0
+	- ESC r b	remove (umount) /dev/fd1
+	- ESC r t	remove (umount) the fs under the current directory
+
+** As you can see, 4 lines of new features, 11 of side effects.  Sorry
+   about this changes, but at the time I decided to use the previous
+   bindings I had no idea how wonderful emacs is :-).
+
+
+* Version 4.3.9
+===============
+
+** A bug introduced in 4.3.8 has been fixed.
+
+** Better handling of `aixterm' terminal emulators under AIX.
+
+
+* Version 4.3.8
+===============
+
+** A few bugs have been fixed and some slow algorithms have been speed
+   up.
+
+** I have tested `git' on our recently installed NFS volume and tried
+   to fix the related problems.  I don't know whether or not I have
+   fixed all of them.  Please let me know if it works for you.
+
+** The default ANSI colors are correctly restored under color_xterm,
+   rxvt and most likely under any other (bug free :-) ANSI capable
+   terminal or terminal emulator.
+
+** New commands in .gitrc.common.
+
+** Fti matching is delayed until needed.
+
+** gitrgrep & Co. use 'find' to walk through the file system tree.
+
+** gitregrep and gitfgrep will call egrep and fgrep recursively.
+
+** The clock is gone.  There were too many races.  Sorry guys :-( Type
+   ^XT to get the current date/time (DATE).
+
+** Better terminal optimizations and terminal I/O.  It should work a
+   faster on almost every terminal.
+
+** The gitaction script has been improved.  It is now able to handle
+   compressed movies and accepts uppercase extensions for all image
+   types.  Also, all the actions on C, C++, PGP, LEX, YACC, make files
+   have been removed.  Compiling the current file was a little bit
+   silly since most .c files are part of bigger projects and compiling
+   them separately is useless.
+
+** Many new file types are now detected in the [GIT-FTI] section. If
+   `git' seems slow due to the fact that about 300 file patterns are
+   matched for each file entry displayed, consider setting
+   TypeSensitivity to OFF or removing some of the unnecessary patterns
+   from .gitrc.common's [GIT-FTI] section.  However, 4.3.8 should work
+   much better than 4.3.7 since the patterns are matched only when
+   necessary and no more than once.
+
+** The ./configure option for requesting the terminfo library is now
+   --with-terminfo.  The previous option (--enable-terminfo) is no
+   longer supported.
+
+** A bug preventing users from defining their own colors in the
+   [GIT-FTI] section of their ~/.gitrc.TERM file has been fixed thanks
+   to Marian Ciobanu <ciobi@liis.sfos.ro>.
+
+** The delay at the end of the file type sensitive action executed by
+   the gitaction script has been removed.  This was annoying,
+   especially under X when starting viewers in background.
+
+** Even though the default .gitrc.xterm is still configured with
+   AnsiColors = OFF, it is highly recommended to set it to ON on
+   terminal emulators that have ANSI colors support (aixterm under
+   AIX, xterm under ULTRIX, color_xterm & rxvt under Linux).
+
+** `git' no longer attempts to execute empty commands at the command
+   prompt (that is, commands that contain only spaces and
+   semi-columns.  This is not a bug, is a feature :-)
+
+** Philippe De Muyter ported GIT 4.3.7 to sysV68 R3V7.1
+   (m68k-motorola-sysv).  I have integrated his patch into 4.3.8.
+
+
+* Version 4.3.7
+===============
+
+** Few improvements, mostly fixes.  All the compilation/installation
+   problems reported in 4.3.6 have been fixed (I hope :-).
+
+** RUMORS, RUMORS, RUMORS, .... it've heard that newer Linux systems
+   use "linux" instead of "console" for the TERM environment variable.
+   Due to this, I've linked .gitrc.linux to .gitrc.console.  I'm not
+   sure if it will really be useful, but it won't hurt.
+
+** `git' can now display files using different colors, depending on
+   their types as specified by the [GIT-FTI] section (FTI stands for
+   file type information). See .gitrc.common for more details.  If you
+   don't want/like colors, they can be disabled by setting the
+   TypeSensitivity variable to OFF.  Note that I've considered more
+   important to emphasize the file type and *NOT* the fact that it is
+   compressed.  That means that foo.c and foo.c.gz will be displayed
+   using the same color.  Of course, this approach can be changed by
+   modifying the configuration file...
+
+** GIT_PAGER is a new environment variable that replaces "more" in all
+   the user defined commands described in the configuration files.  If
+   your system has "less", just add GIT_PAGER=less to your
+   environment.  By default GIT_PAGER='more'.  gitaction & .gitaction
+   use GIT_PAGER too.
+
+** conform-current-directory & conform-other-directory now save the
+   new directory into the directory history.
+
+** Faster startup.
+
+** ^C= now performs recursive diff.
+
+** `flip' is the default action for *.fli and *.flc. See gitaction for
+   details.
+
+** tty.c now uses /dev/vcsa to dump/restore the screen.  The ioctl()
+   system call is no longer used.  You should have the right to r/w
+   the corresponding /dev/vcsaX since I don't like setuids, and I also
+   think that the appropriate permission/owner should be set by the
+   login utility in the same way as for /dev/ttyX.  Until then, if you
+   are on a single-user machine or you don't care much about security,
+   you can give unrestricted r/w permission on /dev/vcsaX.
+
+
+* Version 4.3.6
+===============
+
+** Added scroll step. A new built-in function (set-scroll-step) lets
+   you modify the panel scroll step.  It is also possible to set it in
+   the configuration file using the StartupScrollStep variable.  The
+   built-in function set-scroll-step is binded on ^XP.
+
+** Added incremental search. The built-in functions isearch-backward
+   and isearch-forward are mapped on ^S and ^R (as in emacs).  If the
+   hardware doesn't let you change the default meaning of ^S, you can
+   use the alternate key sequences ^Xs and ^Xr.  Wrapped isearch is
+   also provided.
+
+** select-file has been moved on ^T since ^R is now used for
+   isearch-backward.  You can also use Ctrl-\ (^\) for select-file (if
+   available). Sorry, I promise that this is the last time I am moving
+   this one :-). Anyway, if you are using Linux, you can continue to
+   press the 'Insert' key.
+
+** Verdoolaege Sven has contributed an enhanced gitaction script.
+   Default actions are now available for many new file extensions:
+   zip, arj, rar, mod, s3m, voc, wav, lsm, jpeg, mpg, ps, dvi and tex.
+   I also added support for compressed and uncompressed manual pages.
+
+** A bug in getting the size of symbolic links has been fixed.  Only
+   symbolic links with no target have been affected.
+
+** It is now possible to have a command with no body, still being able
+   to chdir to the directory specified in the configuration line.  You
+   can switch between directories much faster.  A command name is
+   still required.
+
+	- M-/ (ESC-/, Alt-/ under Linux) goes to /
+	- M-. (ESC-., Alt-. under Linux) goes to ..
+	- M-h (ESC-h, Alt-h under Linux) goes to $HOME
+	- M-i (ESC-i, Alt-i under Linux) goes to /usr/include
+
+** Han Holl made gitrgrep work on SCO 3.2 V 4.2.  He also reported
+   some other problems under SCO.  See the PROBLEMS file.
+
+** Alexander Jolk <p6mqt001@cicrp.jussieu.fr> requested that the
+   Makefiles makes no provisions in order not to display the commands.
+   Done.
+
+** Preformatted manual pages are no longer part of the distribution.
+   In fact, manual pages have not been updated in this version.  The
+   GNU projects seems to consider them obsolete, and I think that
+   updating only the info file will be enough.  Each release will have
+   a decent set of manual pages, but only to figure out what it is all
+   about, not as a reliable source of information about GIT.
+
+** A directory history is provided, making it easy to switch between
+   directories within a given set.  If you change the current
+   directory with ^Xd or you specify a new-dir field to a command, the
+   directory is added to the directory history.  You can switch to the
+   previous directory with ^X^P, to the next directory with ^X^N and
+   you can reset the entire directory history with ^X^R.  After
+   reseting the directory history, the current directory is
+   automatically added to it.
+
+** A new variable (ConfirmOnExit) has been added to the [GIT-Setup]
+   section, allowing you to specify if you want to be asked for
+   confirmation at exit.  The default is not to be asked for
+   confirmation.
+
+** Added tilde expansion on 'copy' and on 'move'.  It should have been
+   there from the very beginning.
+
+** make-directory no longer expect a base-name.  The directory name is
+   tilde_expand()-ed and then created, if possible.
+
+** The FIND function no longer asks for the start directory.  It
+   simply ask the file name and starts searching it from the current
+   directory.
+
+** It is now possible to select directories and delete / copy / move
+   them using the same builtin functions used in the previous versions
+   for file only operations.  Since it is inherently dangerous to
+   delete directories, if the directory to be deleted is not empty,
+   the user is prompted twice, in order to reduce the possibility of
+   an error.  Briefly, you can use the same key binding for both file
+   and directories common operations (i.e. pressing F8 or ^C D will
+   delete the current file (or directory) if there are no selected
+   files / directories, or all the selected files and directories
+   otherwise).  You should pay attention because directories are
+   deleted recursively.  Also note that the select-all built-in
+   function doesn't select directories.  You should select them "by
+   hand".  Just for safety...
+
+** Most file commands have been changed in order to act on the
+   selected files.  As an example, if you select some files in a panel
+   and then start the COMPRESS command, `git' will compress all the
+   selected files, not only the current one.  If the command used
+   (gzip in our case) exits successfully, all the selected files will
+   become unselected.  However, if an error occur, `git' will *not*
+   unselect the selected files since there is no way to tell (in
+   general) which files have been successfully processed.
+
+** An utility for wiping files is provided.  Its name is (of course)
+   gitwipe and is binded on ^C W. gitwipe overwrites the file contents
+   with a random sequence of numbers and then calls sync().  Note that
+   gitwipe does *not* delete the file since (under Linux at least) the
+   sync() system call might return before actually writing the new
+   file contents to disk.  Deleting the file might be dangerous
+   because some file systems can detect that the blocks in the file
+   are no longer used and never write them back to disk in order to
+   improve performance.  It is up to you to delete the file(s) at a
+   later moment.
+
+** A new scheme is used for the configuration files.  Since most of
+   the key bindings are common to all the terminal types and only a
+   few are really terminal specific, a new configuration file called
+   .gitrc.common is used to keep the 'common' ones.  This new confi-
+   guration file contains only the [GITxxx-Keys] sections.  Terminal
+   specific key bindings can be defined as usual in the .gitrc.TERM
+   files and, if a conflict occurs, the .gitrc.TERM definition is
+   used, giving the user the possibility to overwrite a 'common' key
+   binding if it wishes to do so.
+
+** The configuration files commands have been enhanced with a new format
+   specifier:
+
+	'%?{confirmation}'
+
+   This format specifier only asks for confirmation before expanding /
+   executing the current command.  The 'confirmation' string is displayed
+   and if the user doesn't confirm, the command is aborted.  Otherwise,
+   %?{...} expands to a null string and the command is expanded /
+   executed normally.
+
+** A separate history is kept for each command.  This is true for both
+   built-in and user-defined commands.  For example, if you search a
+   file using the user-defined FIND command and, later, you call the
+   FIND function again, you can walk through the file names history
+   using the arrow keys or ESC p / ESC n (M-p / M-n in emacs).
+
+** Three built-in functions have been added:
+
+*** enlarge-panel	- binded on ^X1 (C-X 1)
+*** enlarge-other-panel	- binded on ^X0 (C-X 0)
+*** two-panels		- binded on ^X2 (C-X 2)
+
+   enlarge-panel will maximize the current panel, enlarge-other-panel
+   the other one.  One of the panels will become invisible.  However,
+   *all* the operations can still be performed.  The invisible panel
+   will remain the default destination for copy/move operations.  TAB
+   will also continue to work.  two-panels will restore the original
+   two panels mode.
+
+** A new display mode, suitable for enlarged panels, is provided.
+   This new mode combines all the other modes, displaying the owner,
+   group, date, time, size and mode of a file.  It is automatically
+   selected by enlarge-panel and enlarge-other-panel but can be
+   changed afterward, by pressing ^] (C-]).
+
+** A 'lock' built-in function has been added.  It is binded on ^X p (C-x
+   p) and locks the terminal until the password typed at lock time is
+   correctly retyped.
+
+** The `git' panels are no longer deleted/restored when a background
+   command is started.
+
+** A .gitrc.sun configuration file has been added.  It is a link to
+   .gitrc.generic.
+
+** New Linux kernels seem to use the /dev/vcs devices to dump the
+   screen contents.  I dont' have access to such a kernel right know,
+   but I will fix this in the next release.  See the file PROBLEMS for
+   details.
+
+** The texinfo documentation has been rewritten from scratch.  It is
+   better organized and has many new additions.  It also contains an
+   exhaustive description of all the default key bindings.  There are
+   still many things that can be done, though.
+
+** A dvi Makefile target has been aded. Type 'make dvi' if you want to
+   create the git.dvi file from git.texinfo.  After that, you should
+   be able to get a PostScript documentation using dvips.
+
+** A last minute Minix 1.6.25.1 port.  Works fine, has colors.  A
+   .gitrc.minix has been added to the distribution.
+
+
+* Version 4.3.5
+===============
+
+** Owner and group names are now being cached using hash tables in
+   order to increase the directory reading speed.
+
+** `git' is now able to display the file system free space on many
+   systems. GIT 4.3.4 was only able to do this under Linux, using the
+   statfs() system call. GIT 4.3.5 uses a modified version of the
+   fsusage.c file from the GNU fileutils 3.2 package.
+
+** ^H (8), ^I (9), ^J (10), ^M (13), ^SPC (0) and BACKSPACE (127) can
+   be configured in the configuration files.
+
+** The interrupt & quit characters are both ^G now. You can exit from
+   GIT with ^X^C (this is the default binding but you can change it,
+   of course :-) ).
+
+** The entire set of default key bindings has been changed.  I have
+   tried to make them be more emacs-like (where possible). Since it is
+   impossible to use 'z' to compress a file or 'Z' to uncompress it as
+   emacs does in the 'dired' mode because 'a', 'A', ... 'z', 'Z', etc
+   are used to enter commands in the input line, I have decided to use
+   the ^C prefix key for file operations.  Background commands are
+   prefixed with ^Cb. You should read the configuration files for more
+   details.
+
+** `git' now has an editable input line.  Most emacs-like editing
+   functions suitable for editing one line of input are now available:
+
+	Function:		    GIT style:	    Emacs style:
+
+***	backward-char			^B		C-b
+***	forward-char			^F		C-f
+***	backward-word			^[b		M-b
+***	forward-word			^[f		M-f
+***	beginning-of-line		^A		C-a
+***	end-of-line			^E		C-e
+***	delete-char			^D		C-d
+***	backward-delete-char		^_		DEL
+***	backward-kill-word		^[^_		M-DEL
+***	kill-line			^[k		C-k
+***	kill-to-beginning-of-line	^U
+***	kill-to-end-of-line		^K
+***	just-one-space			^[^@		M-SPC
+***	delete-horizontal-space		^[\		M-\
+***	action				^M		RET
+***	set-mark			^$		C-SPC
+***	kill-region			^W		C-w
+***	kill-ring-save			^[w		M-w
+***	yank				^Y		C-Y
+***	exchange-point-and-mark		^X^X		C-x C-x
+
+** Since the entire input line code has been changed / improved, the
+   2048 bytes length limit no longer exist. The input line can hold as
+   many characters as you want.
+
+** All the built-in command names have been changed in order to match
+   the emacs style function names: <ChangePanel> has become
+   change-panel. By convention, built-in commands are now lowercase
+   while user defined commands are uppercase.
+
+** When copying files that are longer than 32 Kb, the copied percent
+   is displayed on the status bar.
+
+** The copy_files built-in command can be interrupted in the middle of
+   a file copy action. If the operation is interrupted in the middle,
+   the incomplete file is deleted.
+
+** The configuration files are using now shell environment variables
+   to call the shell, editor, mail reader, compress and virtual memory
+   status utility. That means that if you set GIT_SHELL, GIT_EDITOR,
+   GIT_RMAIL, GIT_COMPRESS or GIT_VMSTAT to some value, that value
+   will be used instead of the default one. The defaults are:
+
+***	GIT_SHELL='/bin/sh'
+***	GIT_EDITOR='vi'
+***	GIT_RMAIL='emacs -f rmail'
+***	GIT_COMPRESS='gzip -9'
+***	GIT_VMSTAT='free'
+
+   If GIT_SHELL is not defined but SHELL is, GIT_SHELL will be set to
+   that value.
+
+   If GIT_EDITOR is not defined but EDITOR is, GIT_EDITOR will be set
+   to that value.
+
+** History expansion has been added. `git' now takes advantage of the
+   full power of the history library.  Each command entered at the
+   prompt is expanded and added to the history.  !!, !?, !-n, ...  are
+   now available. See the history library documentation for more
+   details.
+
+** The package can be compiled in a different directory, keeping the
+   source tree unmodified.  You should be able to make an empty
+   directory, chdir to it and start git-4.3.5/configure, then make.
+
+** The distribution has been split into three directories: src, man
+   and info.
+
+** GIT has been tested on IRIX 4.0.5F. It works. It also works on
+   SunOS 4.1.3, Solaris 2.3 and Irix 5.2 according to Eric Jaron
+   Stieglitz <ephraim@ctr.columbia.edu>.
+
+** `make install' creates a symbolic link from $(libdir)/.gitrc.xterm
+   to $(libdir)/.gitrc.xterms in order to avoid problems on systems
+   that have the TERM environment variable defined as xterms instead
+   of xterm.
+
+** A script doing recursive grep (gitrgrep) has been added to the
+   distribution. It might be useful.
+
+
+* Version 4.3.4
+===============
+
+** Richard Stallman saw it and agreed to be part of the GNU project.
+
+** The package is no longer called 'UNIX Interactive Tools'.  I've
+   changed its name to 'GNU Interactive Tools'.
+
+** GIT is now able to correctly restore the terminal foreground and
+   background under X. The previous version had a problem with this
+   because there is no way to find out the terminal colors at startup.
+   The [Setup] section of the configuration file specifies the colors
+   that GIT should set at exit.
+
+** If gcc is detected at configure time, -Wall is added to CFLAGS.
+
+** A bug in Makefile.in has been fixed.
+
+** Two gitps bugs have been fixed.
+
+** Better ^Z (suspend) management. GIT doesn't wait any longer for a
+   key to be pressed after the 'fg' command is entered at the shell
+   prompt.
+
+** The hpterm terminal emulator support works better. It is far from
+   being perfect, but it works better than the previous versions.
+
+** Added support for System V and BSD terminal interfaces.
+
+** Added support for AIX aixterm terminal emulator.
+
+** If a .gitrc.TERM file cannot be found for a specific terminal, a
+   generic configuration file (.gitrc.generic) is used.
+
+** Tested on a Bull computer running AIX.
+
+** Tested on some BSD 4.3 systems at FSF.
+
+** Tested on a Sun running SunOS 4.0.3 at FSF.
+
+** A better Sun port thanks to Johann Friedrich Heinrichmeyer.
+
+** A better Alpha port thanks to Dan Pop.
+
+** Added some emacs-like key bindings. There will be more in the next
+   version.
+
+** Code cleanup.
+
+
+* Version 4.3.3
+===============
+
+** Added support for moving files on MS-DOS file systems.
+
+** Added support for terminals that can't write on the last character
+   of the screen without scrolling the entire screen.
+
+** Alt-k starts diff with the two panels current files as arguments.
+
+** Cosmetic changes.
+
+** Bug fixes.
+
+
+* Version 4.3.2
+===============
+
+** A lot of work has been done to make the UIT package compile with
+   traditional K&R compilers. I've successfully compiled it with such
+   a compiler on our HP-UX 9000/715.
+
+** The installation procedure has been simplified: UIT 4.3.2 uses the
+   'configure' script! The 'configure' script was generated from the
+   file configure.in (available in the package) using the autoconf
+   utility version 1.11. To install the UIT 4.3.2 package just type:
+
+	./configure
+	make
+	make install
+
+** The configure script first check for the termcap library.  If the
+   termcap library is not found, some terminfo libraries will be
+   searched: ncurses, curses, termlib, tinfo, terminfo. If you want to
+   change this default behavior and search for terminfo libraries
+   before searching the termcap library, run
+
+	./configure --enable-terminfo
+   instead of
+	./configure
+
+** UIT now understands some symbolic key names in the configuration
+   files: F0, F1, F2, ... F10, UP, DOWN, RIGHT, LEFT, INS, DEL, HOME,
+   END, PGUP, PGDOWN. You can still specify a key sequence, but, for
+   the function & cursor keys, it's a better idea to get them from the
+   termcap/terminfo database if they can be found there. So, the
+   command for the F1 key on the Linux console (the configuration file
+   is .uitrc.console) can be:
+
+	F1  = UIT-HELP; man uit
+   or
+	^[A = UIT-HELP; man uit
+
+** If some key doesn't have a termcap/terminfo description (like the
+   F11/F12 keys on the Linux console) you can specify the key sequence
+   in the usual way.
+
+** The UIT package will use the GNU readline library if available.  If
+   this library is not installed on your system, uit will use the
+   sources for the history and tilde expansion included in the
+   package.  For Linux systems, the DLL readline library version 2.0.1
+   is available at sunsite.unc.edu in the directory /pub/Linux/libs.
+   The package name is librl-2.0.1.tar.gz. This package also includes
+   a readline linked ftp, bash-1.14.1 and gdb-4.12 binaries.  The bash
+   binary is about 60k smaller that the SLACKWARE 2.0.0 version and,
+   hold your breath..., the gdb binary is about 500k smaller too. So,
+   if you really want things to work better, install this DLL readline
+   library.  UIT will work just fine without it, but using a shared
+   library generally means shorter binaries ...
+
+** Changes in the configuration files:
+
+***	^De starts the editor sending the selected files as para-
+	meters. So, if you want to edit multiple files at once, select
+	them, then press ^De . The default editor is joe, but you can
+	use any other editor if you change the corresponding line in
+	the configuration file.
+
+***	^Dd starts the 'more' viewer sending the  selected  files
+	as parameters. See above.
+
+***	^Du displays on the status bar the result of the  'du -s'
+	command
+
+***	^Df displays on the status bar the  result  of  the  'df'
+	command, one line at a time
+
+***	^Dm displays on the status bar the result of the  'mount'
+	command, one line at a time
+
+***	^Dv displays on the status bar the result of  the  'free'
+	command, one line at a time
+
+***	^Dw displays on the status bar the result of the 'whereis'
+	command, one line at a time
+
+***	^DW displays on the status bar the result of the  'which'
+	command, one line at a time
+
+***	^Dh displays on the status bar the result of the  'users'
+	command, one line at a time
+
+** The file and path names copied to the command line are now quoted
+   because files residing on ISO9660 CDs may contain ';' and the shell
+   will fail to expand the resulting string.
+
+** Three new default actions have been added to the uitaction script
+   for *.texi, *.texinfo and *.man. See the uitaction script for more
+   details.
+
+** 3 bugs have been fixed.
+
+
+* Version 4.3.1
+===============
+
+** UIT now uses the GNU history library. The default history file is
+   ~/.uithistory.
+
+** The number of files in a panel is no longer limited to 1024.  If
+   you have enough memory, UIT can now display all the files in the
+   directory, even if the directory is a very big one. UIT dynamically
+   allocates memory for the directory data so UIT 4.3.1 needs about
+   120k-140k of memory less than UIT 4.3 (for usual directories).
+
+** UIT can move files between file systems by copying the source file
+   to the destination file and then removing the source file.
+
+** The source files termcap.l and termcap.h have been removed.  UIT
+   4.3.1 now use the standard termcap library. If you want to use a
+   local termcap database (like .termcap), you can do it by setting
+   the TERMCAP environment variable to point to it:
+
+	TERMCAP = /home/joe/.termcap
+
+** UIT 4.3.1 needs only the 'cm' and the 'cl' terminal capability.  If
+   available, 'me', 'md', 'mr', 'vi' and 've' are also used.
+
+** Using the standard termcap database has some advantages:
+***	UIT 4.3.1 now does padding (if padding is required)
+***	UIT 4.3.1 can  handle any kind of  parameterized terminal
+	capabilities.
+***	uit, uitps, uitview are smaller.
+***	No more problems with different versions of lex/flex...
+
+** UIT has now terminfo support. You can choose between termcap and
+   terminfo at compile time.
+
+** The selected files are marked with a '*' in the right side.  This
+   can be useful if your terminal doesn't know about brightness (the
+   me & md terminal capabilities).
+
+** The current file of the current panel is marked with a '>' in the
+   left side.
+
+** The current file of the other panel is marked with a '*' in the
+   left side. You can see this way which is the current file of the
+   other panel.
+
+** UIT is able to run a command sending to it the selected file names
+   as parameters. This is done using the new %i and %I parameters
+   available in the formatted string. Suppose the current directory
+   test_dir contains the files foo, bar, tutu and gogu, and foo & tutu
+   are selected, the following command
+
+	^Wyt = TAR; tar cf %b.tar %i;;;;y
+
+   will be expanded as
+
+	tar cf test_dir.bar foo tutu
+
+   Thus, you can make your favorite commands act only on the selected
+   files.
+
+** A new builtin command (<CopySelectedFilesToCmdLn>) is available.
+   This command lets you to insert all the selected files names into
+   the command line. I've mapped it on ^Kg. If there is no selected
+   file, only the current file name is copied.
+
+** Changes in the configuration files:
+***	the archive (.tar.gz) created with ^Wz get its name  from
+	the directory under the cursor.
+	So, in the configuration files,
+	  ^Wz = tar cf - * | gzip -9cf > %b.tar.gz    is now
+	  ^Wz = tar cf - %d | gzip -9c > %d.tar.gz
+***	elm can be started with ^Ke
+***	the shell can be started with ^Kj
+***	as explained before, I've added ^Kg & ^Wyt
+
+** A new utility (uitkeys) is provided to help users to set up the
+   configuration files .uitrc.TERM.
+
+** If uit/uitps/uitview doesn't find a local configuration file
+   .uitrc.TERM, it tries to use the global version (usually found in
+   the /usr/local/lib directory). This way, users are able to run uit/
+   uitps/uitview without having to copy the configuration file(s) in
+   their home directory.
+
+** uit now understands '~' in the 'newdir' field, in the <ChangeDir>
+   builtin command, etc ...
+
+** The procedure of setting up colors has been simplified. If you want
+   to try to run UIT with colors, just set AnsiColorSequences to ON in
+   the configuration files.
+
+** MS-DOS files are copied without the __x bits.
+
+** UIT can now display the host-name, system type, machine type and
+   the current date on the status bar using the following escape
+   sequences:
+	\h	->	the host name
+	\s	->	the system type
+	\m	->	the machine type
+	\t	->	the date
+   Please read the configuration files for more details.
+
+** For the sake of readability, in the configuration files '1' and '0'
+   have been replaced by 'y' and 'n'.
+
+** The size of the command line has been increased to 2k.
+
+** alloca.c is now included in the distribution. You should be able to
+   compile the UIT 4.3.1 package even if the target system does not
+   support the alloca() function. For such systems, define in the
+   Makefile ALLOCAOBJ = alloca.o .
+
+** A better Makefile:
+	- you can uninstall the UIT package using 'make uninstall'
+	- you can build a distribution file using 'make dist'
+
+** A *MUCH* *MUCH* *MUCH* better code.
+
+** N bugs have been fixed :-(.
+
+
+* Version 4.3
+=============
+
+** A new script that executes a different action for each file type
+   specified. If you press F2 or ^Kz on a "*.c" file, UIT will compile
+   it, if you press F2 or ^Kz on a "*.tar.gz" file, UIT will list the
+   tar archive contents, if you press the same keys on a "*.gz" file
+   UIT will display its uncompressed contents on the screen, etc ...
+   By default uitaction checks for the following patterns:
+
+   "*.cc" "*.c" "*.l" "*.y" "*.h" "*.s" "*.S" "*.o" "*.a" "*.sa"
+   "Makefile" "makefile"
+   "*.tar.gz" "*.tgz" "*.tar.z" "*.tar.Z" "*.taz" "*.tar" "*.gz"
+   "*.z" "*.Z"
+   "*.doc" "*.txt"
+   "*.gif" "*.jpg" "*.tif" "*.bmp"
+
+   and acts as appropriate. If no pattern is found, the file is
+   displayed using more. Feel free to change this.
+
+   If you press F2 or ^Kz on a "*.gif" file or a "*.jpg" file and you
+   have the zgv utility installed, you will be able to see it. If you
+   want to change the gif/jpeg viewer, all you need to do is to change
+   its name in the uitaction script. I don't know a "*.bmp" or "*.tif"
+   viewer. Feel free to add one in the uitaction script.  The script
+   can be easy enhanced.  Just read it.  You can have a local version
+   of this script (in the current directory). Please read the manual
+   page for more details.
+
+** UIT 4.3 was tested on DEC OSF/1 operating system.
+
+** Enhanced configuration files:
+	- uitaction (F2 or ^Kz)
+	- grep (^Vr)
+	- ispell (^Vi)
+	- ' | more' added to finger, w, ...
+	- reset (terminal reset) (^WR)
+	- mv (you can now change a file name even if the two panels
+	  don't show the same directory) (^Vr)
+	- chmod for a group of files (^Wlm)
+	- chown for a group of files (^Wlo)
+	- chgrp for a group of files (^Wlg)
+	- conform  the   current  directory   to  the  other  panel
+	  directory (Alt-c c, ESC c c, ^[cc) - <ConformCurrentDir>
+	- conform  the other panel directory  to  the current panel
+	  directory (Alt-c o, ESC c o, ^[co) - <ConformOtherDir>
+	- tar + gzip in one shot (^Wz).  Something  like   that   is
+	  executed: tar cf - * | gzip -9cf > %b.tar.gz
+	- the background version of the previous command (^Wbz)
+	- gunzip + un-tar in one shot (^Wv). Something  like that is
+	  executed: gzip -dc %f | tar xf -
+	- the background version of the previous command (^Wbv)
+	- copy the other panel path to the command line (^Ka)
+
+** Enhanced manual pages.
+
+** A better Makefile
+
+** 3 bugs have been fixed.
+
+** Better error checking on directories.
+
+** ^H support (treated as backspace).
+
+** The ASCII documentation has been removed. I think that every modern
+   UNIX system should have the man utility.
+
+
+* Version 4.2c
+==============
+
+** UIT 4.2c was tested on HP-UX operating system.
+
+** UIT 4.2c implements a curses-like algorithm to prevent useless
+   screen refreshes. *NOTHING* will be displayed on the screen if it
+   is already there. This will speed up UIT when working on terminals.
+   To force a screen refresh you can use ^Wr ( <HardRefresh> ).
+
+** UIT 4.2c is able to select/unselect files using a pattern matching
+   method. You can now select something like *.c, *.h or unselect *.o.
+   This is done with ^Vs (select) / ^Vu (unselect).
+
+** The configuration files .uitrc.TERM where enhanced.  You can now
+   start tar xf, tar cf, gzip, gunzip, uuencode, uudecode as
+   foreground or background commands.  This is done with ^Wx / ^Wbx,
+   ^Wt / ^Wbt, ^Wc / ^Wbc, ^Wu / ^Wbu, etc.  There is also possible to
+   directly send by mail a file to someone as an ASCII file (^Va) or
+   as an uuencoded binary file (^Vb).
+
+** Bug fix: UIT 4.2c now correctly stops when it is started as a
+   background job.
+
+** Files can be sorted in 9 different ways.  The most important
+   sorting methods are "by name", "by extension", "by size" and "by
+   date".
+
+** A new script uitmount which allows you to mount any block device
+   without specifying the fs type.  You may now insert the floppy in
+   the drive and type 'uitmount fd0' and the first floppy will be
+   mounted in the directory /mnt/fd0. Under Linux just press F11 or
+   F12.  You don't need to know the fs type anymore.  The directories
+   /mnt/fd0 and /mnt/fd1 must exist.  If you want to use uitmount with
+   the block device /dev/xxx then the directory /mnt/xxx must exist.
+
+** You can now install uit with 'make install'
+
+** A new feature has been added to the command line: pressing Alt-h
+   you can delete the last command line word. The built-in command
+   name is <DeleteCmdLnWord>.  I now that the command line is not very
+   flexible and I'll probably change it in the future.
+
+** <ChangeDir> can now use ~ as home directory specification.
+
+** <ChangeDir> can now be canceled with TAB.
+
+** UIT 4.2c is now able now to display up to 99G of free file system
+   space. Big enough, I suppose :-) .
+
+
+* Version 4.2b
+==============
+
+** UIT 4.2b now contains info format documentation.
+
+** UIT 4.2b has separate configuration files for each type of terminal.
+
+** An ASCII version of the manual page (uit.doc) included for those
+   who can't read neither the nroff version nor the info version.
+
+** New built-in function for changing the current panel directory.
+
+** uit, uitps and uitview are a little bit smaller than the previous
+   versions (uitcmp was small enough :-) ).
+
+** UIT 4.2b package now correctly runs under X (in an xterm window).
+   Previous versions did not due to a bug in handling the ioctl() call
+   to get the screen contents.
+
+** UIT 4.2b now supports full configurable key sequences.  The key
+   pressed is identified faster.
+
+** 5 minor bugs have been fixed.  See the ChangeLog file for details.
+
+
+* Version 4.2a and older
+========================
+
+** UIT 4.2a has been tested with Linux 1.0 and ULTRIX V4.2A.
+
+** As to Linux 1.0 you can't do a screen dump if you are not super
+   user so the <ShowTty> command is no longer completely supported for
+   the normal users. Even if you are not super user, <ShowTty> is
+   still useful because you can see the result of the latest command.
+
+** As to Linux 1.0 MS-DOS files are all executable (__x__x__x).  UIT
+   now checks the file system type and ignores the executable bits if
+   the current directory belongs to a MS-DOS file system.
+
+** UIT 4.2a can now display longer file names (with the 'FullName'
+   FileDisplayMode value).
+
+** UIT 4.2a can now display setuid, set group id attributes and the
+   sticky bit.
+
+** Lots of optimizations have been made to speed up UIT when working with
+   terminals.
+
+** Filenames containing control characters are correctly displayed.
+   (control characters are displayed as '?')
+
+** New options in the configuration file permitting to increase the
+   displaying speed on very slow terminals.
+
+** An interactive process viewer / killer utility is provided.
+
+** An interactive HEX/ASCII file viewer is now available.
+
+
+* Notes
+=======
+
+*** Starting with version 4.0, this program is no longer named PSH.
+    PSH was the name used until version 3.2b.
+
+*** Please read the INSTALL file before starting UIT 4.3.
+
+Tudor & Andi
